@@ -1,0 +1,35 @@
+# Decisions
+
+## 2026-04-08
+
+- Confirmed stack: Next.js 15 + TypeScript on Hostinger Node.js v20 using npm.
+- `next.config.ts` uses `output: "standalone"` only, with no experimental flags.
+- `package.json` was kept minimal and only includes the requested `build` and `start` scripts plus the Node.js engine constraint.
+- No package installation was performed, and no additional package declarations were added beyond what the request required.
+- `drizzle.config.ts` reads the SQLite database file path from `DATABASE_URL` and does not rely on `dotenv`.
+- Database ID strategy uses the confirmed hybrid model:
+  - `posts.id` is a text primary key for content portability.
+  - `webmentions.id`, `auth_tokens.id`, and `auth_codes.id` are auto-incrementing integer primary keys.
+- Timestamp columns were stored as SQLite text values to keep exported data straightforward and human-readable:
+  - `posts.published_at`
+  - `webmentions.received_at`
+  - `auth_tokens.issued_at`
+  - `auth_tokens.expires_at`
+  - `auth_codes.expires_at`
+- Operational timestamp defaults use `CURRENT_TIMESTAMP` where a default was appropriate:
+  - `webmentions.received_at`
+  - `auth_tokens.issued_at`
+- `posts.slug` is unique, and `auth_tokens.token_hash` / `auth_codes.code_hash` are unique.
+- `posts.syndicated_urls` is stored as a JSON string in a text column with a default of `[]`.
+- `webmentions.status` defaults to `pending`.
+- `pm2.config.js` runs a single forked process named `creatrweb` from `.next/standalone/server.js` with `NODE_ENV=production`.
+- The repository does not currently contain `nextjs/AGENTS.md`, so session behavior followed the root `AGENTS.md` only.
+- The repo-root `AGENTS.md` was rewritten from the generic collaboration template into a project-specific guide containing only currently confirmed project facts and already-established boundaries.
+- `MEMORY.md` was created with the initial confirmed session learnings after explicit user approval.
+- The local database path was set to `./data/creatrweb.sqlite`, stored in a root `.env` file, and `data/` plus `.env` were added to `.gitignore`.
+- `drizzle-kit generate` created the initial SQL migration at `drizzle/0000_regular_marrow.sql`.
+- `drizzle-kit migrate` applied successfully and created the SQLite database file at `./data/creatrweb.sqlite`.
+- The requested dependency install used unpinned package names, which resolved `next` to `^16.2.3` rather than a Next.js 15 release.
+- `next` was downgraded to an installed 15.x release and the manifest was corrected to the requested `^15.3.0` range.
+- `dotenv` was added as a dev dependency, and `drizzle.config.ts` now loads `.env` automatically with `import "dotenv/config"`.
+- `npx drizzle-kit generate` now runs successfully without manually injecting `DATABASE_URL`.
