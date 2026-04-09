@@ -2,33 +2,83 @@
 
 ## How to Read This File
 
-- **Read six sections every session start** (Six Rules, Brainstorm Mode, Mode Adaptation, Framework Detection, User Constraints, AI Ethics). You are reading section zero — it does not count.
-- **Remaining sections are reference material** — open a section only when the situation calls for it. Each is self-contained and useful even in partial reads.
-- **Explicit user prompts override this file.** When the person says something directly, that takes precedence.
-- **If context is limited**, read Six Rules → Brainstorm Mode → Mode Adaptation → Framework Detection → User Constraints → AI Ethics, then stop and ask what to build.
-- **If a session ends before a question is answered**, log it as an unresolved checkpoint in `DECISIONS.md` and halt.
+- **Read six sections every session start** (Six Rules, Brainstorm Mode, Mode Adaptation,
+  Framework Detection, User Constraints, AI Ethics). You are reading section zero — it
+  does not count.
+- **Remaining sections are reference material** — open a section only when the situation
+  calls for it. Each is self-contained and useful even in partial reads.
+- **Explicit user prompts override this file.** When the person says something directly,
+  that takes precedence.
+- **If context is limited**, read Six Rules → Brainstorm Mode → Mode Adaptation →
+  Framework Detection → User Constraints → AI Ethics, then stop and ask what to build.
+- **If a session ends before a question is answered**, log it as an unresolved checkpoint
+  in `DECISIONS.md` and halt.
+- **Multi-agent advisory use:** If a separate AI chat session is being used to interpret
+  questions or formulate prompts, the human remains the authority. Prompts relayed from
+  another AI session carry the same weight as direct human instructions and are subject
+  to the same safeguards — including the AGENTS.md overwrite protection below.
 
 ---
 
 ## Six Rules — These Override Everything
 
-1. **Ask one question before any significant change.** A change is **significant** if it introduces visible behavior, adds a route, modifies a schema, creates a file others depend on, or touches the Irreversible Decisions table. A change is **mechanical** if it fixes a typo, adjusts style, renames a variable within one file, or edits a comment. Never ask permission for mechanical changes.
+1. **Ask one question before any significant change.** A change is **significant** if it
+   introduces visible behavior, adds a route, modifies a schema, creates a file others
+   depend on, or touches the Irreversible Decisions table. A change is **mechanical** if
+   it fixes a typo, adjusts style, renames a variable within one file, or edits a comment.
+   Never ask permission for mechanical changes.
 
-2. **Show 2–3 meaningfully different options before committing.** Include at least one unexpected option. Wait for a reaction before building.
+2. **Show 2–3 meaningfully different options before committing.** Include at least one
+   unexpected option. Wait for a reaction before building.
 
-3. **Pause at irreversible decisions.** URL structure, identity links, auth endpoints, syndication targets, and vendor dependencies require explicit sign-off.
+3. **Pause at irreversible decisions.** URL structure, identity links, auth endpoints,
+   syndication targets, and vendor dependencies require explicit sign-off.
 
-4. **The person owns everything.** Architecture, aesthetics, and priorities belong to them. Amplify their judgment; do not substitute for it. Support unconventional choices fully.
+4. **The person owns everything.** Architecture, aesthetics, and priorities belong to them.
+   Amplify their judgment; do not substitute for it. Support unconventional choices fully.
 
-5. **URLs must never break. Content must always be exportable.** Keep `GET /export/json`, `GET /feed.xml`, and `GET /feed.json` functional. Permanent redirects for moved content. No database IDs in public URLs.
+5. **URLs must never break. Content must always be exportable.** Keep `GET /export/json`,
+   `GET /feed.xml`, and `GET /feed.json` functional. Permanent redirects for moved content.
+   No database IDs in public URLs.
 
-6. **If specified technology appears non-functional, stop.** State the issue clearly. Present alternatives using the gallery format. Get explicit approval before modifying anything currently working. Never implement a silent workaround.
+6. **If specified technology appears non-functional, stop.** State the issue clearly.
+   Present alternatives using the gallery format. Get explicit approval before modifying
+   anything currently working. Never implement a silent workaround.
+
+---
+
+## Session-Scoped Instructions — How to Read the Opening Prompt
+
+**This file never changes between sessions.** Phase-specific constraints,
+active tool context, and per-session overrides are always delivered in the
+opening prompt, not here.
+
+When an opening prompt contains a block marked `SESSION CONSTRAINTS` or
+`PHASE CONSTRAINTS`, treat every item in that block as an extension of the
+Six Rules for the duration of that session. They carry the same authority
+as Rule 1 through Rule 6 and override any default behavior described in this
+file's reference sections.
+
+**Priority order for any conflict:**
+1. Explicit statement from the person during the session (highest)
+2. Items in the `SESSION CONSTRAINTS` or `PHASE CONSTRAINTS` block
+3. The Six Rules above
+4. All reference sections below (lowest)
+
+**If no `SESSION CONSTRAINTS` block is present in the opening prompt:**
+Proceed using this file's defaults. Ask one question to confirm the current
+phase and active tool before writing any code.
+
+**If a `SESSION CONSTRAINTS` item conflicts with a rule in this file:**
+Do not resolve it silently. Name the conflict in one sentence and ask which
+takes precedence before acting.
 
 ---
 
 ## Explore Before You Commit — Brainstorm Mode
 
-When the person is thinking out loud, asking open questions, or has not yet formed a direction, enter **Brainstorm Mode**:
+When the person is thinking out loud, asking open questions, or has not yet formed a
+direction, enter **Brainstorm Mode**:
 
 - Respond freely. No one-question-then-wait rule. No gallery required.
 - Offer ideas, name trade-offs, ask gentle follow-ups. Think alongside the person.
@@ -38,8 +88,10 @@ When the person is thinking out loud, asking open questions, or has not yet form
 **Entering:** Any of these signals it — *"I'm not sure"*, *"what if"*, *"just thinking"*,
 *"is it possible to"*, or an open-ended question with no clear deliverable.
 
-**Exiting:** When the person expresses a direction — *"let's do X"*, *"build Y"*, asks for code, or accepts an option — confirm the transition before acting:
-*"It sounds like you want to [restate their direction]. Should I start building, or are you still exploring?"*
+**Exiting:** When the person expresses a direction — *"let's do X"*, *"build Y"*, asks
+for code, or accepts an option — confirm the transition before acting:
+*"It sounds like you want to [restate their direction]. Should I start building, or are
+you still exploring?"*
 
 Wait for confirmation. Then switch to the appropriate mode in the table below.
 
@@ -50,7 +102,8 @@ Adaptation.
 
 ## Adapt to the Execution Mode First
 
-A **conservative default** is the option most easily reversed, most portable across frameworks, and least dependent on external services.
+A **conservative default** is the option most easily reversed, most portable across
+frameworks, and least dependent on external services.
 
 | Mode | Examples | Behavior |
 |------|----------|----------|
@@ -59,31 +112,65 @@ A **conservative default** is the option most easily reversed, most portable acr
 | **Auto / Build** | Replit Agent, Base44, Google AI Studio Build, Cursor auto-apply | Apply conservative defaults. Create `DECISIONS.md` at session start, note it in build output, invite deletion. Do not modify existing files outside stated scope. |
 | **Inline Edit** | Cursor inline, Copilot suggestions | Mechanical changes only. No architectural decisions. Suggest; do not auto-accept. |
 
-In any mode: if a mandatory checkpoint is reached with no human available, stop and log it in `DECISIONS.md`.
+In any mode: if a mandatory checkpoint is reached with no human available, stop and log
+it in `DECISIONS.md`.
 
 ---
 
 ## Detect the Framework Before Building
 
-**Default:** This project uses **Next.js + TypeScript**. See `nextjs/AGENTS.md` for commands, file layout, and conventions. The lint command is defined there — check it before running any lint step.
+**Default:** This project uses **Next.js + TypeScript**. See `nextjs/AGENTS.md` for
+commands, file layout, and conventions. The lint command is defined there — check it
+before running any lint step.
 
-**Override:** If the person specifies Python, FastAPI, or Flask, see `fastapi/AGENTS.md`. For other stacks, derive from whichever profile is closer and record the confirmed stack in `DECISIONS.md`.
+**If `nextjs/AGENTS.md` does not exist:** Log its absence in `DECISIONS.md` and proceed
+with root rules only. Do not create it speculatively — it will be populated during Phase
+1 or when the first lint/test command is confirmed.
 
-**Mid-project switch:** Stop before touching existing files. Record the current state and reason in `DECISIONS.md`. Confirm the new profile explicitly. Flag every file needing migration before starting.
+**Override:** If the person specifies Python, FastAPI, or Flask, see `fastapi/AGENTS.md`.
+For other stacks, derive from whichever profile is closer and record the confirmed stack
+in `DECISIONS.md`.
 
-Both profiles share all specs, POSSE rules, URL conventions, security, and behavioral protocols. Only tooling differs.
+**Mid-project switch:** Stop before touching existing files. Record the current state and
+reason in `DECISIONS.md`. Confirm the new profile explicitly. Flag every file needing
+migration before starting.
+
+Both profiles share all specs, POSSE rules, URL conventions, security, and behavioral
+protocols. Only tooling differs.
+
+**Hostinger deployment constraint:** This project deploys as a single Next.js standalone
+app on Hostinger Node.js v20. There is one entry point (`npm start`), one process, and
+one SQLite database. Never propose a separate service, separate port, or separate
+deployment as a solution to any problem — route it as a Next.js API route instead.
+
+**Version pinning:** Always install Next.js as `next@^15.3.0`. Never run `npm install
+next` without an explicit version specifier. If a newer major version resolves during
+install, stop, flag it, and downgrade before proceeding.
+
+**Local environment:** A `.env` file must exist at the repo root before any Drizzle
+commands run, containing `DATABASE_URL=./data/creatrweb.sqlite`. The `data/` directory
+and `.env` must both be in `.gitignore`. On Hostinger, `DATABASE_URL` must be set as a
+server environment variable in hPanel — the `.env` file is local only and does not
+deploy.
+
+**Required dev dependency:** `dotenv` must be installed as a dev dependency. It is
+required by `drizzle.config.ts` to read `.env` at migration time. Document it in
+`docs/dependencies.md` as: *"Required for drizzle.config.ts — no external data
+transmission, no self-hosting alternative needed."*
 
 ---
 
 ## User Constraints — Record and Honor These
 
-Any constraint the person states — about content, dependencies, data, licensing, or ethics — is binding until explicitly lifted. Record it immediately.
+Any constraint the person states — about content, dependencies, data, licensing, or
+ethics — is binding until explicitly lifted. Record it immediately.
 
 **If this file is read-only during a session, log constraints in `CONSTRAINTS.md` instead.**
 
 CONSTRAINT: [plain-language description]
 SCOPE: [what it applies to]
 SET: [date or "this session"]
+
 
 **Examples:**
 - `Only use MIT or Apache-2.0 licensed dependencies`
@@ -92,7 +179,9 @@ SET: [date or "this session"]
 - `Do not auto-syndicate — always ask before sending to any external platform`
 
 **Rules:**
-- Permanent until explicitly removed. When a person says something that could lift a constraint, confirm before acting: *"Are you removing the [constraint] permanently, or just for this feature?"*
+- Permanent until explicitly removed. When a person says something that could lift a
+  constraint, confirm before acting: *"Are you removing the [constraint] permanently,
+  or just for this feature?"*
 - If an action would violate a constraint, stop, name the conflict, and offer alternatives.
 - If a constraint conflicts with a spec, explain it and ask how to resolve before proceeding.
 - In auto/build mode, log every constraint-blocked action in `DECISIONS.md`.
@@ -101,21 +190,34 @@ SET: [date or "this session"]
 
 ## AI Authorship and Ethics — Apply Throughout
 
-**Authorship:** The person is always the named author. AI-generated prose for publication must be marked as a draft for human review. Content is **published** when reachable at a URL on the person's domain by anyone with network access — including public staging URLs. Content in a git commit or local build is not published. Never auto-publish AI-generated content.
+**Authorship:** The person is always the named author. AI-generated prose for publication
+must be marked as a draft for human review. Content is **published** when reachable at a
+URL on the person's domain by anyone with network access — including public staging URLs.
+Content in a git commit or local build is not published. Never auto-publish AI-generated
+content.
 
-**Provenance:** Do not fabricate citations, links, or references. Invented links corrupt the cross-site citation graph the open web depends on.
+**Provenance:** Do not fabricate citations, links, or references. Invented links corrupt
+the cross-site citation graph the open web depends on.
 
-**Distinct voice:** The web is most valuable when it contains distinct personal voices. AI tools produce averaged outputs. The gallery protocol exists partly to counteract this — always include at least one unconventional option. Research on human–AI collaboration (Walton et al., 2026, doi:10.1145/377329) found human-steered sessions produce outcomes 2–4× better than passive ones. The protocols here are not friction — they are what makes the output good.
+**Distinct voice:** The web is most valuable when it contains distinct personal voices. AI
+tools produce averaged outputs. The gallery protocol exists partly to counteract this —
+always include at least one unconventional option. Research on human–AI collaboration
+(Walton et al., 2026, doi:10.1145/377329) found human-steered sessions produce outcomes
+2–4× better than passive ones. The protocols here are not friction — they are what makes
+the output good.
 
 **Privacy:** Do not transmit user content or personal data off-domain without disclosure.
 
-**Webmention integrity:** Webmention sending must be human-initiated or explicitly scheduled. Never auto-send.
+**Webmention integrity:** Webmention sending must be human-initiated or explicitly
+scheduled. Never auto-send.
 
 ---
 
 ## Starting a New Feature — Ask First
 
-The threshold is the same as Rule 1. Any significant change warrants one question before work begins. Mechanical changes do not. One question at a time; reflect the answer back before acting.
+The threshold is the same as Rule 1. Any significant change warrants one question before
+work begins. Mechanical changes do not. One question at a time; reflect the answer back
+before acting.
 
 **Vision** *(new feature or project)*
 - "What feeling do you want someone to have when they first land on this?"
@@ -129,16 +231,18 @@ The threshold is the same as Rule 1. Any significant change warrants one questio
 - "When you say 'post', do you mean article, note, reply, bookmark — or all of these?"
 - "Do you want to publish from a mobile app, desktop editor, CLI, or just this site?"
 
-In auto/build mode, log unanswered questions in `DECISIONS.md` with the conservative default taken. If the session ends, log the pending question as an unresolved checkpoint and halt.
+In auto/build mode, log unanswered questions in `DECISIONS.md` with the conservative
+default taken. If the session ends, log the pending question as an unresolved checkpoint
+and halt.
 
 ---
 
 ## Facing a Design Choice — Show Options Before Building
 
-Before committing, present 2–3 meaningfully divergent options. The goal is reflection, not approval. Viewing alternatives improves decision quality even when none are chosen.
+Before committing, present 2–3 meaningfully divergent options. The goal is reflection,
+not approval. Viewing alternatives improves decision quality even when none are chosen.
 
 **Format:**
-
 [Label — one word]
 - Two sentences: approach and its feel.
 - Trade-off: what this gives vs. what it costs.
@@ -166,9 +270,12 @@ Before committing, present 2–3 meaningfully divergent options. The goal is ref
 | **Any syndication target** | Determines where and under whose terms words are published |
 | **New vendor dependency** | Document self-hosting alternative before adding |
 
-A **new vendor dependency** requires an account, sends data off-domain, cannot be self-hosted, charges money at any tier, or was not in the lockfile and requires changes to more than one existing file.
+A **new vendor dependency** requires an account, sends data off-domain, cannot be
+self-hosted, charges money at any tier, or was not in the lockfile and requires changes
+to more than one existing file.
 
-In auto/build mode: log the checkpoint in `DECISIONS.md`, note the conservative default, and surface it at the next interaction.
+In auto/build mode: log the checkpoint in `DECISIONS.md`, note the conservative default,
+and surface it at the next interaction.
 
 ---
 
@@ -191,7 +298,10 @@ In auto/build mode: log the checkpoint in `DECISIONS.md`, note the conservative 
 
 ## Specifications — Implement in Priority Order
 
-Build in priority order. Higher specs make lower ones more useful but are not always strict dependencies. A **real UX need** exists when the person has described a workflow or outcome the spec would enable. If none is stated, ask: *"What would you want users to be able to do that this enables?"*
+Build in priority order. Higher specs make lower ones more useful but are not always
+strict dependencies. A **real UX need** exists when the person has described a workflow
+or outcome the spec would enable. If none is stated, ask: *"What would you want users
+to be able to do that this enables?"*
 
 | Priority | Spec | Advertise in `<head>` | Key notes | Acceptance criterion | Ask first |
 |----------|------|-----------------------|-----------|----------------------|-----------|
@@ -208,23 +318,27 @@ Never remove a microformats2 class without checking which spec depends on it.
 
 ## POSSE and Data Ownership
 
-**POSSE** = Publish on Own Site, Syndicate Elsewhere. Content lives here first. Canonical URLs always point here. Syndicated copies link back to the original.
+**POSSE** = Publish on Own Site, Syndicate Elsewhere. Content lives here first. Canonical
+URLs always point here. Syndicated copies link back to the original.
 
 ```html
 <a class="u-syndication" href="https://mastodon.social/@user/123">Also on Mastodon</a>
 ```
 
-Supported targets (`config/syndication.json`): Mastodon · Bluesky · Micro.blog · LinkedIn (articles only). Never configure a target the person did not name.
+Supported targets (`config/syndication.json`): Mastodon · Bluesky · Micro.blog ·
+LinkedIn (articles only). Never configure a target the person did not name.
 
 **URL conventions** (confirm with a gallery before finalizing):
 - `/YYYY/MM/DD/<slug>` — kebab-case from title, never a database ID
 - Never encode post type in the URL — types change; URLs must not
-- Notes without titles: first 5 words or a hash — `lib/slug.ts` or `app/utils/slug.py` (**create if absent**, following the active framework profile)
+- Notes without titles: first 5 words or a hash — `lib/slug.ts` or
+  `app/utils/slug.py` (**create if absent**, following the active framework profile)
 
 **Export endpoints — always keep functional:**
 `GET /export/json` → mf2-JSON · `GET /feed.xml` → Atom · `GET /feed.json` → JSON Feed 1.1
 
-Document the self-hosting path in `docs/dependencies.md` before adding any third-party service.
+Document the self-hosting path in `docs/dependencies.md` before adding any third-party
+service.
 
 ---
 
@@ -242,7 +356,8 @@ Document the self-hosting path in `docs/dependencies.md` before adding any third
 
 ## Testing and Compliance — Run Checks at the Right Scope
 
-The applicable lint and test commands are in the nearest framework `AGENTS.md` — check there before running any check.
+The applicable lint and test commands are in the nearest framework `AGENTS.md` — check
+there before running any check.
 
 | Scope | Trigger | Action |
 |-------|---------|--------|
@@ -251,7 +366,9 @@ The applicable lint and test commands are in the nearest framework `AGENTS.md` �
 | **Spec route release** | Before releasing a Webmention, Micropub, IndieAuth, or WebSub change | Run the corresponding **external integration test**. |
 | **Merge** | Before merging any branch | Complete the **pre-merge checklist**. |
 
-A **logical unit of work** is describable in a single commit message — a new route, spec endpoint, schema change, or component. A typo fix, comment, style tweak, or single-file rename does not qualify. Do not accumulate failures across units.
+A **logical unit of work** is describable in a single commit message — a new route, spec
+endpoint, schema change, or component. A typo fix, comment, style tweak, or single-file
+rename does not qualify. Do not accumulate failures across units.
 
 **External tests:** [webmention.rocks](https://webmention.rocks/) ·
 [micropub.rocks](https://micropub.rocks/) · [indieauth.rocks](https://indieauth.rocks/)
@@ -282,12 +399,17 @@ A **logical unit of work** is describable in a single commit message — a new r
 
 **Creating files:**
 - *Interactive mode:* Ask before creating either file for the first time.
-- *Auto/Build mode:* Create `DECISIONS.md` at session start without asking; note it in build output. Ask before creating `MEMORY.md` even in auto mode.
-- *`CONSTRAINTS.md` format:* One entry per constraint, recorded immediately when stated, using the same three-field format defined in User Constraints (`CONSTRAINT` /`SCOPE` / `SET`). Create at the project root the first time a constraint is logged while this file is read-only.
+- *Auto/Build mode:* Create `DECISIONS.md` at session start without asking; note it in
+  build output. Ask before creating `MEMORY.md` even in auto mode.
+- *`CONSTRAINTS.md` format:* One entry per constraint, recorded immediately when stated,
+  using the same three-field format defined in User Constraints (`CONSTRAINT` / `SCOPE`
+  / `SET`). Create at the project root the first time a constraint is logged while this
+  file is read-only.
 
 **MEMORY.md rules:**
 - Write only confirmed, repeated, or clearly stable lessons.
-- Keep under 150 lines. When near the limit, ask the person to review; move older entries to `docs/memory-archive.md`.
+- Keep under 150 lines. When near the limit, ask the person to review; move older entries
+  to `docs/memory-archive.md`.
 - No secrets, tokens, or personal data.
 - Entry format — one line per lesson, optional note on the next line:
 
@@ -301,10 +423,17 @@ A **logical unit of work** is describable in a single commit message — a new r
 
 **Safeguards for AGENTS.md / CLAUDE.md:**
 - Never edit without explicit human instruction.
-- Present changes as a clearly marked diff; wait for approval before applying.
+- **If AGENTS.md is non-empty when first read, it is the standing instruction set for
+  the entire project.** Never replace its contents. "Populate", "update", or "fill in"
+  applied to a non-empty AGENTS.md means propose an append as a clearly marked diff —
+  never a replacement. If asked to rewrite it wholesale, stop and confirm: *"AGENTS.md
+  already has content. Do you want to replace it entirely, or add to it?"*
+- Present any change as a clearly marked diff; wait for approval before applying.
 - After any approved change, log what changed in `DECISIONS.md`; summarize in `MEMORY.md`.
-- If accumulated entries suggest a rule is outdated, surface it as one specific question — do not self-amend.
-- This file is owned by the person, not the session. Only the person changes the rules the agent operates under.
+- If accumulated entries suggest a rule is outdated, surface it as one specific question —
+  do not self-amend.
+- This file is owned by the person, not the session. Only the person changes the rules
+  the agent operates under.
 
 ---
 

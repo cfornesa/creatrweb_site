@@ -1,0 +1,31 @@
+.main {
+  padding: 64px 24px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.navContainer {
+  margin-top: 48px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.navLink {
+  font-weight: 600;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.navLinkIcon {
+  font-size: 1.4rem;
+  color: var(--accent-orange);
+}

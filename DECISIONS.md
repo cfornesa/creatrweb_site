@@ -33,3 +33,12 @@
 - `next` was downgraded to an installed 15.x release and the manifest was corrected to the requested `^15.3.0` range.
 - `dotenv` was added as a dev dependency, and `drizzle.config.ts` now loads `.env` automatically with `import "dotenv/config"`.
 - `npx drizzle-kit generate` now runs successfully without manually injecting `DATABASE_URL`.
+- Implemented **Identity-First Home Page** (`/`) using `HCard.tsx` with IndieWeb microformats (`h-card`).
+- Implemented **Studio-Journal Projects Page** (`/projects`) with a mobile-first bento-box grid.
+- Integrated **Mistral AI Agent** and **Localized RAG scheme**:
+  - `npm run rag:index` embeddings documents in the `documents/` folder.
+  - `app/api/chat/route.ts` provides backend logic for the chatbot.
+  - `TerminalDialog.tsx` component provides a retro-terminal UI for chat.
+- Added `document_embeddings` table to `lib/schema.ts` to store vector data as JSON-stringified arrays.
+- Required environment variables: `MISTRAL_API_KEY` and `AGENT_ID`.
+- Confirmed that `@mistralai/mistralai` sends data off-domain. Self-hosting path for Mistral AI is documented in `docs/dependencies.md`.
