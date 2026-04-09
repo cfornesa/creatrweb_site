@@ -108,11 +108,12 @@ const TerminalDialog: React.FC<TerminalDialogProps> = ({ isOpen, onClose }) => {
           display: flex;
           flex-direction: column;
           box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+          overflow: hidden;
         }
         .terminal-header {
           background: #333;
           color: #fff;
-          padding: 5px 10px;
+          padding: 10px 15px;
           display: flex;
           justify-content: space-between;
           align-items: center;
@@ -122,25 +123,30 @@ const TerminalDialog: React.FC<TerminalDialogProps> = ({ isOpen, onClose }) => {
           color: #fff;
           border: none;
           cursor: pointer;
-          font-size: 1.2rem;
+          font-size: 1.5rem;
+          padding: 5px 10px;
+          line-height: 1;
         }
         .terminal-body {
           flex: 1;
-          padding: 10px;
+          padding: 15px;
           overflow-y: auto;
-          line-height: 1.4;
+          line-height: 1.5;
         }
         .terminal-line {
-          margin-bottom: 5px;
+          margin-bottom: 8px;
           white-space: pre-wrap;
+          word-break: break-all;
         }
         .terminal-footer {
           display: flex;
-          padding: 10px;
+          padding: 15px;
           border-top: 1px solid #333;
+          background: #000;
         }
         .terminal-prompt {
           margin-right: 10px;
+          color: #0f0;
         }
         .terminal-input {
           flex: 1;
@@ -149,6 +155,25 @@ const TerminalDialog: React.FC<TerminalDialogProps> = ({ isOpen, onClose }) => {
           color: #0f0;
           font-family: monospace;
           outline: none;
+          font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+          .terminal-overlay {
+            padding: 0;
+          }
+          .terminal-window {
+            height: 100%;
+            max-height: 100vh;
+            border: none;
+            border-radius: 0;
+          }
+          .terminal-header {
+            padding: 15px;
+          }
+          .terminal-footer {
+            padding-bottom: env(safe-area-inset-bottom, 15px);
+          }
         }
       `}</style>
     </div>

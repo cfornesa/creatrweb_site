@@ -45,6 +45,79 @@
    Present alternatives using the gallery format. Get explicit approval before modifying
    anything currently working. Never implement a silent workaround.
 
+**Before writing any file**, silently check these three things:
+- Does this file appear in the Irreversible Decisions table?
+  If yes → stop and confirm before proceeding.
+- Does this file render content that a microformats parser will read?
+  If yes → it must be a Server Component with no "use client".
+- Does this change install a package or call an external service?
+  If yes → docs/dependencies.md must be updated in the same session,
+  before the session ends.
+
+These three checks are not optional in any mode.
+
+---
+
+## Session-Scoped Instructions — How to Read the Opening Prompt
+
+**This file never changes between sessions.** Phase-specific constraints,
+active tool context, and per-session overrides are always delivered in the
+opening prompt, not here.
+
+When an opening prompt contains a block marked `SESSION CONSTRAINTS` or
+`PHASE CONSTRAINTS`, treat every item in that block as an extension of the
+Six Rules for the duration of that session. They carry the same authority
+as Rule 1 through Rule 6 and override any default behavior described in this
+file's reference sections.
+
+**Priority order for any conflict:**
+1. Explicit statement from the person during the session (highest)
+2. Items in the `SESSION CONSTRAINTS` or `PHASE CONSTRAINTS` block
+3. The Six Rules above
+4. All reference sections below (lowest)
+
+**If no `SESSION CONSTRAINTS` block is present in the opening prompt:**
+Proceed using this file's defaults. Ask one question to confirm the current
+phase and active tool before writing any code.
+
+**If a `SESSION CONSTRAINTS` item conflicts with a rule in this file:**
+Do not resolve it silently. Name the conflict in one sentence and ask which
+takes precedence before acting.
+
+---
+
+## Irreversible Decisions — Stop and Confirm
+
+| Checkpoint | Why it matters |
+|------------|----------------|
+| **URL structure** | Once published and linked, changing breaks the web |
+| **Post type schema** | Shapes every feature built on top |
+| **`rel=me` / identity links** | A public statement about who you are online |
+| **Webmention endpoint** | Once advertised, external sites will start pinging |
+| **IndieAuth activation** | Makes this domain an identity provider |
+| **Micropub activation** | Allows external clients to create, update, and delete content |
+| **Any syndication target** | Determines where and under whose terms words are published |
+| **New vendor dependency** | Document self-hosting alternative before adding |
+
+A **new vendor dependency** requires an account, sends data off-domain, cannot be
+self-hosted, charges money at any tier, or was not in the lockfile and requires changes
+to more than one existing file.
+
+In auto/build mode: log the checkpoint in `DECISIONS.md`, note the conservative default,
+and surface it at the next interaction.
+
+**Mandatory question for any new vendor dependency**, regardless of how
+technically detailed the user's prompt is:
+
+"This dependency sends data to [service name]. If [service name] changes
+its API, pricing, or shuts down, [describe what breaks]. The self-hosting
+alternative is [X]. Should I proceed and document this in
+docs/dependencies.md?"
+
+Ask this even when the person appears to have already decided. The question
+is not about whether to proceed — it is about ensuring the trade-off is
+named out loud before it becomes invisible infrastructure.
+
 ---
 
 ## Explore Before You Commit — Brainstorm Mode
@@ -89,60 +162,81 @@ it in `DECISIONS.md`.
 
 ---
 
+## Project Profile — Filled In During Phase 1
+
+<!-- PROJECT-SPECIFIC. Keep values here architecture-level only.
+     Sensitive specifics (hostnames, ports, file paths, credentials)
+     belong in .env — never in this file. -->
+
+Deployment: Node.js v20 PaaS, single standalone process, one entry point (`npm start`). Never propose a separate service, separate port, or separate deployment — route everything as a Next.js API route.
+Database: SQLite via Drizzle ORM, local file, accessed through `DATABASE_URL` environment variable.
+Version pins: Node 20, `next@^15.3.0`. If a newer major resolves during install, stop, flag it, and downgrade before proceeding.
+Stack: Next.js 15 + TypeScript
+
+---
+
 ## Detect the Framework Before Building
 
-**Default:** This project uses **Next.js + TypeScript**. See `nextjs/AGENTS.md` for
-commands, file layout, and conventions. The lint command is defined there — check it
-before running any lint step.
+<!-- TEMPLATE: This section is fully agent-driven. The person does not
+     need to fill anything in. If the stack is unknown, ask the plain-
+     language questions below and record findings in DECISIONS.md. -->
 
-**If `nextjs/AGENTS.md` does not exist:** Log its absence in `DECISIONS.md` and proceed
-with root rules only. Do not create it speculatively — it will be populated during Phase
-1 or when the first lint/test command is confirmed.
+**If the Project Profile is filled in**, read it and proceed.
 
-**Override:** If the person specifies Python, FastAPI, or Flask, see `fastapi/AGENTS.md`.
-For other stacks, derive from whichever profile is closer and record the confirmed stack
-in `DECISIONS.md`.
+**If the Project Profile is empty or unclear**, ask these questions
+before writing any code — one at a time, in plain language, stopping
+after each answer:
 
-**Mid-project switch:** Stop before touching existing files. Record the current state and
-reason in `DECISIONS.md`. Confirm the new profile explicitly. Flag every file needing
-migration before starting.
+1. "What are you trying to build — a website, an app, a blog,
+   something else?"
+2. "Do you already have any code or files for this project, or are
+   we starting from scratch?"
+3. "Is there a specific tool or service you've been told to use,
+   or should I suggest something?"
 
-Both profiles share all specs, POSSE rules, URL conventions, security, and behavioral
-protocols. Only tooling differs.
+Record every answer as a `DECISION` entry in `DECISIONS.md`. Do not
+ask about frameworks, runtimes, or languages by name — derive the
+appropriate stack from the answers and confirm it in plain language:
+*"Based on what you've described, I'd suggest building this as [plain
+description]. Does that sound right?"*
 
-**Hostinger deployment constraint:** This project deploys as a single Next.js standalone
-app on Hostinger Node.js v20. There is one entry point (`npm start`), one process, and
-one SQLite database. Never propose a separate service, separate port, or separate
-deployment as a solution to any problem — route it as a Next.js API route instead.
+Wait for confirmation before writing any code.
 
-**Version pinning:** Always install Next.js as `next@^15.3.0`. Never run `npm install
-next` without an explicit version specifier. If a newer major version resolves during
-install, stop, flag it, and downgrade before proceeding.
+**If a framework-specific AGENTS.md exists** (e.g. `nextjs/AGENTS.md`,
+`fastapi/AGENTS.md`), read it for commands and conventions. If it does
+not exist, log its absence in `DECISIONS.md` and proceed from root
+rules only. Do not create it speculatively.
 
-**Local environment:** A `.env` file must exist at the repo root before any Drizzle
-commands run, containing `DATABASE_URL=./data/creatrweb.sqlite`. The `data/` directory
-and `.env` must both be in `.gitignore`. On Hostinger, `DATABASE_URL` must be set as a
-server environment variable in hPanel — the `.env` file is local only and does not
-deploy.
-
-**Required dev dependency:** `dotenv` must be installed as a dev dependency. It is
-required by `drizzle.config.ts` to read `.env` at migration time. Document it in
-`docs/dependencies.md` as: *"Required for drizzle.config.ts — no external data
-transmission, no self-hosting alternative needed."*
+**Implementation details** (chosen framework, runtime version, file
+layout conventions, lint command) are recorded in `DECISIONS.md` by
+the agent — not in this file. This file stays framework-agnostic.
 
 ---
 
 ## User Constraints — Record and Honor These
 
-Any constraint the person states — about content, dependencies, data, licensing, or
-ethics — is binding until explicitly lifted. Record it immediately.
+Any constraint the person states — about content, dependencies, data,
+licensing, or ethics — is binding until explicitly lifted. Record it
+immediately in CONSTRAINTS.md.
 
-**If this file is read-only during a session, log constraints in `CONSTRAINTS.md` instead.**
+**CONSTRAINTS.md is a required project file.** Create it at the project
+root in the first session where any constraint is stated, regardless of
+whether this file is read-only. It is not a fallback — it is the
+authoritative constraint registry for the project lifetime.
 
-CONSTRAINT: [plain-language description]
-SCOPE: [what it applies to]
-SET: [date or "this session"]
+**If AGENTS.md is read-only:** CONSTRAINTS.md is the only available
+record. Apply the same format. The constraint is equally binding.
 
+If CONSTRAINTS.md does not exist when a constraint is stated:
+- In interactive mode: create it now, record the constraint, confirm
+  with the person before continuing.
+- In auto/build mode: create it now, record the constraint, log its
+  creation in DECISIONS.md, continue without confirmation.
+
+Format — one entry per constraint:
+  CONSTRAINT: [plain-language description]
+  SCOPE: [what it applies to]
+  SET: [date or "this session"]
 
 **Examples:**
 - `Only use MIT or Apache-2.0 licensed dependencies`
@@ -226,28 +320,6 @@ not approval. Viewing alternatives improves decision quality even when none are 
 - Do not signal a preference. Let the person's reaction drive the choice.
 - If all options feel similar, they are not divergent enough.
 - In auto/build mode, select the conservative default and log alternatives in `DECISIONS.md`.
-
----
-
-## Irreversible Decisions — Stop and Confirm
-
-| Checkpoint | Why it matters |
-|------------|----------------|
-| **URL structure** | Once published and linked, changing breaks the web |
-| **Post type schema** | Shapes every feature built on top |
-| **`rel=me` / identity links** | A public statement about who you are online |
-| **Webmention endpoint** | Once advertised, external sites will start pinging |
-| **IndieAuth activation** | Makes this domain an identity provider |
-| **Micropub activation** | Allows external clients to create, update, and delete content |
-| **Any syndication target** | Determines where and under whose terms words are published |
-| **New vendor dependency** | Document self-hosting alternative before adding |
-
-A **new vendor dependency** requires an account, sends data off-domain, cannot be
-self-hosted, charges money at any tier, or was not in the lockfile and requires changes
-to more than one existing file.
-
-In auto/build mode: log the checkpoint in `DECISIONS.md`, note the conservative default,
-and surface it at the next interaction.
 
 ---
 
@@ -375,8 +447,9 @@ rename does not qualify. Do not accumulate failures across units.
   build output. Ask before creating `MEMORY.md` even in auto mode.
 - *`CONSTRAINTS.md` format:* One entry per constraint, recorded immediately when stated,
   using the same three-field format defined in User Constraints (`CONSTRAINT` / `SCOPE`
-  / `SET`). Create at the project root the first time a constraint is logged while this
-  file is read-only.
+  / `SET`). Create at the project root the first time a constraint is stated in any
+  session. This file is always required — not conditional on whether AGENTS.md is
+  read-only.
 
 **MEMORY.md rules:**
 - Write only confirmed, repeated, or clearly stable lessons.
@@ -406,6 +479,16 @@ rename does not qualify. Do not accumulate failures across units.
   do not self-amend.
 - This file is owned by the person, not the session. Only the person changes the rules
   the agent operates under.
+
+**End-of-session requirement (Interactive mode):**
+Before the final response of any session, propose one to three MEMORY.md
+entries using this exact format:
+
+  YYYY-MM-DD · CATEGORY · Lesson in one sentence.
+
+Ask: "Should I write these to MEMORY.md?" Do not write without confirmation.
+If the session ends without this step, log "MEMORY.md update pending" as
+an unresolved checkpoint in DECISIONS.md.
 
 ---
 

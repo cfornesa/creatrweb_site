@@ -1,1 +1,0 @@
-See AGENTS.md in this directory for all project guidelines.
