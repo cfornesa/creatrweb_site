@@ -1,7 +1,3 @@
 {
-  "/page": "app/page.js",
-  "/projects/page": "app/projects/page.js",
-  "/indieweb-platform/page": "app/indieweb-platform/page.js",
-  "/creatrweb-rag/page": "app/creatrweb-rag/page.js",
-  "/terminal-ui/page": "app/terminal-ui/page.js"
+  "/page": "app/page.js"
 }

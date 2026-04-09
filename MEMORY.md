@@ -8,3 +8,5 @@
 2026-04-09 · PREFERENCE · Use full-screen overlay for terminal UI on mobile (max-width: 768px).
 2026-04-09 · PREFERENCE · Reduced vertical padding on home page (24px) for better vertical centering on desktop.
 2026-04-09 · PREFERENCE · Studio Journal headings should be scaled down on mobile (2.25rem) to prevent excessive wrapping.
+2026-04-09 · DECISION · Hostinger build failed because SQLite was opened before the git-ignored `data/` directory existed in the deploy environment.
+2026-04-09 · DECISION · The deploy blocker was the SQLite directory assumption, not the npm deprecation or audit warnings from install.

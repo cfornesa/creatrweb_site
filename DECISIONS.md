@@ -137,6 +137,18 @@
 - MISTRAL_API_KEY
 - AGENT_ID
 
+### 2026-04-09 — Hostinger Deploy Fix (Codex CLI)
+
+- Hostinger build failed while collecting `/chat` because `lib/db.ts`
+  opened SQLite at import time and the deploy environment did not have
+  the git-ignored `./data/` directory yet.
+- Least disruptive fix applied: `lib/db.ts` now creates the parent
+  directory for `DATABASE_URL` before opening the SQLite file, which
+  preserves existing route behavior while preventing this deploy-time
+  crash.
+- No dependency or design changes were made. npm deprecation warnings
+  and audit notices were not treated as the build blocker.
+
 ### Unresolved Checkpoints Entering Phase 3
 - [ ] Run `npx drizzle-kit generate && npx drizzle-kit migrate` for
       `document_embeddings` table.

@@ -1,3 +1,6 @@
+import { mkdirSync } from "node:fs";
+import { dirname } from "node:path";
+
 import Database from "better-sqlite3";
 import { drizzle } from "drizzle-orm/better-sqlite3";
 
@@ -7,6 +10,12 @@ const databaseUrl = process.env.DATABASE_URL;
 
 if (!databaseUrl) {
   throw new Error("DATABASE_URL must be set to a SQLite database file path.");
+}
+
+const databaseDir = dirname(databaseUrl);
+
+if (databaseDir !== ".") {
+  mkdirSync(databaseDir, { recursive: true });
 }
 
 const sqlite = new Database(databaseUrl);
