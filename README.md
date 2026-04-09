@@ -321,16 +321,16 @@ improves the framework over time based on real failures.
 
 ---
 
----
-
 ## Known Behavioral Limitation — High-Specificity Prompts
 
 The gallery protocol (Rule 2 — show 2–3 options before committing) is the framework's primary mechanism for preserving human creative ownership. It fires reliably when a prompt is exploratory or open-ended. It is suppressed when a prompt contains specific measurements, named files, or exact values — because the agent correctly reads those details as a directive and executes rather than offering alternatives.
 
 This is a model-level inference pattern. It cannot be resolved in AGENTS.md — adding more rules does not improve adherence when the suppression comes from the prompt signal itself.
 
-**If you already work this way** — Arriving at sessions with a direction formed, using specific prompts deliberately may trigger gallery
-suppression, which is not a failure. The evaluation prompt remains useful not to catch missed options, but to ensure DECISIONS.md and MEMORY.md are maintained, which is where the framework's value concentrates for experienced users, or at least those who are used to prompt engineering or, otherwise, asking the right questions. For many, this framework is a reminder to think more critically and thoroughly (possibly finding blind spots) while, for others, this is meant to simplify the process of creation and reduce friction, while others will fall somewhere in between. So long as you utilize AI tools to create what you would not have created otherwise, it is a justified use case for this framework.
+**If you already work this way** — arriving at sessions with a direction formed, using specific prompts deliberately may trigger gallery
+suppression, which is not a failure. The evaluation prompt remains useful not to catch missed options, but to ensure DECISIONS.md and MEMORY.md are maintained, which is where the framework's value concentrates for experienced users, which is where the framework's value concentrates for experienced users, or anyone already comfortable asking the right questions. For many, this framework is a reminder to think more critically and thoroughly (possibly finding blind spots) while, for others, this is meant to simplify the process of creation and reduce friction, while others will fall somewhere in between. So long as you utilize AI tools to create what you would not have created otherwise, it is a justified use case for this framework.
+
+---
 
 **What this means in practice:**
 
