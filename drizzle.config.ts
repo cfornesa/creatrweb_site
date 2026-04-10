@@ -1,10 +1,10 @@
 import "dotenv/config";
 import { defineConfig } from "drizzle-kit";
 
-const databaseUrl = process.env.DATABASE_URL;
+const databaseUrl = process.env.SQLITE_DATABASE_URL;
 
 if (!databaseUrl) {
-  throw new Error("DATABASE_URL must be set to a SQLite database file path.");
+  throw new Error("SQLITE_DATABASE_URL must be set to a SQLite database file path.");
 }
 
 export default defineConfig({

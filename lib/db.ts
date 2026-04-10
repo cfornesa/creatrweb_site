@@ -6,10 +6,10 @@ import { drizzle } from "drizzle-orm/better-sqlite3";
 
 import * as schema from "./schema";
 
-const databaseUrl = process.env.DATABASE_URL;
+const databaseUrl = process.env.SQLITE_DATABASE_URL;
 
 if (!databaseUrl) {
-  throw new Error("DATABASE_URL must be set to a SQLite database file path.");
+  throw new Error("SQLITE_DATABASE_URL must be set to a SQLite database file path.");
 }
 
 const databaseDir = dirname(databaseUrl);
