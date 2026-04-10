@@ -37,6 +37,5 @@ give a score of Pass / Partial / Fail and one sentence of evidence.
 - Was at least one gallery option genuinely unexpected or imperfect — not just a
   minor variation of the others? (If all options were similar, Rule 2 was not met.)
 
-**Recommended AGENTS.md or CONSTRAINTS.md changes based on this session:**
-List only changes that would have prevented an actual failure. Do not
-propose changes for rules that were already followed.
+**Recommended AGENTS.md or CONSTRAINTS.md (as well as CLAUDE.md if you are Claude Code) changes based on this session:**
+List only changes that would have prevented an actual failure. Do not propose changes for rules that were already followed.

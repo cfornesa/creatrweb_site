@@ -16,27 +16,51 @@
 
 .bentoBox {
   background-color: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 24px;
-  padding: 32px;
+  border: 2px solid var(--foreground);
+  border-radius: 12px;
+  padding: 48px 32px 32px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   position: relative;
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .bentoBox:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.1);
 }
 
 @media (prefers-color-scheme: dark) {
+  .bentoBox {
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.5);
+  }
   .bentoBox:hover {
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+    box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.5);
   }
 }
+
+.macTitleBar {
+  display: flex;
+  gap: 6px;
+  position: absolute;
+  top: 16px;
+  left: 16px;
+}
+.macDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+@media (prefers-color-scheme: dark) {
+  .macDot { border: 1px solid rgba(255,255,255,0.1); }
+}
+.macRed { background-color: #ff5f56; }
+.macYellow { background-color: #ffbd2e; }
+.macGreen { background-color: #27c93f; }
 
 .identityBox {
   align-items: center;
@@ -51,23 +75,23 @@
 }
 
 .photo {
-  width: 160px;
-  height: 160px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
   object-fit: cover;
-  margin-bottom: 24px;
-  border: 4px solid var(--accent-orange);
+  margin-bottom: 20px;
+  border: 3px solid var(--accent-orange);
 }
 
 .name {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 800;
   margin: 0;
   color: var(--foreground);
 }
 
 .org {
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: var(--accent-orange);
   font-weight: 600;
   margin-top: 8px;
@@ -86,21 +110,22 @@
 }
 
 .symbolIcon {
-  width: 64px;
-  height: 64px;
+  width: 56px;
+  height: 56px;
   background-color: var(--accent-orange);
   color: #fff;
-  border-radius: 50%;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 32px;
-  margin-bottom: 20px;
+  font-size: 28px;
+  margin-bottom: 16px;
+  border: 2px solid var(--foreground);
 }
 
 .note {
-  font-size: 1.1rem;
-  line-height: 1.7;
+  font-size: 1.05rem;
+  line-height: 1.6;
   color: var(--foreground);
   opacity: 0.9;
 }
@@ -122,22 +147,60 @@
 }
 
 .socialLink {
-  background-color: var(--background);
-  border: 1px solid var(--card-border);
-  padding: 12px 24px;
-  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: transparent;
+  border: none;
+  padding: 4px;
   font-weight: 600;
   color: var(--foreground);
   text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: all 0.2s ease;
+  width: 76px;
+  text-align: center;
+  cursor: pointer;
 }
 
-.socialLink:hover {
+.socialIconGraphic {
+  width: 48px;
+  height: 48px;
+  border: 2px solid var(--foreground);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  background-color: var(--background);
+  box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+  color: var(--accent-orange);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+@media (prefers-color-scheme: dark) {
+  .socialIconGraphic {
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.5);
+  }
+}
+
+.socialLink:hover .socialIconGraphic {
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0px transparent;
   background-color: var(--accent-orange);
   color: #fff;
-  border-color: var(--accent-orange);
-  text-decoration: none;
+}
+
+.socialLabel {
+  font-size: 0.8rem;
+  background-color: rgba(255,255,255,0.5);
+  padding: 2px 4px;
+  border-radius: 4px;
+  line-height: 1.1;
+}
+
+@media (prefers-color-scheme: dark) {
+  .socialLabel {
+    background-color: rgba(0,0,0,0.5);
+  }
 }

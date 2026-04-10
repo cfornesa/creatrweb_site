@@ -36,8 +36,7 @@ your-project/
 ├── .env.example               ← Environment variable reference
 ├── .gemini/
 │   └── settings.json          ← Gemini CLI context configuration
-└── docs/
-    └── eval-prompt.md         ← Optional: post-session compliance audit
+└── EVAL_PROMPT.md             ← Optional: post-session compliance audit
 ```
 
 Files the agent creates during sessions — do not create manually:
@@ -84,6 +83,49 @@ Open your chosen agent tool in the project directory and begin. The
 agent reads AGENTS.md automatically. No special prompt is required
 for the first session — it will ask one question to confirm the
 current phase before writing any code.
+
+### Step 5 - Directly reference AGENTS.md or CLAUDE.md
+
+While AI agents are programmed to use AGENTS.md or CLAUDE.md, it is still best to reference them directly at the start of a conversation. Note the following about this issue from a recent conversation that I had with Gemini CLI, as well as other tips for interaction:
+
+The short answer is yes, starting each session with a reference to AGENTS.md is the single most
+  effective way to ensure compliance.
+
+  While I am programmed to scan your repository, my internal "priorities" can sometimes drift toward
+  generic coding defaults unless I am explicitly anchored to your project's specific rules at the start
+  of a conversation.
+
+  Here are the best practices to ensure I (and other agents) follow your framework strictly:
+
+  1. The "Anchor" Prompt
+  You don't need a long explanation. Use a concise Session Constraints block in your very first message.
+  This promotes the "Reference" sections of AGENTS.md (which agents sometimes skim) into "Active"
+  instructions.
+
+  > User: "Starting a new session. 
+  > SESSION CONSTRAINTS: Follow all rules in AGENTS.md when processing all prompts in this conversation. Are you ready?"
+
+  2. The "Self-Correction" Trigger
+  If you notice an agent starting to write code without asking a question first (Rule 1) or providing
+  options (Rule 2), stop it immediately with a "Compliance Check" phrase:
+   * "Stop. Check AGENTS.md Rule 2 before proceeding."
+   * "Wait—did you ask the Rule 1 question for this change?"
+
+  3. Use the .gemini/settings.json (For Gemini CLI)
+  You already have this set up, which is great. It ensures that every time I "index" your files,
+  AGENTS.md, CONSTRAINTS.md, and MEMORY.md are at the top of my mind. Never remove these from the
+  settings, as they provide my "long-term memory."
+
+  4. The "Eval" Habit
+  As we just did, running the @EVAL_PROMPT.md at the end of a session is powerful. It forces the agent to "confess" where it slipped up. Because I have to provide evidence for each Pass/Fail, it trains the model's attention on those specific rules for the remainder of the session (and the MEMORY.md update captures the correction for next time).
+
+  5. Keep CONSTRAINTS.md Sharp
+  If you find yourself repeating the same correction (e.g., "Don't use style-jsx"), put it in
+  CONSTRAINTS.md. Agents treat that file as a "No-Fly Zone" and are much more likely to respect it than a general suggestion made in chat.
+
+  Summary: The most successful users of this framework treat AGENTS.md like a Contract. By mentioning it in your first prompt, you are "signing" the contract for that session, which significantly reduces the chance of the agent taking "creative liberties" that break your workflow.
+
+It is evident that human feedback and judgment is the single most important component in this process, especially since you're trying to make applications that are authentic to you and who you are.
 
 ---
 
@@ -164,7 +206,7 @@ from prior sessions even before the file is explicitly referenced
 in a prompt. If `MEMORY.md` does not yet exist, Gemini skips it
 silently.
 
-### `docs/eval-prompt.md`
+### `EVAL_PROMPT.md`
 Not read automatically. Use it at the end of any session to run a
 structured compliance audit. Paste the file's contents into the
 same tool that just completed the session, or into a separate
@@ -308,7 +350,7 @@ the memory files carry that context automatically.
 At the end of any session, run the eval prompt to check how well the
 agent followed AGENTS.md:
 
-1. Open `docs/eval-prompt.md`
+1. Open `EVAL_PROMPT.md`
 2. Paste its contents into the tool that just completed the session,
    or into a separate analysis session with the chat log attached
 3. Review the Pass / Partial / Fail scores
@@ -354,6 +396,8 @@ Both are valid. The difference is intentional — the framework respects your si
 - Feedback phrased as a correction rather than a question
 
 **The eval prompt is the recovery mechanism.** If a session produced changes you accepted but never saw alternatives for, run the eval prompt. It will surface missed gallery opportunities, log them in DECISIONS.md, and — over time — MEMORY.md will accumulate your aesthetic preferences so future sessions need fewer explicit options to reflect your direction accurately.
+
+**For Claude Code users:** This behavior is addressed proactively in `CLAUDE.md`. When Claude Code is in Plan Mode and detects a high-specificity prompt, it is instructed to name the suppression at the top of the plan and offer one alternative framing before building. The eval prompt remains the recovery mechanism for sessions where suppression was not caught in time.
 
 ---
 

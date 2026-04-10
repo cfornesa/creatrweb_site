@@ -2,14 +2,21 @@
 import { useState } from "react";
 import TerminalDialog from "./TerminalDialog";
 
-export default function TerminalTrigger() {
+interface TerminalTriggerProps {
+  className?: string;
+  iconClassName?: string;
+  labelClassName?: string;
+}
+
+export default function TerminalTrigger({ className, iconClassName, labelClassName }: TerminalTriggerProps) {
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
 
   return (
     <>
       <button 
         onClick={() => setIsTerminalOpen(true)}
-        style={{ 
+        className={className}
+        style={!className ? { 
           backgroundColor: "var(--foreground)", 
           color: "var(--background)", 
           border: "none", 
@@ -21,10 +28,17 @@ export default function TerminalTrigger() {
           fontSize: "1.1rem",
           display: "flex",
           alignItems: "center",
-          gap: "8px",
-          transition: "background-color 0.2s ease, transform 0.2s ease"
-        }}>
-        <span style={{ fontSize: "1.4rem" }}>▶_</span> Launch Terminal
+          gap: "8px"
+        } : undefined}
+      >
+        {className ? (
+          <>
+            <div className={iconClassName}>💻</div>
+            <span className={labelClassName}>Terminal</span>
+          </>
+        ) : (
+          <><span style={{ fontSize: "1.4rem" }}>▶_</span> Launch Terminal</>
+        )}
       </button>
       <TerminalDialog 
         isOpen={isTerminalOpen} 
