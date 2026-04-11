@@ -1,0 +1,10 @@
+{
+  "/_not-found/page": "/_not-found",
+  "/chat/route": "/chat",
+  "/(system)/creatrweb-rag/page": "/creatrweb-rag",
+  "/(system)/projects/page": "/projects",
+  "/(system)/readme/page": "/readme",
+  "/(system)/indieweb-platform/page": "/indieweb-platform",
+  "/(system)/page": "/",
+  "/(system)/terminal-ui/page": "/terminal-ui"
+}

@@ -100,15 +100,29 @@ current phase before writing any code.
 This repo is configured to deploy as a standalone Next.js app.
 
 - `npm run build` builds the app and copies `public/` plus
-  `.next/static/` into `.next/standalone/`.
+  `.next/static/` into `.next/standalone/`, then verifies that every
+  manifest-referenced static asset exists in the standalone bundle.
 - `npm start` runs `node .next/standalone/server.js`.
-- On Hostinger, the application root directory should stay at the repo
-  root, and runtime environment should include `NODE_ENV=production`
-  and `PORT=5000`.
+- On Hostinger, use the `Other` framework preset, keep the root
+  directory at `./`, use Node.js `20.x`, keep the output directory
+  empty, and set the entry file to `.next/standalone/server.js`.
+- Hostinger build settings should stay on `npm` with `npm run build`.
+- Runtime environment should include `NODE_ENV=production` and
+  `PORT=5000`.
+- Do not use `server.bundle.js` and do not switch this app to the
+  managed `Next.js` preset.
 
 If Hostinger is left on a generic Next.js preset that assumes
 `next start`, the app can render HTML while failing to serve the CSS
 and JS bundles that live under `/_next/static/`.
+
+For the first redeploy after changing Hostinger settings, treat it as a
+clean cutover:
+
+- purge any Hostinger build cache if the panel exposes that control
+- trigger a fresh deploy from the normalized settings above
+- open page source for `/` and confirm the emitted `/_next/static/...`
+  hashes match the assets actually served after a hard refresh
 
 ### Step 5 — Reference AGENTS.md directly at session start
 

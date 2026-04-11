@@ -315,3 +315,19 @@
 - This removes the mismatch where project docs suggested a generic
   Next.js start flow while the deployed build artifacts were prepared
   for standalone execution.
+
+---
+
+## 2026-04-11 — Standalone Asset Verification (Codex CLI)
+
+- Added `scripts/verify-standalone-assets.mjs` to read
+  `.next/app-build-manifest.json` and `.next/build-manifest.json`,
+  collect all referenced `static/` assets, and fail if either the
+  build output or `.next/standalone/.next/` is missing any of them.
+- Updated `package.json` so `npm run build` now runs the standalone
+  asset verifier after copying `public/` and `.next/static/`.
+- Added `npm run verify:standalone` for manual post-build checks.
+- Updated `README.md` so Hostinger deployment instructions now name
+  the required `Other` preset, `./` root directory, empty output
+  directory, `.next/standalone/server.js` entrypoint, and clean-
+  cutover validation steps.
