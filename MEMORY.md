@@ -36,3 +36,5 @@
 2026-04-11 · DECISION · Local development now uses port 3000 while production remains on port 5000.
 2026-04-11 · DECISION · A persistent macOS process was occupying port 5000, so the local Next.js dev script was moved off that port.
 2026-04-11 · DECISION · Hostinger PM2 deployments are most reliable in `standalone` mode, provided that `public` and `.next/static` are manually copied into the standalone folder during the build script.
+2026-04-11 · DECISION · Production `npm start` must run `node .next/standalone/server.js` so the Hostinger runtime matches the standalone build contract.
+2026-04-11 · DECISION · Hostinger deployment guidance in `README.md` must stay aligned with the standalone runtime contract to avoid CSS and JS asset mismatches.

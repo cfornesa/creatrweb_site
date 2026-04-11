@@ -73,7 +73,7 @@ Open `AGENTS.md` and find the **Project Profile** section near the top.
 If you know what you are building, fill in the four fields at an
 architecture level — no technical details required:
 <!-- Replace any of the following existing details if you know what you want -->
-Deployment: Node.js PaaS, single process, npm start
+Deployment: Node.js PaaS, single process, standalone Next.js via npm start
 Database: SQLite via Drizzle ORM
 Version pins: Node 20, Next.js 15.x
 Stack: Next.js + TypeScript
@@ -94,6 +94,21 @@ Open your chosen agent tool in the project directory and begin. The
 agent reads `AGENTS.md` automatically. No special prompt is required
 for the first session — it will ask one question to confirm the
 current phase before writing any code.
+
+### Hostinger deployment note
+
+This repo is configured to deploy as a standalone Next.js app.
+
+- `npm run build` builds the app and copies `public/` plus
+  `.next/static/` into `.next/standalone/`.
+- `npm start` runs `node .next/standalone/server.js`.
+- On Hostinger, the application root directory should stay at the repo
+  root, and runtime environment should include `NODE_ENV=production`
+  and `PORT=5000`.
+
+If Hostinger is left on a generic Next.js preset that assumes
+`next start`, the app can render HTML while failing to serve the CSS
+and JS bundles that live under `/_next/static/`.
 
 ### Step 5 — Reference AGENTS.md directly at session start
 

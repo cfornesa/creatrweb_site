@@ -17,6 +17,18 @@
       "static/chunks/main-app.js",
       "static/css/app/(system)/page.css",
       "static/chunks/app/(system)/page.js"
+    ],
+    "/(system)/projects/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/(system)/projects/page.css",
+      "static/chunks/app/(system)/projects/page.js"
+    ],
+    "/(system)/creatrweb-rag/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/(system)/creatrweb-rag/page.css",
+      "static/chunks/app/(system)/creatrweb-rag/page.js"
     ]
   }
 }

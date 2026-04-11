@@ -300,3 +300,18 @@
     - Updated `package.json` to manually copy `public/` and `.next/static/` into the standalone directory as part of the `build` script.
     - Updated `pm2.config.js` to run the standalone `.next/standalone/server.js` directly with `NODE_ENV=production` and `PORT: 5000`.
 - **Outcome:** This ensures all assets are bundled alongside the server entry point, making the deployment independent of parent directory structure.
+
+---
+
+## 2026-04-11 — Hostinger Runtime Alignment (Codex CLI)
+
+- Updated `package.json` so production `npm start` now runs
+  `node .next/standalone/server.js` directly instead of `next start`.
+- Kept `npm run build` on the standalone contract that copies
+  `public/` and `.next/static/` into `.next/standalone/`.
+- Updated `README.md` so Hostinger deployment guidance now matches the
+  actual runtime contract: repo root working directory, standalone
+  server entrypoint, `NODE_ENV=production`, and `PORT=5000`.
+- This removes the mismatch where project docs suggested a generic
+  Next.js start flow while the deployed build artifacts were prepared
+  for standalone execution.
