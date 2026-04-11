@@ -6,17 +6,18 @@
     "node": "20.x"
   },
   "scripts": {
-    "dev": "next dev -p 3000 -H 0.0.0.0",
-    "build": "next build && mkdir -p .next/standalone/public && cp -r public/* .next/standalone/public/ && mkdir -p .next/standalone/.next/static && cp -r .next/static/* .next/standalone/.next/static/ && node scripts/verify-standalone-assets.mjs",
-    "start": "node .next/standalone/server.js",
-    "verify:standalone": "node scripts/verify-standalone-assets.mjs",
+    "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev --host 0.0.0.0 --port 3000",
+    "build": "ASTRO_TELEMETRY_DISABLED=1 astro build",
+    "start": "ASTRO_TELEMETRY_DISABLED=1 HOST=0.0.0.0 node ./dist/server/entry.mjs",
     "rag:index": "tsx scripts/rag-index.ts"
   },
   "dependencies": {
+    "@astrojs/node": "^9.5.0",
+    "@astrojs/react": "^4.4.0",
     "@mistralai/mistralai": "^2.2.0",
+    "astro": "^5.13.2",
     "better-sqlite3": "^12.8.0",
     "drizzle-orm": "^0.45.2",
-    "next": "^15.3.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5"
   },
@@ -27,6 +28,7 @@
     "@types/react-dom": "^19.2.3",
     "dotenv": "^17.4.1",
     "drizzle-kit": "^0.31.10",
+    "tsx": "^4.20.6",
     "typescript": "^6.0.2"
   }
 }

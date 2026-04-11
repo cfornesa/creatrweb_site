@@ -1,0 +1,11 @@
+---
+import BaseLayout from "@/src/layouts/BaseLayout.astro";
+import SystemLayout from "@/src/layouts/SystemLayout.astro";
+import ReadmePage from "@/app/(system)/readme/page";
+---
+
+<BaseLayout title="Readme" description="Creatrweb methodology and operating guide.">
+  <SystemLayout pathname="/readme">
+    <ReadmePage />
+  </SystemLayout>
+</BaseLayout>

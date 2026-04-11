@@ -7,6 +7,28 @@ interface TerminalDialogProps {
   onClose: () => void;
 }
 
+const terminalInputId = "terminal-command-input";
+
+function formatChatResponse(res: Response, data: unknown): string {
+  if (data && typeof data === "object") {
+    const payload = data as { reply?: unknown; error?: unknown };
+
+    if (res.ok && typeof payload.reply === "string" && payload.reply.trim()) {
+      return payload.reply;
+    }
+
+    if (typeof payload.error === "string" && payload.error.trim()) {
+      return `Error: ${payload.error}`;
+    }
+
+    if (typeof payload.reply === "string" && payload.reply.trim()) {
+      return payload.reply;
+    }
+  }
+
+  return res.ok ? "Error: No response." : `Error: ${res.status} ${res.statusText}`;
+}
+
 const TerminalDialog: React.FC<TerminalDialogProps> = ({ isOpen, onClose }) => {
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<string[]>(["Welcome to Creatrweb Terminal OS v1.0", "Type 'help' for commands."]);
@@ -60,8 +82,15 @@ const TerminalDialog: React.FC<TerminalDialogProps> = ({ isOpen, onClose }) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userMessage }),
       });
-      const data = await res.json();
-      setHistory((prev) => [...prev, data.reply || "Error: No response."]);
+
+      let data: unknown = null;
+      try {
+        data = await res.json();
+      } catch {
+        data = null;
+      }
+
+      setHistory((prev) => [...prev, formatChatResponse(res, data)]);
     } catch (err) {
       setHistory((prev) => [...prev, "Error: Failed to connect to backend."]);
     } finally {
@@ -88,10 +117,16 @@ const TerminalDialog: React.FC<TerminalDialogProps> = ({ isOpen, onClose }) => {
           {isTyping && <div className={styles.terminalLine}>_ AI is thinking...</div>}
         </div>
         <form onSubmit={handleSubmit} className={styles.terminalFooter}>
+          <label htmlFor={terminalInputId} className={styles.visuallyHidden}>
+            Terminal command input
+          </label>
           <span className={styles.terminalPrompt}>{">"}</span>
           <input
             autoFocus
             type="text"
+            id={terminalInputId}
+            name="terminal-command"
+            autoComplete="off"
             className={styles.terminalInput}
             value={input}
             onChange={(e) => setInput(e.target.value)}

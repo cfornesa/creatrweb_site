@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
 import styles from "@/app/(system)/page.module.css";
 
 const getTitleFromPath = (pathname: string) => {
@@ -13,8 +12,11 @@ const getTitleFromPath = (pathname: string) => {
   return "Creatrweb";
 };
 
-export default function DesktopToolbar() {
-  const pathname = usePathname();
+interface DesktopToolbarProps {
+  pathname: string;
+}
+
+export default function DesktopToolbar({ pathname }: DesktopToolbarProps) {
   const [time, setTime] = useState("");
   const title = getTitleFromPath(pathname);
 

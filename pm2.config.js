@@ -3,7 +3,7 @@ module.exports = {
     {
       name: "creatrweb",
       script: "node",
-      args: ".next/standalone/server.js",
+      args: "dist/server/entry.mjs",
       cwd: __dirname,
       instances: 1,
       exec_mode: "fork",
@@ -11,6 +11,7 @@ module.exports = {
       watch: false,
       env: {
         NODE_ENV: "production",
+        HOST: "0.0.0.0",
         PORT: 5000,
       },
     },

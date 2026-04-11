@@ -73,10 +73,10 @@ Open `AGENTS.md` and find the **Project Profile** section near the top.
 If you know what you are building, fill in the four fields at an
 architecture level — no technical details required:
 <!-- Replace any of the following existing details if you know what you want -->
-Deployment: Node.js PaaS, single process, standalone Next.js via npm start
+Deployment: Node.js PaaS, single process, standalone Astro via npm start
 Database: SQLite via Drizzle ORM
-Version pins: Node 20, Next.js 15.x
-Stack: Next.js + TypeScript
+Version pins: Node 20, Astro 5.x, React 19
+Stack: Astro + React + TypeScript
 
 
 If you leave this blank, the agent will ask three plain-language
@@ -97,32 +97,31 @@ current phase before writing any code.
 
 ### Hostinger deployment note
 
-This repo is configured to deploy as a standalone Next.js app.
+This repo is configured to deploy as a standalone Astro app.
 
-- `npm run build` builds the app and copies `public/` plus
-  `.next/static/` into `.next/standalone/`, then verifies that every
-  manifest-referenced static asset exists in the standalone bundle.
-- `npm start` runs `node .next/standalone/server.js`.
+- `npm run build` runs `astro build` with the Node adapter in
+  `standalone` mode.
+- `npm start` runs `HOST=0.0.0.0 node ./dist/server/entry.mjs`.
 - On Hostinger, use the `Other` framework preset, keep the root
   directory at `./`, use Node.js `20.x`, keep the output directory
-  empty, and set the entry file to `.next/standalone/server.js`.
+  empty, and set the entry file to `dist/server/entry.mjs`.
 - Hostinger build settings should stay on `npm` with `npm run build`.
 - Runtime environment should include `NODE_ENV=production` and
   `PORT=5000`.
 - Do not use `server.bundle.js` and do not switch this app to the
-  managed `Next.js` preset.
+  managed `Astro` or `Next.js` presets.
 
-If Hostinger is left on a generic Next.js preset that assumes
-`next start`, the app can render HTML while failing to serve the CSS
-and JS bundles that live under `/_next/static/`.
+If Hostinger is left on a preset that assumes framework-managed startup
+instead of the Astro Node adapter entrypoint, the app can deploy with
+the wrong runtime contract even if the build itself succeeds.
 
 For the first redeploy after changing Hostinger settings, treat it as a
 clean cutover:
 
 - purge any Hostinger build cache if the panel exposes that control
 - trigger a fresh deploy from the normalized settings above
-- open page source for `/` and confirm the emitted `/_next/static/...`
-  hashes match the assets actually served after a hard refresh
+- open page source for `/` and confirm Astro-served CSS and JS assets
+  load from `/_astro/` after a hard refresh
 
 ### Step 5 — Reference AGENTS.md directly at session start
 

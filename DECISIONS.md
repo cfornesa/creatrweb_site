@@ -6,25 +6,29 @@
      to keep the root instruction file framework-agnostic and safe to
      publish. -->
 
-- **Stack:** Next.js 15 + TypeScript
-- **Deployment:** Hostinger Node.js v20 — single standalone app, one
-  entry point (`npm start`), one process. Never propose a separate
+- **Stack:** Astro 5 + React + TypeScript
+- **Deployment:** Hostinger Node.js v20 — single standalone Astro app,
+  one entry point (`npm start`), one process. Never propose a separate
   service, separate port, or separate deployment — route everything as
-  a Next.js API route.
+  an Astro page or API endpoint within the same app.
 - **Database:** SQLite at `./data/creatrweb.sqlite` via Drizzle ORM.
-  `DATABASE_URL` is set in `.env` locally and in hPanel on Hostinger.
-  `.env` and `data/` are in `.gitignore` and do not deploy.
-- **Version pin:** `next@^15.3.0`. Never run `npm install next` without
-  an explicit version specifier. If a newer major resolves during
-  install, stop, flag it, and downgrade before proceeding.
+  `SQLITE_DATABASE_URL` is set in `.env` locally and in hPanel on
+  Hostinger. `.env` and `data/` are in `.gitignore` and do not deploy.
+- **Version pin:** `astro@^5`, `@astrojs/node@^9`, `@astrojs/react@^4`,
+  `react@^19`, `react-dom@^19`, Node `20.x`
 - **Required dev dependency:** `dotenv` — required by `drizzle.config.ts`
   to read `.env` at migration time. No external data transmission.
   Documented in `docs/dependencies.md`.
-- **Framework AGENTS.md:** `nextjs/AGENTS.md` does not exist. Sessions
+- **Framework AGENTS.md:** `astro/AGENTS.md` does not exist. Sessions
   follow root `AGENTS.md` only.
 - **Profile switch rule:** Stop before touching existing files. Record
   current state and reason here. Confirm new profile explicitly. Flag
-  every file needing migration before starting.
+  every file needing migration before starting. Visual parity with the
+  current site is mandatory during framework migration. Preserve the
+  iMac monitor frame, two-mode palette, system-font stack, hard-offset
+  shadows, Unicode-only symbol language, mobile pill navigation, and
+  current motion limits unless a specific incompatibility is documented
+  first.
 
 ---
 
@@ -331,3 +335,19 @@
   the required `Other` preset, `./` root directory, empty output
   directory, `.next/standalone/server.js` entrypoint, and clean-
   cutover validation steps.
+
+---
+
+## 2026-04-11 — Astro Migration (Codex CLI)
+
+- Replaced the Next.js 15 runtime with Astro 5 SSR using
+  `@astrojs/node` in standalone mode and `@astrojs/react` for the
+  existing interactive components.
+- Preserved the existing visual system by keeping the iMac-frame
+  layout, current CSS Modules, Unicode iconography, system font stack,
+  and motion patterns while moving page routing into `src/pages/`.
+- Converted the `/chat` endpoint to an Astro API route and kept the
+  SQLite + Drizzle layer unchanged apart from framework integration.
+- Updated production startup to `HOST=0.0.0.0 node ./dist/server/entry.mjs`
+  and aligned `pm2.config.js`, `README.md`, `.gitignore`, and
+  `docs/dependencies.md` with the Astro deployment contract.

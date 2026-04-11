@@ -1,7 +1,5 @@
 "use client";
 import { useState } from "react";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
 import TerminalDialog from "./TerminalDialog";
 import styles from "@/app/(system)/page.module.css";
 
@@ -21,8 +19,11 @@ const getBackUrlFromPath = (pathname: string) => {
   return "https://augmenthumankind.com";
 };
 
-export default function MobileNavPill() {
-  const pathname = usePathname();
+interface MobileNavPillProps {
+  pathname: string;
+}
+
+export default function MobileNavPill({ pathname }: MobileNavPillProps) {
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const title = getTitleFromPath(pathname);
   const backUrl = getBackUrlFromPath(pathname);
@@ -42,9 +43,9 @@ export default function MobileNavPill() {
             ←
           </a>
         ) : (
-          <Link href={backUrl} className={styles.pillLink} title="Back">
+          <a href={backUrl} className={styles.pillLink} title="Back">
             ←
-          </Link>
+          </a>
         )}
         <div className={styles.pillTitle}>{title}</div>
         <button 

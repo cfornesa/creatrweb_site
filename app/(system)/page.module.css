@@ -154,6 +154,7 @@
 .desktopToolbarTime {
   font-size: 0.9rem;
   opacity: 0.8;
+  padding-right: 3em;
 }
 
 @media (max-width: 1024px) {

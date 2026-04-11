@@ -30,7 +30,15 @@ const HCard: React.FC<HCardProps> = ({ name, url, photo, note, org, profiles = [
       <div className={`${styles.bentoBox} ${styles.identityBox}`}>
         <MacTitleBar />
         {photo && (
-          <img src={photo} alt={name} className={`u-photo ${styles.photo}`} />
+          <img
+            src={photo}
+            alt={name}
+            width={140}
+            height={140}
+            loading="eager"
+            decoding="async"
+            className={`u-photo ${styles.photo}`}
+          />
         )}
         <a href={url} className={`u-url p-name ${styles.name}`} rel="me">
           {name}

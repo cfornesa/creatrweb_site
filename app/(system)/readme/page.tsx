@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 import baseStyles from "../project-detail.module.css";
 import styles from "./readme.module.css";
 
@@ -7,9 +6,9 @@ export default function ReadmePage() {
   return (
     <div className={baseStyles.container}>
       <header className={baseStyles.header}>
-        <Link href="/" className={baseStyles.backLink}>
+        <a href="/" className={baseStyles.backLink}>
           <span>←</span> Home
-        </Link>
+        </a>
         <div className={baseStyles.symbolHero}>◈</div>
         <h1 className={baseStyles.title}>Creatrweb</h1>
         <div className={baseStyles.tags}>
@@ -85,8 +84,8 @@ docs/dependencies.md           ← Vendor dependency registry (agent maintains)`
           </p>
           <pre className={styles.codeBlock}>{`Deployment: Node.js PaaS, single process, npm start
 Database:   SQLite via Drizzle ORM
-Version pins: Node 20, Next.js 15.x
-Stack:      Next.js + TypeScript`}</pre>
+Version pins: Node 20, Astro 5.x
+Stack:      Astro + React + TypeScript`}</pre>
           <p style={{ marginTop: "12px" }}>
             If you leave this blank, the agent will ask you three plain-language questions at the
             start of the first session and fill it in for you.

@@ -40,3 +40,11 @@
 2026-04-11 · DECISION · Hostinger deployment guidance in `README.md` must stay aligned with the standalone runtime contract to avoid CSS and JS asset mismatches.
 2026-04-11 · DECISION · Production builds now verify that every manifest-referenced static asset exists inside `.next/standalone` before deployment succeeds.
 2026-04-11 · DECISION · Hostinger deployments for this repo must use the `Other` preset with entry file `.next/standalone/server.js`, not a managed `Next.js` preset.
+2026-04-11 · DECISION · Next.js 15 was replaced with Astro 5 SSR using `@astrojs/node` and `@astrojs/react` while preserving the existing iMac-frame visual system.
+2026-04-11 · DECISION · Hostinger production startup now uses `HOST=0.0.0.0 node ./dist/server/entry.mjs` for the standalone Astro runtime.
+2026-04-11 · CORRECTION · Astro 5 is not compatible with `@astrojs/node@10` or `@astrojs/react@5`; the latest working adapter majors are 9 and 4.
+2026-04-11 · PREFERENCE · For warning cleanup, prefer minimum-risk patches over component-boundary rewrites when visual parity should remain unchanged.
+2026-04-11 · CORRECTION · Console errors mentioning "Receiving end does not exist" and "message channel closed" did not map to repo code and should be treated as likely extension noise unless reproduced in a clean browser profile.
+2026-04-11 · CORRECTION · The terminal was hiding backend chat errors by falling back to "Error: No response." whenever `/chat` returned JSON without a `reply` field.
+2026-04-11 · DECISION · Astro server runtime code now loads local env vars via `dotenv` so `/chat` and SQLite access work in local dev and standalone runs.
+2026-04-11 · CORRECTION · Interactive React controls on Astro pages must be mounted as explicit islands; rendering them inside a non-hydrated page tree leaves them visibly present but non-clickable.

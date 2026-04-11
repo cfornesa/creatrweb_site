@@ -1,5 +1,4 @@
 import HCard from "@/components/HCard";
-import Link from "next/link";
 import TerminalTrigger from "@/components/TerminalTrigger";
 import styles from "./page.module.css";
 
@@ -16,7 +15,7 @@ export default function Home() {
           { label: "X", href: "https://x.com/creatrweb" },
           { label: "TikTok", href: "https://www.tiktok.com/@creatrweb" }
         ]}
-        note="Identity-First IndieWeb-inspired Creative Platform focusing on decentralization and personal ownership of content. Built with Next.js, TypeScript, and SQLite. Emphasizes user control, privacy, and a seamless creative experience."
+        note="Identity-First IndieWeb-inspired Creative Platform focusing on decentralization and personal ownership of content. Built with Astro, React, TypeScript, and SQLite. Emphasizes user control, privacy, and a seamless creative experience."
       />
 
       <div className={styles.drawerContainer}>
@@ -36,15 +35,15 @@ export default function Home() {
       </div>
 
       <div className={styles.desktopArea}>
-        <Link href="/readme" className={styles.desktopIcon}>
+        <a href="/readme" className={styles.desktopIcon}>
           <div className={styles.iconGraphic}>📄</div>
           <span className={styles.iconLabel}>Readme</span>
-        </Link>
+        </a>
         
-        <Link href="/projects" className={styles.desktopIcon}>
+        <a href="/projects" className={styles.desktopIcon}>
           <div className={styles.iconGraphic}>📁</div>
           <span className={styles.iconLabel}>Studio Journal</span>
-        </Link>
+        </a>
 
         <a href="https://augmenthumankind.com" target="_blank" rel="noopener noreferrer" className={styles.desktopIcon}>
           <div className={styles.iconGraphic}>🌐</div>

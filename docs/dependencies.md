@@ -1,3 +1,21 @@
+## astro
+- Purpose: Astro SSR/static framework for the public site routes and layouts
+- Sends data off-domain: NO
+- Self-hosting alternative: Not applicable; Astro is the self-hosted framework runtime
+- License: MIT
+
+## @astrojs/node
+- Purpose: Node adapter that builds the Astro app into a single standalone server entrypoint for Hostinger
+- Sends data off-domain: NO
+- Self-hosting alternative: Not applicable; this is the self-hosted deployment adapter
+- License: MIT
+
+## @astrojs/react
+- Purpose: React integration used to preserve the existing interactive widgets as Astro islands
+- Sends data off-domain: NO
+- Self-hosting alternative: Not applicable; this is a local framework integration
+- License: MIT
+
 ## @mistralai/mistralai
 - Purpose: Mistral AI SDK for embeddings (RAG indexing) and agent completions (chat)
 - Sends data off-domain: YES — messages and document chunks are sent to Mistral AI API servers

@@ -38,7 +38,5 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Microformats base classes to ensure they don't interfere with custom styles if used globally */
 .h-card {
-  /* Let modules handle the layout */
 }

@@ -1,14 +1,13 @@
 import React from "react";
-import Link from "next/link";
 import styles from "../project-detail.module.css";
 
 export default function CreatrwebRAG() {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <Link href="/projects" className={styles.backLink}>
+        <a href="/projects" className={styles.backLink}>
           <span>←</span> Back to Projects
-        </Link>
+        </a>
         <div className={styles.symbolHero}>⊛</div>
         <h1 className={styles.title}>Creatrweb RAG</h1>
         <div className={styles.tags}>

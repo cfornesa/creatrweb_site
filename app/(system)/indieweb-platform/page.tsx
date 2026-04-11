@@ -1,18 +1,17 @@
 import React from "react";
-import Link from "next/link";
 import styles from "../project-detail.module.css";
 
 export default function IndieWebPlatform() {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <Link href="/projects" className={styles.backLink}>
+        <a href="/projects" className={styles.backLink}>
           <span>←</span> Back to Projects
-        </Link>
+        </a>
         <div className={styles.symbolHero}>♡</div>
         <h1 className={styles.title}>IndieWeb Platform</h1>
         <div className={styles.tags}>
-          <span className={styles.tag}>Next.js</span>
+          <span className={styles.tag}>Astro</span>
           <span className={styles.tag}>IndieWeb</span>
           <span className={styles.tag}>Webmentions</span>
         </div>
@@ -22,7 +21,7 @@ export default function IndieWebPlatform() {
         <section className={styles.section}>
           <h2 className={styles.sectionTitle}>Overview</h2>
           <p>
-            The IndieWeb Platform is a decentralized social networking initiative that empowers individuals to own their identity and content. Built on the principles of the independent web, it leverages modern technologies like Next.js and Microformats to create a seamless, interoperable experience.
+            The IndieWeb Platform is a decentralized social networking initiative that empowers individuals to own their identity and content. Built on the principles of the independent web, it leverages modern technologies like Astro and Microformats to create a seamless, interoperable experience.
           </p>
         </section>
 
