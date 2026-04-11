@@ -1,5 +1,3 @@
 {
-  "/(system)/page": "app/(system)/page.js",
-  "/(system)/projects/page": "app/(system)/projects/page.js",
-  "/(system)/creatrweb-rag/page": "app/(system)/creatrweb-rag/page.js"
+  "/(system)/page": "app/(system)/page.js"
 }
