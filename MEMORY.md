@@ -50,3 +50,5 @@
 2026-04-11 · CORRECTION · Interactive React controls on Astro pages must be mounted as explicit islands; rendering them inside a non-hydrated page tree leaves them visibly present but non-clickable.
 2026-04-11 · CORRECTION · Astro runtime files should not import `dotenv/config`; server secrets must come from Astro server env access instead.
 2026-04-11 · DECISION · SQLite connection creation is now explicit per runtime context so Astro SSR and Node-only scripts can share the same DB code without import-time env coupling.
+2026-04-11 · DECISION · On Hostinger, this Astro app's live runtime belongs in `nodejs/`, while `public_html/` acts as routing glue via `.htaccess` rather than as the app root.
+2026-04-11 · CORRECTION · Hostinger deployment failures should be treated as stale-state issues first when `nodejs/` still contains old framework artifacts and `public_html/.builds` has preserved prior deploy state.

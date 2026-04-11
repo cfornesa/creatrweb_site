@@ -351,3 +351,27 @@
 - Updated production startup to `HOST=0.0.0.0 node ./dist/server/entry.mjs`
   and aligned `pm2.config.js`, `README.md`, `.gitignore`, and
   `docs/dependencies.md` with the Astro deployment contract.
+
+---
+
+## 2026-04-11 — Hostinger Cutover Guidance (Codex CLI)
+
+- Confirmed the presence of both `nodejs/` and `public_html/` on
+  Hostinger is normal for this app and does not, by itself, indicate a
+  bad deployment.
+- Confirmed `public_html/.htaccess` is the routing layer and should
+  point Passenger at `nodejs/dist/server/entry.mjs`, while `nodejs/`
+  remains the live application workspace.
+- Confirmed `public_html/.builds/` is Hostinger-managed deployment
+  state rather than published site content.
+- Identified stale deployment state as the main operational risk:
+  `nodejs/` may retain old framework artifacts such as `.next/`, and
+  `.builds/` may preserve install/build cache across redeploys.
+- Adopted a clean-cutover recovery path for the next redeploy:
+  purge Hostinger build cache, stop the app if possible, clear stale
+  app artifacts from `nodejs/`, keep only routing glue in
+  `public_html/`, and redeploy the Astro SSR app from the normalized
+  `dist/server/entry.mjs` contract.
+- Deferred any `tsx` version pin until after a clean redeploy; the
+  `tsx` / `esbuild` mismatch is treated as a secondary install/cache
+  issue unless it reproduces again from the cleaned state.

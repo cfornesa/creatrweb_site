@@ -107,7 +107,7 @@ This repo is configured to deploy as a standalone Astro app.
   empty, and set the entry file to `dist/server/entry.mjs`.
 - Hostinger build settings should stay on `npm` with `npm run build`.
 - Runtime environment should include `NODE_ENV=production` and
-  `PORT=5000`.
+  `HOST=0.0.0.0` and `PORT=5000`.
 - Do not use `server.bundle.js` and do not switch this app to the
   managed `Astro` or `Next.js` presets.
 
@@ -115,13 +115,33 @@ If Hostinger is left on a preset that assumes framework-managed startup
 instead of the Astro Node adapter entrypoint, the app can deploy with
 the wrong runtime contract even if the build itself succeeds.
 
+Hostinger's filesystem layout can look confusing after deployment, but
+it is normal for this app:
+
+- `nodejs/` is the live Node application workspace and should contain
+  the deployed repo plus `dist/`.
+- `public_html/` is not the app root for this project; it acts as the
+  web entrypoint and routing layer. Its `.htaccess` should point
+  Passenger to `nodejs/dist/server/entry.mjs`.
+- `public_html/.builds/` is Hostinger-managed deployment state. It is
+  not a published Astro asset directory.
+
 For the first redeploy after changing Hostinger settings, treat it as a
 clean cutover:
 
 - purge any Hostinger build cache if the panel exposes that control
+- stop the Node app before cleanup if the panel allows it
+- remove stale deployed artifacts from `nodejs/` before redeploy,
+  especially old framework-era folders such as `.next/`
+- do not upload or preserve old static site files in `public_html/`;
+  keep only the Hostinger routing glue and allow `.htaccess` /
+  `.builds/` to be regenerated as needed
 - trigger a fresh deploy from the normalized settings above
 - open page source for `/` and confirm Astro-served CSS and JS assets
   load from `/_astro/` after a hard refresh
+- if dependency installation still fails with the same `tsx` / `esbuild`
+  mismatch after the clean cutover, pin `tsx` exactly and regenerate
+  `package-lock.json` before the next redeploy
 
 ### Step 5 — Reference AGENTS.md directly at session start
 

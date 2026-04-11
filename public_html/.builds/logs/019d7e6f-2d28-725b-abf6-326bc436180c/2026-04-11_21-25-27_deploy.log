@@ -1,0 +1,57 @@
+npm warn deprecated prebuild-install@7.1.3: No longer maintained. Please contact the author of the relevant native addon; alternatives are available.
+npm error code 1
+npm error path /home/u276695328/domains/creatrweb.com/public_html/.builds/source/repository/node_modules/tsx/node_modules/esbuild
+npm error command failed
+npm error command sh -c node install.js
+npm error /home/u276695328/domains/creatrweb.com/public_html/.builds/source/repository/node_modules/tsx/node_modules/esbuild/install.js:136
+npm error     throw new Error(`Expected ${JSON.stringify(versionFromPackageJSON)} but got ${JSON.stringify(stdout)}`);
+npm error           ^
+npm error
+npm error Error: Expected "0.27.7" but got "0.25.12"
+npm error     at validateBinaryVersion (/home/u276695328/domains/creatrweb.com/public_html/.builds/source/repository/node_modules/tsx/node_modules/esbuild/install.js:136:11)
+npm error     at /home/u276695328/domains/creatrweb.com/public_html/.builds/source/repository/node_modules/tsx/node_modules/esbuild/install.js:287:5
+npm error
+npm error Node.js v20.19.4
+npm error A complete log of this run can be found in: /home/u276695328/.npm/_logs/2026-04-11T21_25_27_752Z-debug-0.log
+[31mERROR: Failed to install dependencies[0m
+[36mNOTICE: Attempting to install with legacy peer dependencies enabled[0m
+npm warn deprecated prebuild-install@7.1.3: No longer maintained. Please contact the author of the relevant native addon; alternatives are available.
+
+added 382 packages, and audited 383 packages in 5s
+
+168 packages are looking for funding
+  run `npm fund` for details
+
+1 moderate severity vulnerability
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+
+> creatrweb@0.1.0 build
+> ASTRO_TELEMETRY_DISABLED=1 astro build
+
+21:25:41 [@astrojs/node] Enabling sessions with filesystem storage
+21:25:41 [content] Syncing content
+21:25:41 [content] Synced content
+21:25:41 [types] Generated 158ms
+21:25:41 [build] output: "server"
+21:25:41 [build] mode: "server"
+21:25:41 [build] directory: /home/u276695328/domains/creatrweb.com/public_html/.builds/source/repository/dist/
+21:25:41 [build] adapter: @astrojs/node
+21:25:41 [build] Collecting build info...
+21:25:41 [build] ✓ Completed in 181ms.
+21:25:41 [build] Building server entrypoints...
+21:25:41 [ERROR] [vite] ✗ Build failed in 391ms
+[vite]: Rollup failed to resolve import "dotenv/config" from "/home/u276695328/domains/creatrweb.com/public_html/.builds/source/repository/src/pages/chat.ts".
+This is most likely unintended because it can break your application at runtime.
+If you do want to externalize this module explicitly add it to
+`build.rollupOptions.external`
+  Stack trace:
+    at viteLog (file:///home/u276695328/domains/creatrweb.com/public_html/.builds/source/repository/node_modules/vite/dist/node/chunks/dep-Dq2t6Dq0.js:46399:15)
+    at onwarn (file:///home/u276695328/domains/creatrweb.com/public_html/.builds/source/repository/node_modules/@vitejs/plugin-react/dist/index.js:90:7)
+    at onRollupLog (file:///home/u276695328/domains/creatrweb.com/public_html/.builds/source/repository/node_modules/vite/dist/node/chunks/dep-Dq2t6Dq0.js:46447:5)
+    at file:///home/u276695328/domains/creatrweb.com/public_html/.builds/source/repository/node_modules/rollup/dist/es/shared/node-entry.js:21369:32
+    at ModuleLoader.handleInvalidResolvedId (file:///home/u276695328/domains/creatrweb.com/public_html/.builds/source/repository/node_modules/rollup/dist/es/shared/node-entry.js:22108:26)
+[31mERROR: Failed to build the application[0m
