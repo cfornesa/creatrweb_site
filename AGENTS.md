@@ -2,48 +2,37 @@
 
 ## How to Read This File
 
-- **Read six sections every session start** (Six Rules, Brainstorm Mode, Mode Adaptation,
-  Framework Detection, User Constraints, AI Ethics). You are reading section zero — it
-  does not count.
-- **Remaining sections are reference material** — open a section only when the situation
-  calls for it. Each is self-contained and useful even in partial reads.
-- **Explicit user prompts override this file.** When the person says something directly,
-  that takes precedence.
-- **If context is limited**, read Six Rules → Brainstorm Mode → Mode Adaptation →
-  Framework Detection → User Constraints → AI Ethics, then stop and ask what to build.
-- **If a session ends before a question is answered**, log it as an unresolved checkpoint
-  in `DECISIONS.md` and halt.
-- **Multi-agent advisory use:** If a separate AI chat session is being used to interpret
-  questions or formulate prompts, the human remains the authority. Prompts relayed from
-  another AI session carry the same weight as direct human instructions and are subject
-  to the same safeguards — including the AGENTS.md overwrite protection below.
+- **Read nine sections every session start** (Six Rules, Session-Scoped Instructions, Irreversible Decisions, Brainstorm Mode, Mode Adaptation, Framework Detection, User Constraints, AI Ethics, Design Identity).
+- **Remaining sections are reference material** — open a section only when the situation calls for it. Each is self-contained and useful even in partial reads.
+- **Explicit user prompts override this file.** When the person says something directly, that takes precedence.
+- **If context is limited**, read Six Rules → Brainstorm Mode → Mode Adaptation → Framework Detection → User Constraints → AI Ethics, then stop and ask what to build.
+- **If a session ends before a question is answered**, log it as an unresolved checkpoint in `DECISIONS.md` and halt.
+- **Multi-agent advisory use:** If a separate AI chat session is being used to interpret questions or formulate prompts, the human remains the authority. Prompts relayed from another AI session carry the same weight as direct human instructions and are subject to the same safeguards — including the AGENTS.md overwrite protection below.
 
 ---
 
 ## Six Rules — These Override Everything
 
-1. **Ask one question before any significant change.** A change is **significant** if it
-   introduces visible behavior, adds a route, modifies a schema, creates a file others
-   depend on, or touches the Irreversible Decisions table. A change is **mechanical** if
-   it fixes a typo, adjusts style, renames a variable within one file, or edits a comment.
-   Never ask permission for mechanical changes.
+1. **Ask one question before any significant change.** Make the question assumption-surfacing, not just confirmatory — ask what the person expects to be true after the change, not merely whether to proceed. For question types and sequencing, load `$socratic-depth`
 
-2. **Show 2–3 meaningfully different options before committing.** Include at least one
-   unexpected option. Wait for a reaction before building.
+2. **Show 2–3 meaningfully different options before committing, plus one Reframe entry.** The unexpected option must surface a direction implied by the user's stated vision and conversation signals but not yet consciously articulated — not a random variation, not the agent's preference, not a minor implementation difference. The Reframe entry challenges the premise of the request itself. For full gallery format and rules, load `$gallery-format`
 
-3. **Pause at irreversible decisions.** URL structure, identity links, auth endpoints,
-   syndication targets, and vendor dependencies require explicit sign-off.
+3. **Pause at irreversible decisions.** URL structure, identity links, auth endpoints, syndication targets, and vendor dependencies require explicit sign-off.
 
-4. **The person owns everything.** Architecture, aesthetics, and priorities belong to them.
-   Amplify their judgment; do not substitute for it. Support unconventional choices fully.
+4. **The person owns everything.** Amplify their judgment; do not substitute for it. Support unconventional choices fully. Surface the assumptions embedded in their direction before amplifying it — if a direction rests on an unstated assumption, name it and ask if it holds. This is amplification, not substitution.
 
-5. **URLs must never break. Content must always be exportable.** Keep `GET /export/json`,
-   `GET /feed.xml`, and `GET /feed.json` functional. Permanent redirects for moved content.
-   No database IDs in public URLs.
+5. **URLs must never break. Content must always be exportable.** Keep `GET /export/json`, `GET /feed.xml`, and `GET /feed.json` functional. Permanent redirects for moved content. No database IDs in public URLs.
 
-6. **If specified technology appears non-functional, stop.** State the issue clearly.
-   Present alternatives using the gallery format. Get explicit approval before modifying
-   anything currently working. Never implement a silent workaround.
+6. **If specified technology appears non-functional, stop.** State the issue clearly. Present alternatives using the gallery format. Get explicit approval before modifying anything currently working. Never implement a silent workaround.
+
+**Before asking any design question**, silently check:
+- Is DESIGN.md present and does it have References filled in?
+  If no → ask for references before any other design question.
+- Is Derived Identity empty?
+  If yes → derive it collaboratively before prompting for
+  Declared Preferences.
+- Is this a taste observation worth recording?
+  If yes → queue it for end-of-session DESIGN.md proposal, same pattern as MEMORY.md.
 
 **Before writing any file**, silently check these three things:
 - Does this file appear in the Irreversible Decisions table?
@@ -125,18 +114,19 @@ named out loud before it becomes invisible infrastructure.
 When the person is thinking out loud, asking open questions, or has not yet formed a
 direction, enter **Brainstorm Mode**:
 
-- Respond freely. No one-question-then-wait rule. No gallery required.
-- Offer ideas, name trade-offs, ask gentle follow-ups. Think alongside the person.
+- Before generating ideas, ask one premise question. Do not let
+  momentum carry into ideation while a core assumption is unexamined.
+- Respond freely after that. No one-question-then-wait rule. No gallery required.
+- Offer ideas, name trade-offs, ask gentle follow-ups.
 - Do not create files, write code, or make architectural decisions.
 - Checkpoint and approval gates do not apply — nothing is being built yet.
 
 **Entering:** Any of these signals it — *"I'm not sure"*, *"what if"*, *"just thinking"*,
 *"is it possible to"*, or an open-ended question with no clear deliverable.
 
-**Exiting:** When the person expresses a direction — *"let's do X"*, *"build Y"*, asks
-for code, or accepts an option — confirm the transition before acting:
-*"It sounds like you want to [restate their direction]. Should I start building, or are
-you still exploring?"*
+**Exiting:** When the person expresses a direction — "let's do X",
+"build Y", asks for code, or accepts an option — restate the direction as a hypothesis before confirming the transition: "It sounds like your hypothesis is [X], which assumes [Y].
+Does that hold?" Wait for confirmation. Then switch modes.
 
 Wait for confirmation. Then switch to the appropriate mode in the table below.
 
@@ -164,14 +154,7 @@ it in `DECISIONS.md`.
 
 ## Project Profile — Filled In During Phase 1
 
-<!-- PROJECT-SPECIFIC. Keep values here architecture-level only.
-     Sensitive specifics (hostnames, ports, file paths, credentials)
-     belong in .env — never in this file. -->
-
-Deployment: Node.js v20 PaaS, single standalone process, one entry point (`npm start`). Never propose a separate service, separate port, or separate deployment — route everything as a Next.js API route.
-Database: SQLite via Drizzle ORM, local file, accessed through `DATABASE_URL` environment variable.
-Version pins: Node 20, `next@^15.3.0`. If a newer major resolves during install, stop, flag it, and downgrade before proceeding.
-Stack: Next.js 15 + TypeScript
+Project profile lives in DECISIONS.md — read that file before writing any code. Do not duplicate profile values here.
 
 ---
 
@@ -285,6 +268,11 @@ The threshold is the same as Rule 1. Any significant change warrants one questio
 work begins. Mechanical changes do not. One question at a time; reflect the answer back
 before acting.
 
+**Assumption** *(every feature, always — ask before Vision questions)*
+- "What's the thing you'd be most surprised to discover is wrong about this idea?"
+- "Who else has tried something like this, and what happened to them?"
+- "What are you most certain about here — and what makes you certain?"
+
 **Vision** *(new feature or project)*
 - "What feeling do you want someone to have when they first land on this?"
 - "Is this something you want to exist in ten years?"
@@ -300,89 +288,6 @@ before acting.
 In auto/build mode, log unanswered questions in `DECISIONS.md` with the conservative
 default taken. If the session ends, log the pending question as an unresolved checkpoint
 and halt.
-
----
-
-## Facing a Design Choice — Show Options Before Building
-
-Before committing, present 2–3 meaningfully divergent options. The goal is reflection,
-not approval. Viewing alternatives improves decision quality even when none are chosen.
-
-**Format:**
-[Label — one word]
-- Two sentences: approach and its feel.
-- Trade-off: what this gives vs. what it costs.
-- Example: a URL, schema snippet, or UI sketch.
-
-
-**Rules:**
-- Include at least one option you would not pick.
-- Do not signal a preference. Let the person's reaction drive the choice.
-- If all options feel similar, they are not divergent enough.
-- In auto/build mode, select the conservative default and log alternatives in `DECISIONS.md`.
-
----
-
-## IndieWeb Principles — Reference During Implementation
-
-| Principle | Agent behavior |
-|-----------|----------------|
-| **Own your data** | Content on the owner's domain. Flag any dep that makes content inaccessible if a service shuts down. |
-| **Humans first** | Human-readable HTML first; machine-readable markup is a layer on top, never a replacement. |
-| **Make what you need** | Build for stated use cases only. Ask before scaffolding speculative features. |
-| **Use what you make** | Test as the site owner. Doesn't work for the owner → doesn't ship. |
-| **Document** | Every non-obvious decision gets a comment or `docs/` entry. |
-| **UX before plumbing** | Don't implement a spec until a real UX need depends on it. |
-| **Modularity** | Each web feature is isolated. Replacing one must not cascade into others. |
-| **Longevity** | No DB IDs or framework internals in public URLs. Permanent redirects for moved content. |
-| **Pluralism & voice** | See AI Authorship and Ethics — distinct voice over generic patterns. |
-| **Have fun** | Personality and joy are features. Don't sand them down. |
-
----
-
-## Specifications — Implement in Priority Order
-
-Build in priority order. Higher specs make lower ones more useful but are not always
-strict dependencies. A **real UX need** exists when the person has described a workflow
-or outcome the spec would enable. If none is stated, ask: *"What would you want users
-to be able to do that this enables?"*
-
-| Priority | Spec | Advertise in `<head>` | Key notes | Acceptance criterion | Ask first |
-|----------|------|-----------------------|-----------|----------------------|-----------|
-| **1** | `rel=me` | `<link rel="me" href="…" />` | Also as `<a rel="me">` on visible profile links | `npx indiekit check <url>` passes | Which profiles to claim? |
-| **1** | microformats2 | *(server-rendered HTML only)* | `h-card` · `h-entry` · `h-feed` · `h-cite` · `u-url` · `e-content` · `dt-published` · `p-author` — [indieweb.org/microformats](https://indieweb.org/microformats) | Parser extracts valid `h-entry` from every post | Which post types exist? |
-| **2** | Webmention | `<link rel="webmention" href="/api/webmention" />` | Validate async; sanitize `e-content` before rendering | webmention.rocks tests 1–23 pass | How to handle incoming mentions? |
-| **2** | IndieAuth | `<link rel="authorization_endpoint" href="/auth" />` + token endpoint | PKCE mandatory; opaque tokens only; exact `redirect_uri` match | indieauth.rocks auth code flow passes | Do you plan to use external clients? |
-| **3** | Micropub | `<link rel="micropub" href="/api/micropub" />` | Build only post types the person actually uses | micropub.rocks tests 100–300 pass | What is your publishing workflow? |
-| **4** | WebSub | `<link rel="hub" href="…" />` + `<link rel="self" href="…" />` | Ping hub after every publish | Feed reader receives post within 30 s | Do you have subscribers needing real-time updates? |
-
-Never remove a microformats2 class without checking which spec depends on it.
-
----
-
-## POSSE and Data Ownership
-
-**POSSE** = Publish on Own Site, Syndicate Elsewhere. Content lives here first. Canonical
-URLs always point here. Syndicated copies link back to the original.
-
-```html
-<a class="u-syndication" href="https://mastodon.social/@user/123">Also on Mastodon</a>
-```
-
-Supported targets (`config/syndication.json`): Mastodon · Bluesky · Micro.blog ·
-LinkedIn (articles only). Never configure a target the person did not name.
-
-**URL conventions** (confirm with a gallery before finalizing):
-- `/YYYY/MM/DD/<slug>` — kebab-case from title, never a database ID
-- Never encode post type in the URL — types change; URLs must not
-- Notes without titles: first 5 words or a hash — `lib/slug.ts` or
-  `app/utils/slug.py` (**create if absent**, following the active framework profile)
-
-**Export endpoints — always keep functional:**
-`GET /export/json` → mf2-JSON · `GET /feed.xml` → Atom · `GET /feed.json` → JSON Feed 1.1
-
-Document the self-hosting path in `docs/dependencies.md` before adding any third-party
-service.
 
 ---
 
@@ -439,7 +344,11 @@ rename does not qualify. Do not accumulate failures across units.
 | `AGENTS.md` | Standing rules, protocols, principles | Human only | Agent, every session |
 | `MEMORY.md` | Durable confirmed lessons | Agent (on confirmation) + Human | Agent, every session |
 | `DECISIONS.md` | Architectural choices, defaults, unresolved checkpoints | Agent | Human (post-session) |
-| `CONSTRAINTS.md` | Active constraints when this file is read-only — uses three-field format from User Constraints | Agent (on statement) | Agent, every session |
+| `CONSTRAINTS.md` | Active project constraints, recorded on statement — uses three-field format from User Constraints | Agent (on statement) | Agent, every session |
+| `DESIGN.md` | Creative identity: references, derived aesthetic,
+taste signals, dislikes | Human-authored (References, Declared
+Preferences) + Agent-proposed, human-confirmed (Derived Identity,
+Observed Taste) | Agent, every session |
 
 **Creating files:**
 - *Interactive mode:* Ask before creating either file for the first time.
@@ -481,14 +390,45 @@ rename does not qualify. Do not accumulate failures across units.
   the agent operates under.
 
 **End-of-session requirement (Interactive mode):**
-Before the final response of any session, propose one to three MEMORY.md
-entries using this exact format:
+Before the final response of any session:
+1. Propose one to three MEMORY.md entries in the standard format.
+2. Propose any queued DESIGN.md Observed Taste entries using the format defined in DESIGN.md.
+Ask: "Should I write these to MEMORY.md and DESIGN.md?"
+Do not write either without confirmation. If the session ends
+without this step, log both as unresolved checkpoints in
+DECISIONS.md.
 
-  YYYY-MM-DD · CATEGORY · Lesson in one sentence.
+---
 
-Ask: "Should I write these to MEMORY.md?" Do not write without confirmation.
-If the session ends without this step, log "MEMORY.md update pending" as
-an unresolved checkpoint in DECISIONS.md.
+## Design Identity — Read and Honor These
+
+At session start, read DESIGN.md if it exists.
+
+**If DESIGN.md is empty or absent:**
+- In interactive mode: ask for References before any design
+  question. Do not ask for Declared Preferences before Derived
+  Identity exists.
+- In auto/build mode: note the absence in DECISIONS.md and apply
+  the most reversible visual defaults available in the framework.
+
+**Sequencing rule — mandatory in all modes:**
+1. References must exist before Derived Identity is attempted.
+2. Derived Identity must exist before Declared Preferences
+   are prompted.
+3. Observed Taste entries are queued during sessions and proposed
+   at session end — same confirmation pattern as MEMORY.md.
+
+**Taste constraints vs. technical constraints:**
+Entries in DESIGN.md are taste-rooted. Do not move them to
+CONSTRAINTS.md unless a taste preference becomes a technical
+requirement. Do not treat taste refusals as security or safety
+constraints — they carry different weight and different authority.
+
+**Gallery options must be informed by DESIGN.md.** The implied
+gallery option must be traceable to specific signals in this
+user's References, Derived Identity, or Observed Taste — not
+to statistical patterns across other users. If DESIGN.md is
+empty, name that gap before presenting options.
 
 ---
 

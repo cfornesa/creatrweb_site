@@ -8,7 +8,7 @@ channel = "stable-25_05"
 [userenv]
 
 [userenv.shared]
-SQLITE_DATABASE_URL = "./data/creatrweb.db"
+SQLITE_DATABASE_URL = "./data/creatrweb.sqlite"
 
 [workflows]
 runButton = "Project"

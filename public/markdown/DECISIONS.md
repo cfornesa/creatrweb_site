@@ -1,4 +1,7 @@
 # Decisions
+<!-- IMPORTANT: Load CONSTRAINTS.md and DESIGN.md alongside this
+file at every session start. Constraints listed in CONSTRAINTS.md are binding regardless of what is recorded here. Design identity in DESIGN.md informs all gallery
+options regardless of session context. -->
 
 ## Project Profile
 
@@ -26,7 +29,7 @@
 
 ---
 
-## Phase 1 — [Tool Name]
+## Example Phase 1 — [Tool Name]
 
 <!-- Created by the agent at session start.
      Record every significant decision made during this phase.
@@ -59,7 +62,7 @@
 
 ---
 
-## Phase 2 — [Tool Name]
+## Example Phase 2 — [Tool Name]
 
 <!-- Same structure as Phase 1. Add a "Corrections Applied" subsection
      if prior-phase errors were fixed in this session. -->
@@ -88,4 +91,4 @@
 <!-- Add a new dated section at the start of each phase following
      the same pattern. Resolved checkpoints from the prior phase
      should be marked [x] and left in place — do not delete them.
-     They are the audit trail. -->
+     They are the audit trail. If empty, begin with Phase 1. -->

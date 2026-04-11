@@ -16,18 +16,21 @@ give a score of Pass / Partial / Fail and one sentence of evidence.
 **Six Rules**
 1. Was Rule 1 followed — one question before each significant change?
 2. Was Rule 2 followed — 2-3 options shown before committing to any design?
-3. Was Rule 3 followed — did the agent stop at every item in the
+3. Was Brainstorm Mode correctly exited — did the agent restate
+    the direction as a hypothesis and confirm the assumption before
+    switching modes?
+4. Was Rule 3 followed — did the agent stop at every item in the
    Irreversible Decisions table?
-4. Was Rule 4 followed — did the agent amplify the person's judgment
+5. Was Rule 4 followed — did the agent amplify the person's judgment
    rather than substitute its own?
-5. Was Rule 5 followed — no URLs broken, export endpoints intact?
-6. Was Rule 6 followed — no silent workarounds for non-functional tech?
+6. Was Rule 5 followed — no URLs broken, export endpoints intact?
+7. Was Rule 6 followed — no silent workarounds for non-functional tech?
 
 **Mandatory Checks**
-7. Was the pre-write self-check performed before each file write?
-8. Was CONSTRAINTS.md created or updated for every new constraint stated?
-9. Was DECISIONS.md updated with choices made this session?
-10. Was a MEMORY.md update proposed at session end?
+8. Was the pre-write self-check performed before each file write?
+9. Was CONSTRAINTS.md created or updated for every new constraint stated?
+10. Was DECISIONS.md updated with choices made this session?
+11. Was a MEMORY.md update proposed before the final response? Was a DESIGN.md Observed Taste update proposed alongside it? If neither happened, was an unresolved checkpoint logged in DECISIONS.md? Any other outcome is a Fail.
 
 **Gaps and Patterns**
 - Which rule was violated most often, and what triggered the violation?
@@ -36,6 +39,13 @@ give a score of Pass / Partial / Fail and one sentence of evidence.
 - Were any irreversible decisions made without a gallery or confirmation?
 - Was at least one gallery option genuinely unexpected or imperfect — not just a
   minor variation of the others? (If all options were similar, Rule 2 was not met.)
+
+**Socratic Quality**
+- At what depth did the agent's questions operate? (Permission-seeking / Definition-clarifying / Assumption-surfacing / Consequence-tracing)
+- Did the agent name at least one assumption embedded in the person's direction before building?
+- In Brainstorm Mode, was a premise question asked before idea generation began?
+- Did any gallery option challenge the premise of the request, or were all options variations of the same approach?
+- Was the implied gallery option traceable to this user's specific signals in DESIGN.md or the session conversation — or did it read as a generic suggestion?
 
 **Recommended AGENTS.md or CONSTRAINTS.md (as well as CLAUDE.md if you are Claude Code) changes based on this session:**
 List only changes that would have prevented an actual failure. Do not propose changes for rules that were already followed.

@@ -28,6 +28,70 @@
 
 ---
 
+## Example Phase 1 — [Tool Name]
+
+<!-- Created by the agent at session start.
+     Record every significant decision made during this phase.
+     Use bullet points. One fact per bullet.
+     Flag gaps or deferred items as noted below. -->
+
+### Stack Confirmed
+<!-- e.g. which framework, runtime, package manager, config approach -->
+
+### Schema and Data Decisions
+<!-- e.g. ID strategy, timestamp format, default values, unique columns -->
+
+### Files Created
+<!-- List every file created and its purpose -->
+
+### Vendor Dependencies Added
+<!-- For each: name, purpose, sends data off-domain (yes/no),
+     self-hosting alternative, documented in docs/dependencies.md -->
+
+### Environment Variables Required
+<!-- List names only — no values. e.g.:
+     - DATABASE_URL
+     - API_KEY_NAME -->
+
+### Gaps and Deferred Items
+<!-- Any Phase 1 deliverable not completed, logged for the next phase -->
+
+### Unresolved Checkpoints Entering Phase 2
+- [ ] <!-- item -->
+
+---
+
+## Example Phase 2 — [Tool Name]
+
+<!-- Same structure as Phase 1. Add a "Corrections Applied" subsection
+     if prior-phase errors were fixed in this session. -->
+
+### Phase N Gap Discovered
+<!-- If a prior-phase deliverable was missing, record it here with a
+     note that it is a prior-phase gap, not a Phase 2 decision. -->
+
+### Components Built
+<!-- List each component/route/feature with its file path and purpose -->
+
+### Corrections Applied
+<!-- What was wrong, what was fixed, what file changed -->
+
+### Vendor Dependencies Added
+<!-- Same format as Phase 1 -->
+
+### Environment Variables Required
+<!-- Cumulative list — include all variables from prior phases plus new -->
+
+### Unresolved Checkpoints Entering Phase 3
+- [ ] <!-- item -->
+
+---
+
+<!-- Add a new dated section at the start of each phase following
+     the same pattern. Resolved checkpoints from the prior phase
+     should be marked [x] and left in place — do not delete them.
+     They are the audit trail. If empty, begin with Phase 1. -->
+
 ## 2026-04-08 — Phase 1 (Codex CLI)
 
 - Confirmed stack: Next.js 15 + TypeScript on Hostinger Node.js v20
