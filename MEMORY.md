@@ -52,3 +52,4 @@
 2026-04-11 · DECISION · SQLite connection creation is now explicit per runtime context so Astro SSR and Node-only scripts can share the same DB code without import-time env coupling.
 2026-04-11 · DECISION · On Hostinger, this Astro app's live runtime belongs in `nodejs/`, while `public_html/` acts as routing glue via `.htaccess` rather than as the app root.
 2026-04-11 · CORRECTION · Hostinger deployment failures should be treated as stale-state issues first when `nodejs/` still contains old framework artifacts and `public_html/.builds` has preserved prior deploy state.
+2026-04-11 · DECISION · Hostinger install instability around `tsx` / `esbuild` is first mitigated by exact-pinning `tsx` to the locally working resolved version before attempting broader dependency overrides.
