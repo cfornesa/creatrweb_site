@@ -33,3 +33,6 @@
 2026-04-10 · DECISION · Implemented a logical mobile navigation hierarchy in `MobileNavPill.tsx`: path-aware back buttons that transition through the site hierarchy (e.g., Detail -> Journal -> Home) rather than always linking externally.
 2026-04-10 · PREFERENCE · Perform a documentation audit immediately following any route-group reorganization to ensure AGENTS.md and CONSTRAINTS.md remain actionable.
 2026-04-10 · DECISION · Use helper functions like getBackUrlFromPath in Nav components to centralize navigation logic and ensure site-wide consistency.
+2026-04-11 · DECISION · Local development now uses port 3000 while production remains on port 5000.
+2026-04-11 · DECISION · A persistent macOS process was occupying port 5000, so the local Next.js dev script was moved off that port.
+2026-04-11 · DECISION · Hostinger PM2 deployments should use `script: "npm", args: "start"` to ensure static assets (CSS/JS/Public) are served correctly. Standalone mode requires manual copying of assets to work.

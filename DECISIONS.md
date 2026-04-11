@@ -276,3 +276,23 @@
 ### Unresolved Checkpoints entering Phase 3
 - [ ] Run `npx drizzle-kit generate && npx drizzle-kit migrate` for `document_embeddings` table.
 - [ ] Implement Phase 3 content routes and admin panel as per the project plan.
+
+---
+
+## 2026-04-11 — Local Dev Port Adjustment (Codex CLI)
+
+- Local `npm run dev` changed from port `5000` to `3000` in
+  `package.json` because port `5000` was already occupied on this macOS
+  workstation.
+- Production `npm start` remains on port `5000` to preserve the
+  existing Hostinger deployment contract and avoid changing runtime
+  assumptions.
+- No route, database, or deployment behavior changed in this session;
+  only the local development entrypoint was adjusted.
+
+---
+
+## 2026-04-11 — Hostinger Asset Fix (Gemini CLI)
+
+- **Root Cause Identified:** 404 errors for CSS/JS on Hostinger were caused by `pm2.config.js` targeting `.next/standalone/server.js` without the necessary static assets being copied into that directory.
+- **Correction Applied:** Updated `pm2.config.js` to use `npm start`. This aligns with the "Project Profile" mandate of using a single entry point and ensures the Next.js production server manages its own static asset routing.
