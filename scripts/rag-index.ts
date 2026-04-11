@@ -2,7 +2,7 @@ import "dotenv/config";
 import fs from "fs";
 import path from "path";
 import { Mistral } from "@mistralai/mistralai";
-import { db } from "../lib/db";
+import { createDb } from "../lib/db";
 import { document_embeddings } from "../lib/schema";
 
 const apiKey = process.env.MISTRAL_API_KEY;
@@ -11,7 +11,14 @@ if (!apiKey) {
   process.exit(1);
 }
 
+const databaseUrl = process.env.SQLITE_DATABASE_URL;
+if (!databaseUrl) {
+  console.error("SQLITE_DATABASE_URL is not set.");
+  process.exit(1);
+}
+
 const client = new Mistral({ apiKey });
+const { db, sqlite } = createDb(databaseUrl);
 
 async function indexDocuments() {
   const docsDir = path.join(process.cwd(), "documents");
@@ -49,4 +56,6 @@ async function indexDocuments() {
   }
 }
 
-indexDocuments().then(() => console.log("Done."));
+indexDocuments()
+  .then(() => console.log("Done."))
+  .finally(() => sqlite.close());

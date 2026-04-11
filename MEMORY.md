@@ -48,3 +48,5 @@
 2026-04-11 · CORRECTION · The terminal was hiding backend chat errors by falling back to "Error: No response." whenever `/chat` returned JSON without a `reply` field.
 2026-04-11 · DECISION · Astro server runtime code now loads local env vars via `dotenv` so `/chat` and SQLite access work in local dev and standalone runs.
 2026-04-11 · CORRECTION · Interactive React controls on Astro pages must be mounted as explicit islands; rendering them inside a non-hydrated page tree leaves them visibly present but non-clickable.
+2026-04-11 · CORRECTION · Astro runtime files should not import `dotenv/config`; server secrets must come from Astro server env access instead.
+2026-04-11 · DECISION · SQLite connection creation is now explicit per runtime context so Astro SSR and Node-only scripts can share the same DB code without import-time env coupling.

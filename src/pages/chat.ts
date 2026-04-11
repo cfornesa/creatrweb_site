@@ -1,6 +1,8 @@
-import "dotenv/config";
+import { getSecret } from "astro:env/server";
 import type { APIRoute } from "astro";
 import { Mistral } from "@mistralai/mistralai";
+import { createDb } from "@/lib/db";
+import { document_embeddings } from "@/lib/schema";
 
 function cosineSimilarity(a: number[], b: number[]): number {
   let dotProduct = 0;
@@ -17,16 +19,18 @@ function cosineSimilarity(a: number[], b: number[]): number {
 }
 
 function getChatConfig() {
-  const apiKey = process.env.MISTRAL_API_KEY;
-  const agentId = process.env.AGENT_ID;
+  const apiKey = getSecret("MISTRAL_API_KEY");
+  const agentId = getSecret("AGENT_ID");
+  const databaseUrl = getSecret("SQLITE_DATABASE_URL");
 
-  if (!apiKey || !agentId) {
+  if (!apiKey || !agentId || !databaseUrl) {
     return null;
   }
 
   return {
     agentId,
     client: new Mistral({ apiKey }),
+    databaseUrl,
   };
 }
 
@@ -92,58 +96,61 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    const { db } = await import("@/lib/db");
-    const { document_embeddings } = await import("@/lib/schema");
+    const { db, sqlite } = createDb(chatConfig.databaseUrl);
 
-    const embeddingResponse = await chatConfig.client.embeddings.create({
-      model: "mistral-embed",
-      inputs: [message],
-    });
+    try {
+      const embeddingResponse = await chatConfig.client.embeddings.create({
+        model: "mistral-embed",
+        inputs: [message],
+      });
 
-    const queryVector = embeddingResponse.data[0]?.embedding;
+      const queryVector = embeddingResponse.data[0]?.embedding;
 
-    if (!queryVector) {
-      return new Response(JSON.stringify({ error: "Failed to generate embedding" }), {
-        status: 500,
+      if (!queryVector) {
+        return new Response(JSON.stringify({ error: "Failed to generate embedding" }), {
+          status: 500,
+          headers: { "Content-Type": "application/json" },
+        });
+      }
+
+      const allDocs = await db.select().from(document_embeddings);
+      const scoredDocs = allDocs
+        .map((doc) => {
+          const docVector = JSON.parse(doc.embedding) as number[];
+          return {
+            ...doc,
+            score: cosineSimilarity(queryVector, docVector),
+          };
+        })
+        .sort((a, b) => b.score - a.score);
+
+      const context = scoredDocs
+        .slice(0, 3)
+        .map((doc) => doc.content)
+        .join("\n\n");
+
+      const chatResponse = await chatConfig.client.agents.complete({
+        agentId: chatConfig.agentId,
+        messages: [
+          {
+            role: "system",
+            content: `You are a terminal-based AI for Creatrweb. Use the following context if relevant: ${context}`,
+          },
+          { role: "user", content: message },
+        ],
+      });
+
+      const reply =
+        extractReplyContent(chatResponse.choices?.[0]?.message?.content) ||
+        "I'm sorry, I couldn't process that.";
+
+      return new Response(JSON.stringify({ reply }), {
+        status: 200,
         headers: { "Content-Type": "application/json" },
       });
+    } finally {
+      sqlite.close();
     }
-
-    const allDocs = await db.select().from(document_embeddings);
-    const scoredDocs = allDocs
-      .map((doc) => {
-        const docVector = JSON.parse(doc.embedding) as number[];
-        return {
-          ...doc,
-          score: cosineSimilarity(queryVector, docVector),
-        };
-      })
-      .sort((a, b) => b.score - a.score);
-
-    const context = scoredDocs
-      .slice(0, 3)
-      .map((doc) => doc.content)
-      .join("\n\n");
-
-    const chatResponse = await chatConfig.client.agents.complete({
-      agentId: chatConfig.agentId,
-      messages: [
-        {
-          role: "system",
-          content: `You are a terminal-based AI for Creatrweb. Use the following context if relevant: ${context}`,
-        },
-        { role: "user", content: message },
-      ],
-    });
-
-    const reply =
-      extractReplyContent(chatResponse.choices?.[0]?.message?.content) ||
-      "I'm sorry, I couldn't process that.";
-
-    return new Response(JSON.stringify({ reply }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
   } catch (error) {
     console.error("Chat API error:", error);
     return new Response(JSON.stringify({ error: extractErrorMessage(error) }), {
