@@ -53,3 +53,5 @@
 2026-04-11 · DECISION · On Hostinger, this Astro app's live runtime belongs in `nodejs/`, while `public_html/` acts as routing glue via `.htaccess` rather than as the app root.
 2026-04-11 · CORRECTION · Hostinger deployment failures should be treated as stale-state issues first when `nodejs/` still contains old framework artifacts and `public_html/.builds` has preserved prior deploy state.
 2026-04-11 · DECISION · Hostinger install instability around `tsx` / `esbuild` is first mitigated by exact-pinning `tsx` to the locally working resolved version before attempting broader dependency overrides.
+2026-04-11 · CORRECTION · Adding `.npmrc` with `install-strategy=nested` did not resolve the `tsx` / `esbuild` install mismatch; the same failure reproduces on a clean local install.
+2026-04-11 · DECISION · Hostinger-facing npm installs should use legacy peer handling up front; .npmrc now sets legacy-peer-deps=true alongside install-strategy=nested, which preserved local builds and fixed the clean-install tsx/esbuild mismatch reproduction.
