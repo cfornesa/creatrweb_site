@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "next dev -p 3000 -H 0.0.0.0",
-    "build": "next build",
+    "build": "next build && mkdir -p .next/standalone/public && cp -r public/* .next/standalone/public/ && mkdir -p .next/standalone/.next/static && cp -r .next/static/* .next/standalone/.next/static/",
     "start": "next start -p 5000 -H 0.0.0.0",
     "rag:index": "tsx scripts/rag-index.ts"
   },

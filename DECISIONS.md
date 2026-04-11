@@ -294,5 +294,9 @@
 
 ## 2026-04-11 — Hostinger Asset Fix (Gemini CLI)
 
-- **Root Cause Identified:** 404 errors for CSS/JS on Hostinger were caused by `pm2.config.js` targeting `.next/standalone/server.js` without the necessary static assets being copied into that directory.
-- **Correction Applied:** Updated `pm2.config.js` to use `npm start`. This aligns with the "Project Profile" mandate of using a single entry point and ensures the Next.js production server manages its own static asset routing.
+- **Root Cause Identified:** 404 errors for CSS/JS on Hostinger were caused by the Next.js server not finding the `public` and `static` folders. Even when using `npm start`, environmental differences in how Hostinger routes requests can cause asset misplacement.
+- **Correction Applied:** 
+    - Re-enabled `output: "standalone"` in `next.config.ts`.
+    - Updated `package.json` to manually copy `public/` and `.next/static/` into the standalone directory as part of the `build` script.
+    - Updated `pm2.config.js` to run the standalone `.next/standalone/server.js` directly with `NODE_ENV=production` and `PORT: 5000`.
+- **Outcome:** This ensures all assets are bundled alongside the server entry point, making the deployment independent of parent directory structure.
