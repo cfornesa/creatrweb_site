@@ -375,3 +375,34 @@
 - Deferred any `tsx` version pin until after a clean redeploy; the
   `tsx` / `esbuild` mismatch is treated as a secondary install/cache
   issue unless it reproduces again from the cleaned state.
+
+---
+
+## 2026-04-11 — Hostinger Static Asset Fix (Claude Code)
+
+- **Root cause identified:** `@astrojs/node` standalone mode bakes absolute
+  `file://` paths into `dist/server/entry.mjs` at build time, pointing to
+  the machine where `astro build` ran. Hostinger builds in
+  `.builds/source/repository/` but Passenger runs the app from `nodejs/`.
+  The hardcoded `client` path in `entry.mjs` references the build-time
+  location, so static assets (`/_astro/*.css`, `/_astro/*.js`) cannot be
+  found at runtime — causing all CSS and JS to return 404 while SSR HTML
+  renders correctly.
+- **Fix applied:** `scripts/patch-entry.mjs` added as a post-build step.
+  Replaces the two absolute `file://` paths in `dist/server/entry.mjs`
+  (`client` and `server` keys in `_args`) with `import.meta.url`-relative
+  equivalents so the built file resolves correctly from wherever it is
+  deployed.
+- `package.json` build script updated to:
+  `astro build && node scripts/patch-entry.mjs`
+- Script is idempotent: re-running after paths are already relative is a
+  safe no-op.
+- **Dependency note:** The patch relies on `@astrojs/node` continuing to
+  emit `"client": "file://..."` as a string literal in `_args`. If that
+  output format changes in a future adapter version, the regex will not
+  match and the script will skip silently with a log message — the
+  deployment will revert to broken static-asset behavior.
+- **Separate hPanel fix still required:** Framework preset → `Other`,
+  Output directory → blank. This fixes server startup. The patch-entry.mjs
+  fix addresses CSS/JS serving once the server is running. Both changes
+  are needed for a working deployment.

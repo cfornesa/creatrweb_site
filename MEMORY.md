@@ -55,3 +55,6 @@
 2026-04-11 · DECISION · Hostinger install instability around `tsx` / `esbuild` is first mitigated by exact-pinning `tsx` to the locally working resolved version before attempting broader dependency overrides.
 2026-04-11 · CORRECTION · Adding `.npmrc` with `install-strategy=nested` did not resolve the `tsx` / `esbuild` install mismatch; the same failure reproduces on a clean local install.
 2026-04-11 · DECISION · Hostinger-facing npm installs should use legacy peer handling up front; .npmrc now sets legacy-peer-deps=true alongside install-strategy=nested, which preserved local builds and fixed the clean-install tsx/esbuild mismatch reproduction.
+2026-04-11 · DECISION · @astrojs/node standalone mode bakes absolute file:// paths into dist/server/entry.mjs at build time; these must be patched to import.meta.url-relative paths before deployment to Hostinger (scripts/patch-entry.mjs).
+2026-04-11 · DECISION · Hostinger Astro preset is for static-output sites; SSR apps using output:"server" must use the Other preset with entry file dist/server/entry.mjs and a blank Output directory.
+2026-04-11 · CORRECTION · Rule 2 (gallery) violated again — implemented patch-entry.mjs without presenting alternatives (copy to Apache web root, custom server.mjs wrapper). Gallery requirement applies to infrastructure/deployment fixes, not only UI changes.
