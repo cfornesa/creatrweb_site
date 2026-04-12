@@ -1,3 +1,15 @@
+## express
+- Purpose: HTTP server framework — serves static files from public/, routes each URL to an HTML file, handles POST /chat
+- Sends data off-domain: NO
+- Self-hosting alternative: Not applicable; Express is the self-hosted server runtime
+- License: MIT
+
+## esbuild
+- Purpose: Build-time bundler — compiles server.ts and all imports into a single server.bundle.js for deployment
+- Sends data off-domain: NO
+- Self-hosting alternative: Not applicable; build-time tool only, not used at runtime
+- License: MIT
+
 ## astro
 - Purpose: Astro SSR/static framework for the public site routes and layouts
 - Sends data off-domain: NO

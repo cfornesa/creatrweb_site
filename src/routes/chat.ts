@@ -1,5 +1,4 @@
-import { getSecret } from "astro:env/server";
-import type { APIRoute } from "astro";
+import type { RequestHandler } from "express";
 import { Mistral } from "@mistralai/mistralai";
 import { createDb } from "@/lib/db";
 import { document_embeddings } from "@/lib/schema";
@@ -19,9 +18,9 @@ function cosineSimilarity(a: number[], b: number[]): number {
 }
 
 function getChatConfig() {
-  const apiKey = getSecret("MISTRAL_API_KEY");
-  const agentId = getSecret("AGENT_ID");
-  const databaseUrl = getSecret("SQLITE_DATABASE_URL");
+  const apiKey = process.env.MISTRAL_API_KEY;
+  const agentId = process.env.AGENT_ID;
+  const databaseUrl = process.env.SQLITE_DATABASE_URL;
 
   if (!apiKey || !agentId || !databaseUrl) {
     return null;
@@ -76,7 +75,11 @@ function extractErrorMessage(error: unknown): string {
       }
     }
 
-    if ("message" in error && typeof error.message === "string" && error.message.trim()) {
+    if (
+      "message" in error &&
+      typeof error.message === "string" &&
+      error.message.trim()
+    ) {
       return error.message;
     }
   }
@@ -84,16 +87,16 @@ function extractErrorMessage(error: unknown): string {
   return "Failed to connect to Mistral AI";
 }
 
-export const POST: APIRoute = async ({ request }) => {
+export const chatHandler: RequestHandler = async (req, res) => {
   try {
-    const { message } = await request.json();
+    const { message } = req.body as { message?: string };
     const chatConfig = getChatConfig();
 
     if (!chatConfig) {
-      return new Response(JSON.stringify({ error: "Configuration error" }), {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      });
+      res
+        .status(500)
+        .json({ error: "Configuration error" });
+      return;
     }
 
     const { db, sqlite } = createDb(chatConfig.databaseUrl);
@@ -101,16 +104,16 @@ export const POST: APIRoute = async ({ request }) => {
     try {
       const embeddingResponse = await chatConfig.client.embeddings.create({
         model: "mistral-embed",
-        inputs: [message],
+        inputs: [message ?? ""],
       });
 
       const queryVector = embeddingResponse.data[0]?.embedding;
 
       if (!queryVector) {
-        return new Response(JSON.stringify({ error: "Failed to generate embedding" }), {
-          status: 500,
-          headers: { "Content-Type": "application/json" },
-        });
+        res
+          .status(500)
+          .json({ error: "Failed to generate embedding" });
+        return;
       }
 
       const allDocs = await db.select().from(document_embeddings);
@@ -136,7 +139,7 @@ export const POST: APIRoute = async ({ request }) => {
             role: "system",
             content: `You are a terminal-based AI for Creatrweb. Use the following context if relevant: ${context}`,
           },
-          { role: "user", content: message },
+          { role: "user", content: message ?? "" },
         ],
       });
 
@@ -144,18 +147,12 @@ export const POST: APIRoute = async ({ request }) => {
         extractReplyContent(chatResponse.choices?.[0]?.message?.content) ||
         "I'm sorry, I couldn't process that.";
 
-      return new Response(JSON.stringify({ reply }), {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      });
+      res.status(200).json({ reply });
     } finally {
       sqlite.close();
     }
   } catch (error) {
     console.error("Chat API error:", error);
-    return new Response(JSON.stringify({ error: extractErrorMessage(error) }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    });
+    res.status(500).json({ error: extractErrorMessage(error) });
   }
 };

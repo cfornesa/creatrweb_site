@@ -13,6 +13,7 @@ node_modules
 /build
 /dist
 /.astro
+/server.bundle.js
 
 # misc
 .DS_Store

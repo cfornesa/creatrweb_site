@@ -6,20 +6,26 @@
      to keep the root instruction file framework-agnostic and safe to
      publish. -->
 
-- **Stack:** Astro 5 + React + TypeScript
-- **Deployment:** Hostinger Node.js v20 — single standalone Astro app,
-  one entry point (`npm start`), one process. Never propose a separate
-  service, separate port, or separate deployment — route everything as
-  an Astro page or API endpoint within the same app.
+- **Stack:** Express 4 + TypeScript, bundled to `server.bundle.js` via
+  esbuild. No React — client interactivity is vanilla JS in
+  `public/js/app.js`. Static HTML pages in `public/`.
+- **Deployment:** Hostinger Node.js v20 — single esbuild bundle
+  (`server.bundle.js`), one process. Entry file in hPanel:
+  `server.bundle.js`. NPM install command: `npm install && npm run build`.
+  Never propose a separate service, separate port, or separate deployment
+  — route everything through `server.ts` as an Express route or
+  `POST /chat`.
 - **Database:** SQLite at `./data/creatrweb.sqlite` via Drizzle ORM.
   `SQLITE_DATABASE_URL` is set in `.env` locally and in hPanel on
   Hostinger. `.env` and `data/` are in `.gitignore` and do not deploy.
-- **Version pin:** `astro@^5`, `@astrojs/node@^9`, `@astrojs/react@^4`,
-  `react@^19`, `react-dom@^19`, Node `20.x`
-- **Required dev dependency:** `dotenv` — required by `drizzle.config.ts`
-  to read `.env` at migration time. No external data transmission.
+- **Version pin:** `express@^4`, `esbuild@^0.25`, `tsx@4.21.0` (pinned),
+  Node `20.x`
+- **Build artifact:** `server.bundle.js` is gitignored. Hostinger builds
+  it at deploy time via `npm install && npm run build` in hPanel.
+- **Required dev dependency:** `dotenv` — loaded at server start via
+  `import "dotenv/config"` in `server.ts`. No external data transmission.
   Documented in `docs/dependencies.md`.
-- **Framework AGENTS.md:** `astro/AGENTS.md` does not exist. Sessions
+- **Framework AGENTS.md:** No framework-specific AGENTS.md. Sessions
   follow root `AGENTS.md` only.
 - **Profile switch rule:** Stop before touching existing files. Record
   current state and reason here. Confirm new profile explicitly. Flag
@@ -406,3 +412,36 @@
   Output directory → blank. This fixes server startup. The patch-entry.mjs
   fix addresses CSS/JS serving once the server is running. Both changes
   are needed for a working deployment.
+
+---
+
+## 2026-04-11 — Express + esbuild Migration (Claude Code)
+
+- Replaced Astro 5 SSR with Express 4 + static HTML + vanilla JS.
+  Removed: `astro`, `@astrojs/node`, `@astrojs/react`, `react`,
+  `react-dom`, `@types/react`, `@types/react-dom`, `scripts/patch-entry.mjs`,
+  `app/`, `components/`, `src/pages/`, `src/layouts/`, `src/styles/`,
+  `astro.config.mjs`.
+- Added: `express@^4.21.2` (runtime), `esbuild@^0.25.5` (build),
+  `@types/express@^5.0.1` (dev). Both documented in `docs/dependencies.md`.
+- `server.ts` is the new entry point. Serves `public/` statically and
+  routes `/`, `/projects`, `/readme`, `/indieweb-platform`,
+  `/creatrweb-rag`, `/terminal-ui` to corresponding HTML files.
+- `src/routes/chat.ts` ports the Astro chat API route to an Express
+  `RequestHandler`. All business logic unchanged.
+- Six static HTML pages in `public/` replace the React+Astro page tree.
+  All CSS Modules merged to `public/styles/app.css` (kebab-case).
+  `public/js/app.js` (vanilla) handles clock, nav pill, and terminal modal.
+- h-card microformats (`h-card`, `u-url`, `p-name`, `u-photo`, `p-org`,
+  `p-note`, `rel=me`) are server-rendered as static HTML in
+  `public/index.html` — constraint satisfied without React or Astro SSR.
+- `server.bundle.js` produced via esbuild with `--format=esm`,
+  `--external:better-sqlite3`, `--external:fsevents`, and a
+  `createRequire` banner for CJS interop.
+- `package.json` adds `"type": "module"` so Node.js treats `.js` as ESM.
+- Default local dev port: `3000` (Express convention, replacing Astro's
+  `4321`). Production uses `PORT` env var from Hostinger.
+- **Deployment contract:** `server.bundle.js` is gitignored. Hostinger
+  builds it at deploy time via `npm install && npm run build` in hPanel.
+  Entry file in hPanel changed from `dist/server/entry.mjs` →
+  `server.bundle.js`.

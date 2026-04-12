@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studio Journal — Creatrweb</title>
+  <meta name="description" content="A collection of current projects and creative experiments." />
+  <link rel="me" href="https://instagram.com/creatrweb" />
+  <link rel="me" href="https://x.com/creatrweb" />
+  <link rel="me" href="https://www.tiktok.com/@creatrweb" />
+  <link rel="stylesheet" href="/styles/globals.css" />
+  <link rel="stylesheet" href="/styles/app.css" />
+</head>
+<body data-pathname="/projects">
+  <main class="main">
+    <div id="mobile-clock" class="floating-mobile-clock"></div>
+
+    <div class="monitor-frame">
+      <div class="monitor-screen">
+        <div class="desktop-toolbar">
+          <div class="desktop-toolbar-title"></div>
+          <div class="desktop-toolbar-time"></div>
+        </div>
+        <div class="monitor-content">
+
+          <div class="pj-container">
+            <header class="pj-header">
+              <a href="/" class="pj-back-link">← Home</a>
+              <h1 class="pj-title">Studio Journal</h1>
+              <p class="pj-subtitle">A collection of current projects and creative experiments.</p>
+            </header>
+
+            <div class="project-grid">
+
+              <a href="/indieweb-platform" class="project-card">
+                <div class="symbol-container">♡</div>
+                <h3 class="project-title">IndieWeb Platform</h3>
+                <p class="project-desc">A decentralized social network built on Astro and IndieWeb principles.</p>
+                <div class="project-tags">
+                  <span class="project-tag">Astro</span>
+                  <span class="project-tag">IndieWeb</span>
+                </div>
+              </a>
+
+              <a href="/creatrweb-rag" class="project-card">
+                <div class="symbol-container">⊛</div>
+                <h3 class="project-title">Creatrweb RAG</h3>
+                <p class="project-desc">Local localized RAG scheme for personal documents.</p>
+                <div class="project-tags">
+                  <span class="project-tag">Mistral AI</span>
+                  <span class="project-tag">SQLite</span>
+                </div>
+              </a>
+
+              <a href="/terminal-ui" class="project-card">
+                <div class="symbol-container">⎈</div>
+                <h3 class="project-title">Terminal UI</h3>
+                <p class="project-desc">Retro OS-style interface for modern AI agents.</p>
+                <div class="project-tags">
+                  <span class="project-tag">CSS Modules</span>
+                  <span class="project-tag">React</span>
+                </div>
+              </a>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="monitor-stand"></div>
+      <div class="monitor-base"></div>
+    </div>
+
+    <div class="mobile-nav-pill">
+      <a id="pill-back" class="pill-link" href="/">←</a>
+      <div class="pill-title"></div>
+      <button id="pill-chat" class="pill-button" type="button" title="Chat">💬</button>
+    </div>
+  </main>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

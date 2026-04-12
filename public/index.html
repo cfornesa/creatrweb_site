@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Creatrweb</title>
+  <meta name="description" content="Identity-First IndieWeb-inspired Creative Platform focusing on decentralization and personal ownership of content." />
+  <link rel="me" href="https://instagram.com/creatrweb" />
+  <link rel="me" href="https://x.com/creatrweb" />
+  <link rel="me" href="https://www.tiktok.com/@creatrweb" />
+  <link rel="stylesheet" href="/styles/globals.css" />
+  <link rel="stylesheet" href="/styles/app.css" />
+</head>
+<body data-pathname="/">
+  <main class="main">
+    <div id="mobile-clock" class="floating-mobile-clock"></div>
+
+    <div class="monitor-frame">
+      <div class="monitor-screen">
+        <div class="desktop-toolbar">
+          <div class="desktop-toolbar-title"></div>
+          <div class="desktop-toolbar-time"></div>
+        </div>
+        <div class="monitor-content">
+
+          <div class="hcard-wrapper">
+
+            <!-- H-Card microformats: server-rendered static HTML -->
+            <div class="h-card grid-container">
+
+              <!-- Box 1: Identity -->
+              <div class="bento-box identity-box">
+                <div class="mac-title-bar">
+                  <span class="mac-dot mac-red"></span>
+                  <span class="mac-dot mac-yellow"></span>
+                  <span class="mac-dot mac-green"></span>
+                </div>
+                <img
+                  src="/guide.png"
+                  alt="Creatrweb"
+                  width="140"
+                  height="140"
+                  loading="eager"
+                  decoding="async"
+                  class="u-photo hcard-photo"
+                />
+                <a href="https://creatrweb.com" class="u-url p-name hcard-name" rel="me">Creatrweb</a>
+                <div class="p-org hcard-org">Augment Humankind</div>
+              </div>
+
+              <!-- Box 2: Mission/Note -->
+              <div class="bento-box mission-box">
+                <div class="mac-title-bar">
+                  <span class="mac-dot mac-red"></span>
+                  <span class="mac-dot mac-yellow"></span>
+                  <span class="mac-dot mac-green"></span>
+                </div>
+                <div class="symbol-icon">✦</div>
+                <div class="p-note hcard-note">
+                  Identity-First IndieWeb-inspired Creative Platform focusing on decentralization and personal ownership of content. Built with Astro, React, TypeScript, and SQLite. Emphasizes user control, privacy, and a seamless creative experience.
+                </div>
+              </div>
+
+              <!-- Box 3: Social Profiles -->
+              <div class="bento-box social-box">
+                <div class="mac-title-bar">
+                  <span class="mac-dot mac-red"></span>
+                  <span class="mac-dot mac-yellow"></span>
+                  <span class="mac-dot mac-green"></span>
+                </div>
+                <a href="https://instagram.com/creatrweb" rel="me" class="u-url social-link">
+                  <div class="social-icon-graphic">⊛</div>
+                  <span class="social-label">Instagram</span>
+                </a>
+                <a href="https://x.com/creatrweb" rel="me" class="u-url social-link">
+                  <div class="social-icon-graphic">⊛</div>
+                  <span class="social-label">X</span>
+                </a>
+                <a href="https://www.tiktok.com/@creatrweb" rel="me" class="u-url social-link">
+                  <div class="social-icon-graphic">⊛</div>
+                  <span class="social-label">TikTok</span>
+                </a>
+              </div>
+
+            </div>
+            <!-- /h-card -->
+
+            <!-- Drawer card -->
+            <div class="drawer-container">
+              <article class="drawer-card">
+                <div class="mac-title-bar">
+                  <span class="mac-dot mac-red"></span>
+                  <span class="mac-dot mac-yellow"></span>
+                  <span class="mac-dot mac-green"></span>
+                </div>
+                <h2 class="drawer-title">◈ Project Methodology</h2>
+                <p class="drawer-text">
+                  Creatrweb is designed as a modular, extensible framework for personal identity and content ownership.
+                  By leveraging standard protocols like IndieAuth, Micropub, and Webmention, it creates a decentralized
+                  social experience where your domain is your primary identifier.
+                </p>
+              </article>
+            </div>
+
+            <!-- Desktop icons -->
+            <div class="desktop-area">
+              <a href="/readme" class="desktop-icon">
+                <div class="icon-graphic">📄</div>
+                <span class="icon-label">Readme</span>
+              </a>
+
+              <a href="/projects" class="desktop-icon">
+                <div class="icon-graphic">📁</div>
+                <span class="icon-label">Studio Journal</span>
+              </a>
+
+              <a href="https://augmenthumankind.com" target="_blank" rel="noopener noreferrer" class="desktop-icon">
+                <div class="icon-graphic">🌐</div>
+                <span class="icon-label">Augment Humankind</span>
+              </a>
+
+              <button id="terminal-trigger" class="desktop-icon terminal-icon" type="button">
+                <div class="icon-graphic">⌨️</div>
+                <span class="icon-label">Terminal</span>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+      <div class="monitor-stand"></div>
+      <div class="monitor-base"></div>
+    </div>
+
+    <div class="mobile-nav-pill">
+      <a id="pill-back" class="pill-link" href="https://augmenthumankind.com">←</a>
+      <div class="pill-title"></div>
+      <button id="pill-chat" class="pill-button" type="button" title="Chat">💬</button>
+    </div>
+  </main>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

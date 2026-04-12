@@ -1,8 +1,8 @@
+/* Light mode (default) */
 :root {
   --background: #fffdfa;
   --foreground: #2c3e50;
   --accent-orange: #e67e22;
-  --accent-orange-hover: #d35400;
   --card-bg: #f9f6f0;
   --card-border: #ebdcd0;
 }
@@ -12,31 +12,28 @@
     --background: #1a1814;
     --foreground: #f4f0ea;
     --accent-orange: #f39c12;
-    --accent-orange-hover: #e67e22;
     --card-bg: #26241e;
     --card-border: #3b362c;
   }
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  line-height: 1.6;
   margin: 0;
   padding: 0;
-  line-height: 1.6;
+  background-color: var(--background);
+  color: var(--foreground);
 }
 
 a {
   color: var(--accent-orange);
-  text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color 0.2s;
 }
 
 a:hover {
-  color: var(--accent-orange-hover);
   text-decoration: underline;
 }
 
-.h-card {
-}
+.h-card {}
