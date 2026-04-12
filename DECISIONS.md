@@ -102,6 +102,27 @@
      should be marked [x] and left in place — do not delete them.
      They are the audit trail. If empty, begin with Phase 1. -->
 
+## 2026-04-11 — Hostinger Build Contract Fix (Codex CLI)
+
+- Reproduced the Hostinger failure locally with the exact production-only
+  install path: `npm ci --omit=dev && npm run build` failed with
+  `sh: esbuild: command not found`.
+- Root cause confirmed: `package.json` classified both `esbuild` and
+  `dotenv` as `devDependencies`, but the deploy build depends on both.
+  `esbuild` must exist as a CLI during `npm run build`, and
+  `server.ts` imports `dotenv/config` during bundling.
+- Promoted `esbuild` and `dotenv` to `dependencies`. Left `tsx`,
+  `typescript`, `drizzle-kit`, and `@types/*` in `devDependencies`.
+- Kept the build and runtime contract unchanged: `npm run build` still
+  emits `server.bundle.js`, and production startup still uses
+  `node server.bundle.js`.
+- Updated `README.md` so the documented Hostinger settings now match the
+  current Express + esbuild deployment: `Other` preset, root `./`,
+  Node `20.x`, blank Output directory, build command `npm run build`,
+  entry file `server.bundle.js`.
+- No routes, public files, styles, database logic, or chat behavior were
+  changed in this fix.
+
 ## 2026-04-08 — Phase 1 (Codex CLI)
 
 - Confirmed stack: Next.js 15 + TypeScript on Hostinger Node.js v20

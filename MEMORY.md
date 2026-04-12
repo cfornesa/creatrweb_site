@@ -64,3 +64,5 @@
 2026-04-11 · DECISION · esbuild ESM bundle requires `--format=esm`, `"type":"module"` in package.json, and a `createRequire` banner for CJS dependencies (dotenv, express). Without the banner, CJS dynamic requires fail at startup.
 2026-04-11 · DECISION · Local dev port is 3000 (Express convention). Port 4321 was Astro's default and should not be reused. Background test processes left running between shell sessions cause EADDRINUSE; always verify no orphaned process exists before running npm run dev.
 2026-04-11 · CORRECTION · "Error: Failed to connect to backend" in the terminal chat means fetch() itself threw — the server crashed or the TCP connection was reset. It does NOT mean the server returned a JSON error. JSON errors produce "Error: [message]" instead.
+2026-04-11 · DECISION · Hostinger production-only installs require build-critical packages like esbuild and dotenv to live in dependencies for the Express bundle contract to work.
+2026-04-11 · CORRECTION · The repo README had stale Astro deployment guidance after the Express migration and must stay aligned with the current Hostinger entry file and build flow.
