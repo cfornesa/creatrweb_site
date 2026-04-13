@@ -1,4 +1,4 @@
-# CreatrWeb — IndieWeb Creative Collaboration Agent Framework
+# CreatrWeb — Creative Human-AI Collaboration Framework
 
 A portable kit of context files and loadable skills that guides AI coding
 agents toward creative, human-steered, IndieWeb-aligned development. Works
@@ -24,7 +24,7 @@ tool you use:
 - **Distinct voice** — gallery-format choices resist AI averaging.
   Research shows human-steered sessions produce outcomes 2–4× better
   than passive ones (Walton et al., 2026).
-- **IndieWeb longevity** — your content stays portable, your URLs
+- **IndieWeb-inspired longevity** — your content stays portable, your URLs
   never break, and every dependency is documented.
 
 ---
@@ -40,8 +40,9 @@ your-project/
 ├── DECISIONS.md ← Architecture log (agent fills during sessions)
 ├── DESIGN.md ← Your aesthetic references and identity
 ├── EVAL_PROMPT.md ← Post-session compliance audit
+├── GEMINI.md ← Gemini CLI entry point
 ├── .env.example ← Environment variable reference
-├── .agents/
+├── .agents + .claude/
 │ └── skills/
 │ ├── gallery-format/
 │ │ └── SKILL.md ← Options protocol before design decisions
@@ -582,9 +583,7 @@ top of the plan and offers one alternative framing before building.
 
 ## IndieWeb Quick Reference
 
-This framework is built around IndieWeb principles. The
-specifications table in `AGENTS.md` and the `$indieweb-specs`
-skill list implementation priority:
+This framework is built around IndieWeb principles. The specifications table in `AGENTS.md` and the `$indieweb-specs` skill list implementation priority:
 
 | Priority | Spec | What it does |
 |---|---|---|
@@ -599,6 +598,14 @@ Build in this order. Do not implement a spec until a real user need
 depends on it. Load `$indieweb-specs` for the full acceptance
 criteria, test suite links, and dependency map before implementing
 any of these.
+
+---
+
+## Personal Note
+
+My name is Chris Fornesa, and as someone with a lifelong passion for art and creative pursuits, but also has knowledge of data science and a long-term interest in web development, I have felt myself personally torn between two wants: preserving human creativity and authenticity and ensuring that humans don't simply fall behind technological progress due to our biases about what is or isn't "real". Authenticity can be a loaded, if not politicized, notion that is oftentimes obfuscated to fit specific, traditionalist ideas of what is or isn't (insert topic here). AI and algorithmic harms are very real and are already occurring, but so are algorithmic utility, specifically the creative use cases that artists, programmers, and other creative people, have already achieved using large language models. 
+
+Therefore, this framework is all about leveraging what AI does best, while embedding safeguards to prevent cognitive atrophy and encourage critical thought in the process. Though agentic AI has made the process of creating websites, applications, and software more accessible than ever, the real opportunity is the ability to apply more thought, not less of it, into your creative programming practice. Whether you're a beginner, intermediate, or advanced developer, engineer, or AI consumer, this framework will hopefully encourage you to exercise your creative prowess as you utilize AI coding tools. 
 
 ---
 
