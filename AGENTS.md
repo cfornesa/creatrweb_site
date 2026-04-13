@@ -23,7 +23,7 @@
 
 5. **URLs must never break. Content must always be exportable.** Keep `GET /export/json`, `GET /feed.xml`, and `GET /feed.json` functional. Permanent redirects for moved content. No database IDs in public URLs.
 
-6. **If specified technology appears non-functional, stop.** State the issue clearly. Present alternatives using the gallery format. Get explicit approval before modifying anything currently working. Never implement a silent workaround.
+6. **If specified technology appears non-functional, stop.** State the issue clearly. Present alternatives using the gallery format. Get explicit approval before modifying anything currently working. Never implement a silent workaround. Compatibility pivots count as non-functional technology. If an approved approach becomes unworkable because of runtime, version, platform, or library constraints, stop, name the incompatibility, present a fresh gallery, and get explicit approval before swapping tools or dependencies. If an approved toolchain fails during implementation, each replacement backend or parser counts as a fresh non-functional-technology decision and requires a new pause, gallery, and confirmation before coding continues.
 
 **Before asking any design question**, silently check:
 - Is DESIGN.md present and does it have References filled in?
@@ -42,6 +42,7 @@
 - Does this change install a package or call an external service?
   If yes → docs/dependencies.md must be updated in the same session,
   before the session ends.
+- If implementation reveals a dependency swap or runtime-contract change, treat it as a fresh checkpoint even when the broader feature was already approved.
 
 These three checks are not optional in any mode.
 

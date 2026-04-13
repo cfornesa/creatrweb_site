@@ -38,3 +38,9 @@ after related runtime artifacts are removed from the repository.
 SCOPE: `MEMORY.md`, `DECISIONS.md`, and any cleanup that touches root-level project
 history documentation.
 SET: 2026-04-12
+
+CONSTRAINT: PDF files in `documents/` are required inputs for RAG indexing and must not
+be skipped as a fallback for local runtime compatibility.
+SCOPE: `scripts/rag-index.ts`, `docs/dependencies.md`, and any future indexing workflow
+for `embeddings.json` generation.
+SET: 2026-04-13

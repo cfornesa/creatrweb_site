@@ -67,3 +67,7 @@
 2026-04-11 · DECISION · Hostinger production-only installs require build-critical packages like esbuild and dotenv to live in dependencies for the Express bundle contract to work.
 2026-04-11 · CORRECTION · The repo README had stale Astro deployment guidance after the Express migration and must stay aligned with the current Hostinger entry file and build flow.
 2026-04-12 · DECISION · Current deployment contract remains Express + esbuild + `server.bundle.js`; local `.next/` and similar framework runtime artifacts are legacy leftovers, while historical deployment notes stay preserved in project records.
+2026-04-13 · DECISION · The RAG indexer now supports top-level `.md`, `.txt`, `.html`, and `.pdf` files in `documents/` through a shared local text-extraction pipeline.
+2026-04-13 · STACK · PDF ingestion uses the local Apache-2.0 package `pdf-parse`, while HTML is converted to text without adding a second parser dependency.
+2026-04-13 · CORRECTION · In-process PDF parsers failed on real project PDFs, so local PDF extraction for RAG indexing now uses Poppler's `pdftotext` CLI.
+2026-04-13 · STACK · The RAG indexer supports `.md`, `.txt`, `.html`, and `.pdf`, with PDFs extracted locally through `pdftotext` rather than an npm PDF parser.

@@ -1,7 +1,11 @@
 import "dotenv/config";
+import { execFile } from "child_process";
 import fs from "fs";
 import path from "path";
+import { promisify } from "util";
 import { Mistral } from "@mistralai/mistralai";
+
+const execFileAsync = promisify(execFile);
 
 const apiKey = process.env.MISTRAL_API_KEY;
 if (!apiKey) {
@@ -15,6 +19,74 @@ interface DocumentChunk {
   file_path: string;
   content: string;
   embedding: number[];
+}
+
+const supportedExtensions = new Set([".md", ".txt", ".html", ".pdf"]);
+
+function normalizeText(text: string): string {
+  return text
+    .replace(/\f/g, "\n\n")
+    .replace(/\r\n/g, "\n")
+    .replace(/\u0000/g, "")
+    .replace(/[\t ]+\n/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
+function decodeHtmlEntities(text: string): string {
+  return text
+    .replace(/&#(\d+);/g, (_, value) => String.fromCodePoint(Number(value)))
+    .replace(/&#x([\da-fA-F]+);/g, (_, value) => String.fromCodePoint(parseInt(value, 16)))
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'");
+}
+
+function extractHtmlText(html: string): string {
+  const withBreaks = html
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<!--([\s\S]*?)-->/g, " ")
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<\/(p|div|section|article|header|footer|aside|main|li|ul|ol|table|tr|td|th|h[1-6])>/gi, "\n")
+    .replace(/<(p|div|section|article|header|footer|aside|main|li|ul|ol|table|tr|td|th|h[1-6])\b[^>]*>/gi, "\n");
+
+  const withoutTags = withBreaks.replace(/<[^>]+>/g, " ");
+  return normalizeText(decodeHtmlEntities(withoutTags));
+}
+
+async function extractPdfText(filePath: string): Promise<string> {
+  try {
+    const { stdout } = await execFileAsync("pdftotext", ["-layout", "-nopgbrk", "-enc", "UTF-8", filePath, "-"]);
+    return normalizeText(stdout);
+  } catch (error) {
+    const cause = error as NodeJS.ErrnoException & { stderr?: string };
+
+    if (cause.code === "ENOENT") {
+      throw new Error("PDF extraction requires `pdftotext` from Poppler. Install it with `brew install poppler` and try again.");
+    }
+
+    throw new Error(cause.stderr?.trim() || `Failed to parse PDF: ${filePath}`);
+  }
+}
+
+async function extractText(filePath: string): Promise<string> {
+  const extension = path.extname(filePath).toLowerCase();
+
+  if (extension === ".pdf") {
+    return extractPdfText(filePath);
+  }
+
+  const content = await fs.promises.readFile(filePath, "utf-8");
+
+  if (extension === ".html") {
+    return extractHtmlText(content);
+  }
+
+  return normalizeText(content);
 }
 
 /**
@@ -60,14 +132,30 @@ async function indexDocuments() {
     return;
   }
 
-  const files = fs.readdirSync(docsDir).filter(f => f.endsWith(".md") || f.endsWith(".txt"));
+  const entries = fs.readdirSync(docsDir, { withFileTypes: true });
+  const files = entries
+    .filter(entry => entry.isFile())
+    .map(entry => entry.name)
+    .filter(file => supportedExtensions.has(path.extname(file).toLowerCase()));
+  const ignoredFiles = entries
+    .filter(entry => entry.isFile())
+    .map(entry => entry.name)
+    .filter(file => !supportedExtensions.has(path.extname(file).toLowerCase()));
   const allChunks: DocumentChunk[] = [];
 
   console.log(`Found ${files.length} files to index.`);
+  if (ignoredFiles.length > 0) {
+    console.log(`Ignoring ${ignoredFiles.length} unsupported files: ${ignoredFiles.join(", ")}`);
+  }
 
   for (const file of files) {
     const filePath = path.join(docsDir, file);
-    const content = fs.readFileSync(filePath, "utf-8");
+    const content = await extractText(filePath);
+    if (!content) {
+      console.warn(`Skipping ${file} because no text content was extracted.`);
+      continue;
+    }
+
     const chunks = chunkText(content);
 
     console.log(`Processing ${file} (${chunks.length} chunks)...`);
@@ -81,7 +169,10 @@ async function indexDocuments() {
           inputs: [chunk],
         });
 
-        const embedding = resp.data[0].embedding;
+        const embedding = resp.data[0]?.embedding;
+        if (!embedding) {
+          throw new Error(`No embedding returned for ${file} chunk ${i}`);
+        }
 
         allChunks.push({
           file_path: `${file}#chunk${i}`,

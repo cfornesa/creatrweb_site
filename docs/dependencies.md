@@ -39,3 +39,9 @@
 - Sends data off-domain: YES — messages and document chunks are sent to Mistral AI API servers
 - Self-hosting alternative: Deploy Mistral Small 4 (open weights, 119B MoE) locally; minimum 4× H100 GPUs required. Weights at https://huggingface.co/mistralai/Mistral-Small-4-119B-2603
 - License: Apache 2.0
+
+## Poppler (`pdftotext`)
+- Purpose: Local PDF text extraction for `scripts/rag-index.ts`, so `.pdf` files in `documents/` can be converted to text before chunking and embedding through the `pdftotext` CLI
+- Sends data off-domain: NO
+- Self-hosting alternative: Not applicable; local CLI tool only
+- License: GPL-2.0-or-later

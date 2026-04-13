@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Readme — Creatrweb</title>
-  <meta name="description" content="Documentation and guide for the Creatrweb framework." />
+  <meta name="description" content="CreatrWeb — a personal IndieWeb site with a retro-modern iMac-framed UI and an AI chat terminal." />
   <link rel="me" href="https://instagram.com/creatrweb" />
   <link rel="me" href="https://x.com/creatrweb" />
   <link rel="me" href="https://www.tiktok.com/@creatrweb" />
@@ -29,366 +29,191 @@
               <div class="pd-symbol-hero">◈</div>
               <h1 class="pd-title">Creatrweb</h1>
               <div class="pd-tags">
-                <span class="pd-tag">Methodology</span>
                 <span class="pd-tag">IndieWeb</span>
-                <span class="pd-tag">AI</span>
+                <span class="pd-tag">Express</span>
+                <span class="pd-tag">Mistral AI</span>
               </div>
             </header>
 
             <main class="pd-content">
 
               <section class="pd-section">
-                <h2 class="pd-section-title">What This Is</h2>
                 <p>
-                  Creatrweb is a portable kit of context files that guides AI coding agents toward
-                  creative, human-steered, IndieWeb-aligned development. It works across Gemini CLI,
-                  Claude Code, Codex CLI, Cursor, and GitHub Copilot from a single source of truth.
+                  A personal IndieWeb site with a retro-modern iMac-framed UI and an AI chat
+                  terminal. Built to own the content, keep the URLs permanent, and stay portable
+                  across hosts.
                 </p>
-                <p style="margin-top:16px">
-                  The framework applies three principles consistently across every AI tool you use:
-                </p>
-                <ul style="margin-top:12px;padding-left:20px;line-height:2">
+              </section>
+
+              <section class="pd-section">
+                <h2 class="pd-section-title">Features</h2>
+                <ul style="padding-left:20px;line-height:2">
                   <li>
-                    <strong>Human ownership</strong> — the agent asks before building, shows options
-                    before committing, and stops at irreversible decisions.
+                    <strong>iMac monitor frame</strong> — the entire site renders inside a styled
+                    iMac shell on desktop; a floating nav pill takes over on mobile
                   </li>
                   <li>
-                    <strong>Distinct voice</strong> — gallery-format choices resist AI averaging.
-                    Research shows human-steered sessions produce outcomes 2–4× better than passive ones.
+                    <strong>AI chat terminal</strong> — a retro terminal overlay powered by
+                    Mistral AI with local RAG over documents you index yourself
                   </li>
                   <li>
-                    <strong>IndieWeb longevity</strong> — your content stays portable, your URLs never
-                    break, and every dependency is documented.
+                    <strong>IndieWeb microformats</strong> — h-card and rel=me links are
+                    server-rendered in static HTML; no client-side hydration required
+                  </li>
+                  <li>
+                    <strong>Six pages</strong> — <code>/</code> (home), <code>/projects</code>,
+                    <code>/readme</code>, <code>/indieweb-platform</code>,
+                    <code>/creatrweb-rag</code>, <code>/terminal-ui</code>
                   </li>
                 </ul>
               </section>
 
               <section class="pd-section">
-                <h2 class="pd-section-title">Repository Structure</h2>
-                <p>Place these files at the root of every new project before your first agent session:</p>
-                <pre class="code-block">your-project/
-├── AGENTS.md                  ← Main instruction file (all agents)
-├── CLAUDE.md                  ← Claude Code entry point
-├── CONSTRAINTS.md             ← Active project constraints (starts empty)
-├── DECISIONS.md               ← Architecture log (agent fills during sessions)
-├── .env.example               ← Environment variable reference
-├── .gemini/
-│   └── settings.json          ← Gemini CLI context configuration
-└── docs/
-    └── eval-prompt.md         ← Optional: post-session compliance audit</pre>
-                <p style="margin-top:16px">Files the agent creates during sessions — do not create manually:</p>
-                <pre class="code-block">MEMORY.md                      ← Confirmed lessons (agent proposes, you approve)
-docs/dependencies.md           ← Vendor dependency registry (agent maintains)</pre>
-              </section>
-
-              <section class="pd-section">
-                <h2 class="pd-section-title">Setup — New Project</h2>
-
-                <h3 class="sub-section">Step 1 — Copy the kit</h3>
-                <p>
-                  Copy all files from this template into your project root. No configuration required
-                  before your first session.
-                </p>
-
-                <h3 class="sub-section">Step 2 — Fill in the Project Profile (optional)</h3>
-                <p>
-                  Open <code>AGENTS.md</code> and find the <strong>Project Profile</strong> section near
-                  the top. If you know what you are building, fill in the four fields at an architecture
-                  level — no technical details required:
-                </p>
-                <pre class="code-block">Deployment: Node.js PaaS, single process, npm start
-Database:   SQLite via Drizzle ORM
-Version pins: Node 20, Astro 5.x
-Stack:      Astro + React + TypeScript</pre>
-                <p style="margin-top:12px">
-                  If you leave this blank, the agent will ask you three plain-language questions at the
-                  start of the first session and fill it in for you.
-                </p>
-
-                <h3 class="sub-section">Step 3 — Set up your environment</h3>
-                <p>
-                  Copy <code>.env.example</code> to <code>.env</code> and fill in any values your project
-                  needs. Never commit <code>.env</code> to version control — it is in <code>.gitignore</code> by default.
-                </p>
-
-                <h3 class="sub-section">Step 4 — Start your first session</h3>
-                <p>
-                  Open your chosen agent tool in the project directory and begin. The agent reads
-                  <code>AGENTS.md</code> automatically. No special prompt is required for the first
-                  session — it will ask one question to confirm the current phase before writing any code.
-                </p>
-              </section>
-
-              <section class="pd-section">
-                <h2 class="pd-section-title">File Reference</h2>
-
-                <h3 class="sub-section">AGENTS.md</h3>
-                <p>
-                  The authoritative instruction file. Read by every agent on every session start. Contains
-                  the Six Rules that override all agent defaults, Brainstorm Mode for open-ended
-                  exploration, gallery protocol for design decisions, IndieWeb specifications and POSSE
-                  rules, and memory file management.
-                </p>
-                <p style="margin-top:12px">
-                  <strong>Do not edit during a session.</strong> Only the project owner changes this file.
-                  The agent will propose changes as a diff and wait for approval.
-                </p>
-
-                <h3 class="sub-section">CLAUDE.md</h3>
-                <p>
-                  A one-line file that imports <code>AGENTS.md</code> into Claude Code. Claude Code reads
-                  <code>CLAUDE.md</code> natively — this file ensures it gets the full AGENTS.md ruleset
-                  without duplication. Add any Claude-specific instructions below the import line.
-                </p>
-
-                <h3 class="sub-section">CONSTRAINTS.md</h3>
-                <p>
-                  Starts empty. The agent creates an entry here the first time you state a constraint
-                  during any session — licensing requirements, data privacy rules, dependency restrictions,
-                  anything binding. Constraints are permanent until you explicitly lift them.
-                </p>
-                <pre class="code-block">CONSTRAINT: No third-party analytics or tracking scripts
-SCOPE:      All pages and API routes
-SET:        YYYY-MM-DD</pre>
-
-                <h3 class="sub-section">DECISIONS.md</h3>
-                <p>
-                  Starts as a template with a Project Profile and phase sections. The agent fills in each
-                  section during sessions — you never need to write to this file directly. It becomes the
-                  persistent audit trail for every architectural decision made across all phases and tools.
-                </p>
-
-                <h3 class="sub-section">.env.example</h3>
-                <p>
-                  A reference file showing which environment variable names the project requires. Contains
-                  no values — only names. Copy to <code>.env</code> and fill in values locally.
-                </p>
-
-                <h3 class="sub-section">.gemini/settings.json</h3>
-                <p>
-                  Required for Gemini CLI. Without it, Gemini ignores <code>AGENTS.md</code> and uses its
-                  own defaults. This file points Gemini at the correct context files:
-                </p>
-                <pre class="code-block">{
-  "context": {
-    "files": [
-      "AGENTS.md",
-      "CONSTRAINTS.md",
-      "MEMORY.md"
-    ]
-  }
-}</pre>
-
-                <h3 class="sub-section">EVALUATE_PROMPT.md</h3>
-                <p>
-                  Not read automatically. Use it at the end of any session to run a structured compliance
-                  audit. Paste the file's contents into the same tool that just completed the session, or
-                  into a separate analysis session with the chat log attached.
-                </p>
-              </section>
-
-              <section class="pd-section">
-                <h2 class="pd-section-title">Agent-by-Agent Guide</h2>
-
-                <h3 class="sub-section">Codex CLI</h3>
-                <p>
-                  <strong>Best for:</strong> Phase 1 scaffolding, schema design, initial file structure,
-                  and any work where you want strict question-before-build discipline with full terminal
-                  access.
-                </p>
-                <p style="margin-top:8px">
-                  Natively reads <code>AGENTS.md</code> from the project root. No configuration needed.
-                  Follows Rule 1 (ask before building) most consistently of all the tools.
-                </p>
-                <p style="margin-top:8px">
-                  <strong>Tip:</strong> Start each Codex session with a <code>SESSION CONSTRAINTS</code> block
-                  in your opening prompt listing phase-specific rules.
-                </p>
-
-                <h3 class="sub-section">Gemini CLI</h3>
-                <p>
-                  <strong>Best for:</strong> UI components, interactive feature development, and sessions
-                  where you want rapid iteration with gallery-style design choices.
-                </p>
-                <p style="margin-top:8px">
-                  Requires <code>.gemini/settings.json</code> to read <code>AGENTS.md</code>. Without this
-                  file, Gemini uses its own defaults and ignores the framework entirely. The gallery
-                  protocol (Rule 2) is where Gemini performs best.
-                </p>
-                <p style="margin-top:8px">
-                  <strong>Known limitation:</strong> Reference sections are read at session start but not
-                  actively consulted during code generation. Use a <code>SESSION CONSTRAINTS</code> block
-                  to promote critical rules into active context.
-                </p>
-
-                <h3 class="sub-section">Claude Code</h3>
-                <p>
-                  <strong>Best for:</strong> Refactoring, cross-file consistency, spec implementation
-                  (Webmention, IndieAuth, Micropub), and sessions requiring strong instruction-following
-                  across many files.
-                </p>
-                <p style="margin-top:8px">
-                  Reads <code>CLAUDE.md</code> natively. <code>CLAUDE.md</code> imports <code>AGENTS.md</code> with
-                  <code>@AGENTS.md</code>, so the full ruleset loads automatically. Handles the Irreversible
-                  Decisions checkpoints more reliably than other tools.
-                </p>
-
-                <h3 class="sub-section">Cursor (Chat and Composer)</h3>
-                <p>
-                  <strong>Best for:</strong> Day-to-day feature work, inline edits, and sessions where you
-                  want suggestions before auto-apply.
-                </p>
-                <p style="margin-top:8px">
-                  Reads <code>AGENTS.md</code> natively in Chat and Composer modes. In Cursor Composer,
-                  ask for a plan first — the plan output will naturally take gallery form if AGENTS.md is
-                  in context, giving you three options before any code is written.
-                </p>
-
-                <h3 class="sub-section">GitHub Copilot (Chat)</h3>
-                <p>
-                  <strong>Best for:</strong> In-editor assistance, quick completions, and sessions where
-                  the human is driving and wants suggestions rather than autonomous building.
-                </p>
-                <p style="margin-top:8px">
-                  Reads <code>AGENTS.md</code> as a repository instruction file. Best suited for asking
-                  questions about the codebase and getting targeted help on a single file or function.
-                  Treat its suggestions as proposals, not decisions — review before accepting.
-                </p>
-              </section>
-
-              <section class="pd-section">
-                <h2 class="pd-section-title">How the Files Work Together Across Sessions</h2>
-                <pre class="code-block">Session 1 (e.g. Codex CLI)
-  └── Reads: AGENTS.md
-  └── Creates: DECISIONS.md (Phase 1), CONSTRAINTS.md (if constraints stated)
-  └── Proposes: MEMORY.md entries at session end
-
-Session 2 (e.g. Gemini CLI)
-  └── Reads: AGENTS.md + CONSTRAINTS.md + MEMORY.md (via settings.json)
-  └── Appends: DECISIONS.md (Phase 2)
-  └── Inherits all constraints and confirmed lessons automatically
-
-Session 3 (e.g. Cursor or Claude Code)
-  └── Reads: AGENTS.md + CONSTRAINTS.md + MEMORY.md
-  └── Resolves: unresolved checkpoints from DECISIONS.md
-  └── Continues without repeating Phase 1–2 decisions</pre>
-                <p style="margin-top:12px">
-                  No tool ever needs to be told what was decided in a prior session — the memory files
-                  carry that context automatically.
-                </p>
-              </section>
-
-              <section class="pd-section">
-                <h2 class="pd-section-title">Post-Session Compliance Audit</h2>
-                <p>At the end of any session, run the eval prompt to check how well the agent followed AGENTS.md:</p>
-                <ol style="margin-top:12px;padding-left:20px;line-height:2">
-                  <li>Open <code>EVALUATE_PROMPT.md</code></li>
-                  <li>
-                    Paste its contents into the tool that just completed the session, or into a separate
-                    analysis session with the chat log attached
-                  </li>
-                  <li>Review the Pass / Partial / Fail scores</li>
-                  <li>
-                    Apply only the recommended changes that would have prevented an actual failure — not
-                    changes for rules already followed
-                  </li>
-                </ol>
-                <p style="margin-top:12px">
-                  The final section of the eval prompt asks the agent to recommend AGENTS.md or
-                  CONSTRAINTS.md changes. This is the feedback loop that improves the framework over time
-                  based on real failures.
-                </p>
-              </section>
-
-              <section class="pd-section">
-                <h2 class="pd-section-title">Known Behavioral Limitation</h2>
-                <p>
-                  The gallery protocol (Rule 2 — show 2–3 options before committing) is the framework's
-                  primary mechanism for preserving human creative ownership. It fires reliably when a
-                  prompt is exploratory or open-ended. It is suppressed when a prompt contains specific
-                  measurements, named files, or exact values — because the agent correctly reads those
-                  details as a directive and executes rather than offering alternatives.
-                </p>
-                <p style="margin-top:12px">
-                  This is a model-level inference pattern. It cannot be resolved in AGENTS.md — adding
-                  more rules does not improve adherence when the suppression comes from the prompt signal
-                  itself.
-                </p>
-                <p style="margin-top:12px">Both modes are valid. If you want options, write an open prompt:</p>
-                <div class="prompt-example">"The terminal dialog feels cramped on mobile. What are some approaches?"</div>
-                <p style="margin-top:12px">If you want execution, write a specific prompt:</p>
-                <div class="prompt-example">"Reduce the terminal dialog padding to 24px on mobile."</div>
-                <p style="margin-top:12px">
-                  The framework respects your signal. If you write a specific prompt and later wish you
-                  had seen options, run the eval prompt at session end — the agent will identify the
-                  missed gallery opportunity and log it.
-                </p>
-                <p style="margin-top:12px">
-                  Over time, <code>MEMORY.md</code> accumulates your aesthetic preferences so future
-                  sessions need fewer explicit options to reflect your direction accurately.
-                </p>
-                <p style="margin-top:12px">
-                  <strong>For Claude Code users:</strong> This behavior is addressed proactively in
-                  <code>CLAUDE.md</code>. When Claude Code is in Plan Mode and detects a high-specificity
-                  prompt, it is instructed to name the suppression at the top of the plan and offer one
-                  alternative framing before building. The eval prompt remains the recovery mechanism for
-                  sessions where suppression was not caught in time.
-                </p>
-              </section>
-
-              <section class="pd-section">
-                <h2 class="pd-section-title">IndieWeb Quick Reference</h2>
-                <p>
-                  This framework is built around IndieWeb principles. Build specifications in priority
-                  order — do not implement a spec until a real user need depends on it.
-                </p>
-                <table class="rm-table" style="margin-top:20px">
+                <h2 class="pd-section-title">Stack</h2>
+                <table class="rm-table">
                   <thead>
                     <tr>
-                      <th>Priority</th>
-                      <th>Spec</th>
-                      <th>What it does</th>
+                      <th>Layer</th>
+                      <th>Choice</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td>1</td>
-                      <td><span class="rm-badge">rel=me</span></td>
-                      <td>Links your domain to your profiles elsewhere</td>
+                      <td>Runtime</td>
+                      <td>Node.js 20, Express 4</td>
                     </tr>
                     <tr>
-                      <td>1</td>
-                      <td><span class="rm-badge">microformats2</span></td>
-                      <td>Makes your content machine-readable without breaking HTML</td>
+                      <td>Language</td>
+                      <td>TypeScript — bundled via esbuild to <code>server.bundle.js</code></td>
                     </tr>
                     <tr>
-                      <td>2</td>
-                      <td><span class="rm-badge">Webmention</span></td>
-                      <td>Lets other sites notify you when they link to you</td>
+                      <td>Frontend</td>
+                      <td>Vanilla JS + static HTML in <code>public/</code></td>
                     </tr>
                     <tr>
-                      <td>2</td>
-                      <td><span class="rm-badge">IndieAuth</span></td>
-                      <td>Makes your domain an identity provider</td>
+                      <td>Database</td>
+                      <td>SQLite via Drizzle ORM</td>
                     </tr>
                     <tr>
-                      <td>3</td>
-                      <td><span class="rm-badge">Micropub</span></td>
-                      <td>Lets external apps publish to your site</td>
+                      <td>AI</td>
+                      <td>Mistral AI (<code>mistral-embed</code> + agent inference)</td>
                     </tr>
                     <tr>
-                      <td>4</td>
-                      <td><span class="rm-badge">WebSub</span></td>
-                      <td>Pushes new content to subscribers in real time</td>
+                      <td>RAG store</td>
+                      <td><code>embeddings.json</code> — built locally, committed to the repo</td>
                     </tr>
                   </tbody>
                 </table>
               </section>
 
-              <p style="text-align:center;opacity:0.5;font-style:italic;margin-top:8px">
-                The person owns this site. You hold the brush.<br />
-                Ask before you paint. Show before you decide. Stop before you break anything.
-              </p>
+              <section class="pd-section">
+                <h2 class="pd-section-title">Local Development</h2>
+                <pre class="code-block">cp .env.example .env        # fill in the three required vars below
+npm install
+npm run dev                 # http://localhost:3000</pre>
+                <p style="margin-top:16px"><strong>Required environment variables:</strong></p>
+                <table class="rm-table" style="margin-top:12px">
+                  <thead>
+                    <tr>
+                      <th>Variable</th>
+                      <th>Purpose</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><code>SQLITE_DATABASE_URL</code></td>
+                      <td>Path to the SQLite file, e.g. <code>./data/creatrweb.sqlite</code></td>
+                    </tr>
+                    <tr>
+                      <td><code>MISTRAL_API_KEY</code></td>
+                      <td>Mistral API key</td>
+                    </tr>
+                    <tr>
+                      <td><code>AGENT_ID</code></td>
+                      <td>Mistral agent ID for chat inference</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p style="margin-top:12px">
+                  <code>PORT</code> is optional and defaults to <code>3001</code> in local dev.
+                </p>
+              </section>
+
+              <section class="pd-section">
+                <h2 class="pd-section-title">RAG Indexing</h2>
+                <p>
+                  Place <code>.md</code>, <code>.txt</code>, <code>.html</code>, or
+                  <code>.pdf</code> files in <code>documents/</code> and run:
+                </p>
+                <pre class="code-block" style="margin-top:12px">npm run rag:index</pre>
+                <p style="margin-top:12px">
+                  Output is written to <code>embeddings.json</code> in the repo root. PDF
+                  extraction runs locally through Poppler's <code>pdftotext</code> — no document
+                  text is sent to a remote parser. Poppler must be installed on the machine
+                  running the indexer (<code>brew install poppler</code> on macOS).
+                </p>
+                <p style="margin-top:12px">
+                  Indexing is manual-only. Nothing indexes on server start or during a visitor
+                  request.
+                </p>
+              </section>
+
+              <section class="pd-section">
+                <h2 class="pd-section-title">Deployment (Hostinger)</h2>
+                <p>This repo deploys as a bundled Express app on Hostinger Node.js v20.</p>
+                <p style="margin-top:16px"><strong>hPanel settings:</strong></p>
+                <table class="rm-table" style="margin-top:12px">
+                  <thead>
+                    <tr>
+                      <th>Setting</th>
+                      <th>Value</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Framework preset</td>
+                      <td>Other</td>
+                    </tr>
+                    <tr>
+                      <td>Root directory</td>
+                      <td><code>./</code></td>
+                    </tr>
+                    <tr>
+                      <td>Node.js version</td>
+                      <td><code>20.x</code></td>
+                    </tr>
+                    <tr>
+                      <td>Output directory</td>
+                      <td><em>leave blank</em></td>
+                    </tr>
+                    <tr>
+                      <td>Build command</td>
+                      <td><code>npm install &amp;&amp; npm run build</code></td>
+                    </tr>
+                    <tr>
+                      <td>Entry file</td>
+                      <td><code>server.bundle.js</code></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p style="margin-top:16px"><strong>Runtime environment variables</strong> (set in hPanel):</p>
+                <pre class="code-block" style="margin-top:12px">NODE_ENV=production
+HOST=0.0.0.0
+PORT=5000
+SQLITE_DATABASE_URL=/home/&lt;username&gt;/path/to/creatrweb.sqlite
+MISTRAL_API_KEY=...
+AGENT_ID=...</pre>
+                <p style="margin-top:12px">
+                  <code>SQLITE_DATABASE_URL</code> must be an absolute path on Hostinger —
+                  relative paths are not resolved correctly under Phusion Passenger.
+                </p>
+                <p style="margin-top:12px">
+                  <code>esbuild</code> and <code>dotenv</code> are listed under
+                  <code>dependencies</code> (not <code>devDependencies</code>) because Hostinger
+                  installs only production dependencies before running the build step. Both are
+                  required at build time.
+                </p>
+              </section>
 
             </main>
           </div>

@@ -511,3 +511,13 @@
 - **Correction:** Removed the unused `document_embeddings` table from `lib/schema.ts` to clean up the codebase.
 - **Optimization:** Added in-memory caching for the `embeddings.json` content in `src/routes/chat.ts` to ensure fast response times for chat requests.
 - **Context:** Documents are now sourced from a new `documents/` folder in the root directory.
+
+---
+
+## 2026-04-13 — Hybrid Document Parsing for RAG (Codex CLI)
+
+- **Decision:** Extended `scripts/rag-index.ts` to index top-level `.md`, `.txt`, `.html`, and `.pdf` files from `documents/` through a shared text-extraction pipeline.
+- **Correction:** Replaced the in-process PDF parsers with Poppler's `pdftotext` after both `pdf-parse` and `pdfreader` failed on real project PDFs.
+- **Decision:** Kept HTML parsing dependency-light by converting `.html` files to text in-process instead of adding a separate HTML-to-text package.
+- **Constraint:** PDF ingestion remains mandatory for `documents/`; runtime fallbacks that skip PDFs are not allowed.
+- **Documentation:** Updated `docs/dependencies.md`, `README.md`, and `documents/README.md` to reflect the supported document formats and local Poppler-based PDF parsing behavior.
