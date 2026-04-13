@@ -66,3 +66,4 @@
 2026-04-11 · CORRECTION · "Error: Failed to connect to backend" in the terminal chat means fetch() itself threw — the server crashed or the TCP connection was reset. It does NOT mean the server returned a JSON error. JSON errors produce "Error: [message]" instead.
 2026-04-11 · DECISION · Hostinger production-only installs require build-critical packages like esbuild and dotenv to live in dependencies for the Express bundle contract to work.
 2026-04-11 · CORRECTION · The repo README had stale Astro deployment guidance after the Express migration and must stay aligned with the current Hostinger entry file and build flow.
+2026-04-12 · DECISION · Current deployment contract remains Express + esbuild + `server.bundle.js`; local `.next/` and similar framework runtime artifacts are legacy leftovers, while historical deployment notes stay preserved in project records.

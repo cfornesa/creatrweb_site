@@ -18,6 +18,7 @@
 - **Database:** SQLite at `./data/creatrweb.sqlite` via Drizzle ORM.
   `SQLITE_DATABASE_URL` is set in `.env` locally and in hPanel on
   Hostinger. `.env` and `data/` are in `.gitignore` and do not deploy.
+  RAG context is stored separately in `embeddings.json`.
 - **Version pin:** `express@^4`, `esbuild@^0.25`, `tsx@4.21.0` (pinned),
   Node `20.x`
 - **Build artifact:** `server.bundle.js` is gitignored. Hostinger builds
@@ -304,11 +305,22 @@
 - **EVAL_PROMPT.md Consolidation:** Confirmed `EVAL_PROMPT.md` remains at the root directory. Updated `README.md` and `app/(system)/readme/page.tsx` (manually by user) to remove stale references to `docs/eval-prompt.md`.
 - **Template Separation:** Confirmed that `public/markdown/` files serve as immutable templates and must remain separate from root-level active project documentation.
 
-### Unresolved Checkpoints entering Phase 3
-- [ ] Run `npx drizzle-kit generate && npx drizzle-kit migrate` for `document_embeddings` table.
-- [ ] Implement Phase 3 content routes and admin panel as per the project plan.
-
 ---
+
+## 2026-04-12 — Chat Route and Port Fix (Gemini CLI)
+
+- **Decision:** Renamed the chatbot endpoint from `/chat` to `/api/api/chat`. This reduces the risk of the route being blocked by Hostinger's Web Application Firewall (WAF) or other hosting-level security filters which often flag root-level `/chat` paths.
+- **Decision:** Changed the default development port from `5000` to `3000` in `server.ts`. This avoids `EADDRINUSE` conflicts on macOS workstations where port 5000 is often reserved by AirPlay Receiver.
+- **Correction:** Enhanced the `extractErrorMessage` logic in `src/routes/chat.ts` to handle Mistral AI error bodies that are either non-JSON or contain a `detail` field instead of a `message` field.
+- **Correction:** Added explicit `console.error` logging for server-side configuration gaps (missing API keys or database URLs) to improve debugging speed.
+- **Deployment Guidance:** Confirmed that `SQLITE_DATABASE_URL` on Hostinger must use an absolute path (`/home/u276695328/...`) to ensure the `better-sqlite3` driver resolves the file correctly under Phusion Passenger.
+
+### Environment Variables Required
+- SQLITE_DATABASE_URL (Absolute path for Hostinger)
+- MISTRAL_API_KEY
+- AGENT_ID
+- PORT (Optional, defaults to 3000)
+
 
 ## 2026-04-11 — Local Dev Port Adjustment (Codex CLI)
 
@@ -466,3 +478,36 @@
   builds it at deploy time via `npm install && npm run build` in hPanel.
   Entry file in hPanel changed from `dist/server/entry.mjs` →
   `server.bundle.js`.
+
+---
+
+## 2026-04-12 — Runtime Artifact Cleanup + Build Verification (Codex CLI)
+
+- User confirmed that `./.agents`, `./.claude`, `./.gemini`, `./.github`,
+  `./docs`, `./public`, `./screenshots`, `./scripts`, `./src`, and root
+  markdown files must not be deleted under any circumstance.
+- User confirmed `./deprecated` and `./public_html` can be removed.
+- Cleanup policy for this session: preserve historical deployment notes in
+  `MEMORY.md` and `DECISIONS.md`, even when related runtime artifacts are
+  deleted from the repository.
+- Removed stale runtime artifacts and files no longer used by the current
+  Express deployment: `.next/`, `deprecated/`, `public_html/`,
+  `pm2.config.js`, `global.d.ts`, `tsconfig.tsbuildinfo`, `.DS_Store`.
+- Retained Drizzle runtime and migration files because the active routes
+  still open SQLite through Drizzle ORM for posts and webmentions.
+- Updated current-facing repo docs to match the active Express runtime while
+  leaving older Next/Astro notes intact in historical records.
+- Reinstalled dependencies with `npm install`; local `npm run build` now
+  succeeds and emits `server.bundle.js` via esbuild.
+
+---
+
+## 2026-04-12 — RAG Structure: JSON-based Vector Storage (Gemini CLI)
+
+- **Decision:** Shifted RAG storage from a SQLite database (`document_embeddings` table) to a flat JSON file (`embeddings.json`) in the root directory. This simplifies deployment and avoids database locking/schema issues on Hostinger.
+- **Decision:** Switched to Mistral Embeddings Model (`mistral-embed`) for all document chunking and user query embedding.
+- **Decision:** Implemented character-based chunking with overlap in `scripts/rag-index.ts` to improve retrieval context quality.
+- **Decision:** Indexing is now strictly manual via `npm run rag:index`. No indexing occurs during server startup or visitor interaction, fulfilling the "no indexing on deployment" requirement.
+- **Correction:** Removed the unused `document_embeddings` table from `lib/schema.ts` to clean up the codebase.
+- **Optimization:** Added in-memory caching for the `embeddings.json` content in `src/routes/chat.ts` to ensure fast response times for chat requests.
+- **Context:** Documents are now sourced from a new `documents/` folder in the root directory.

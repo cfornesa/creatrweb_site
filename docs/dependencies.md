@@ -10,23 +10,29 @@
 - Self-hosting alternative: Not applicable; build-time tool only, not used at runtime
 - License: MIT
 
-## astro
-- Purpose: Astro SSR/static framework for the public site routes and layouts
+## dotenv
+- Purpose: Loads local and deployment environment variables before the Express server and Drizzle config initialize
 - Sends data off-domain: NO
-- Self-hosting alternative: Not applicable; Astro is the self-hosted framework runtime
+- Self-hosting alternative: Not applicable; local configuration loader only
+- License: BSD-2-Clause
+
+## better-sqlite3
+- Purpose: Native SQLite driver used by the app runtime to open `SQLITE_DATABASE_URL`
+- Sends data off-domain: NO
+- Self-hosting alternative: Not applicable; local embedded database driver
 - License: MIT
 
-## @astrojs/node
-- Purpose: Node adapter that builds the Astro app into a single standalone server entrypoint for Hostinger
+## drizzle-orm
+- Purpose: Type-safe ORM layer used by the chat route and indexing scripts to read and write SQLite tables
 - Sends data off-domain: NO
-- Self-hosting alternative: Not applicable; this is the self-hosted deployment adapter
-- License: MIT
+- Self-hosting alternative: Not applicable; local query and schema layer
+- License: Apache-2.0
 
-## @astrojs/react
-- Purpose: React integration used to preserve the existing interactive widgets as Astro islands
+## drizzle-kit
+- Purpose: Migration and schema CLI for generating SQL files in `drizzle/` from `lib/schema.ts`
 - Sends data off-domain: NO
-- Self-hosting alternative: Not applicable; this is a local framework integration
-- License: MIT
+- Self-hosting alternative: Not applicable; local development and migration tool
+- License: Apache-2.0
 
 ## @mistralai/mistralai
 - Purpose: Mistral AI SDK for embeddings (RAG indexing) and agent completions (chat)

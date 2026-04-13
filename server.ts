@@ -7,7 +7,7 @@ import { chatHandler } from "./src/routes/chat";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
-const PORT = Number(process.env.PORT ?? 5000);
+const PORT = Number(process.env.PORT ?? 3001);
 const HOST = process.env.HOST ?? "127.0.0.1";
 
 app.use(express.json());
@@ -28,7 +28,7 @@ Object.entries(pageRoutes).forEach(([route, file]) => {
   });
 });
 
-app.post("/chat", chatHandler);
+app.post("/api/chat", chatHandler);
 
 app.listen(PORT, HOST, () => {
   console.log(`[server] Listening on http://${HOST}:${PORT}`);

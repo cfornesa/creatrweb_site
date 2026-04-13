@@ -43,10 +43,3 @@ export const auth_codes = sqliteTable("auth_codes", {
   me: text("me").notNull(),
   expires_at: text("expires_at").notNull(),
 });
-
-export const document_embeddings = sqliteTable("document_embeddings", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  file_path: text("file_path").notNull(),
-  content: text("content").notNull(),
-  embedding: text("embedding").notNull(), // JSON stringified array of floats
-});

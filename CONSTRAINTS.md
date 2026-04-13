@@ -32,3 +32,9 @@ directive on any page that renders microformats2 markup.
 SCOPE: app/(system)/page.tsx and any future route page that includes h-card,
 h-entry, h-feed, or h-cite markup.
 SET: 2026-04-09
+
+CONSTRAINT: Preserve historical deployment notes in root project record files even
+after related runtime artifacts are removed from the repository.
+SCOPE: `MEMORY.md`, `DECISIONS.md`, and any cleanup that touches root-level project
+history documentation.
+SET: 2026-04-12

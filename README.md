@@ -294,12 +294,11 @@ agent should load at session start:
   ],
   "ignore": [
     "node_modules",
-    ".next",
+    "server.bundle.js",
     ".env",
     ".env.*",
-    "dist",
-    "build",
-    "*.lock"
+    "data",
+    "*.tsbuildinfo"
   ]
 }
 ```

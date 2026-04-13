@@ -1,7 +1,32 @@
 import type { RequestHandler } from "express";
 import { Mistral } from "@mistralai/mistralai";
-import { createDb } from "@/lib/db";
-import { document_embeddings } from "@/lib/schema";
+import fs from "fs";
+import path from "path";
+
+interface DocumentChunk {
+  file_path: string;
+  content: string;
+  embedding: number[];
+}
+
+let cachedEmbeddings: DocumentChunk[] | null = null;
+
+function loadEmbeddings(): DocumentChunk[] {
+  if (cachedEmbeddings) return cachedEmbeddings;
+  const filePath = path.join(process.cwd(), "embeddings.json");
+  if (!fs.existsSync(filePath)) {
+    console.warn("[Chat] embeddings.json not found. RAG context will be empty. Run 'npm run rag:index' to generate it.");
+    return [];
+  }
+  try {
+    const data = fs.readFileSync(filePath, "utf-8");
+    cachedEmbeddings = JSON.parse(data);
+    return cachedEmbeddings || [];
+  } catch (err) {
+    console.error("[Chat] Error reading embeddings.json:", err);
+    return [];
+  }
+}
 
 function cosineSimilarity(a: number[], b: number[]): number {
   let dotProduct = 0;
@@ -20,16 +45,14 @@ function cosineSimilarity(a: number[], b: number[]): number {
 function getChatConfig() {
   const apiKey = process.env.MISTRAL_API_KEY;
   const agentId = process.env.AGENT_ID;
-  const databaseUrl = process.env.SQLITE_DATABASE_URL;
 
-  if (!apiKey || !agentId || !databaseUrl) {
+  if (!apiKey || !agentId) {
     return null;
   }
 
   return {
     agentId,
     client: new Mistral({ apiKey }),
-    databaseUrl,
   };
 }
 
@@ -65,13 +88,14 @@ function extractErrorMessage(error: unknown): string {
   if (error && typeof error === "object") {
     if ("body" in error && typeof error.body === "string") {
       try {
-        const parsed = JSON.parse(error.body) as { message?: unknown };
+        const parsed = JSON.parse(error.body) as { message?: unknown; detail?: unknown };
+        const msg = (parsed.message ?? parsed.detail) as string | undefined;
 
-        if (typeof parsed.message === "string" && parsed.message.trim()) {
-          return parsed.message;
+        if (typeof msg === "string" && msg.trim()) {
+          return msg;
         }
       } catch {
-        // Ignore malformed JSON and fall through to other error shapes.
+        if (error.body.trim()) return error.body.trim();
       }
     }
 
@@ -84,7 +108,7 @@ function extractErrorMessage(error: unknown): string {
     }
   }
 
-  return "Failed to connect to Mistral AI";
+  return "An unexpected error occurred while connecting to the AI service.";
 }
 
 export const chatHandler: RequestHandler = async (req, res) => {
@@ -93,13 +117,12 @@ export const chatHandler: RequestHandler = async (req, res) => {
     const chatConfig = getChatConfig();
 
     if (!chatConfig) {
+      console.error("[Chat] Configuration missing: MISTRAL_API_KEY or AGENT_ID");
       res
         .status(500)
-        .json({ error: "Configuration error" });
+        .json({ error: "Server configuration error. Please check environment variables." });
       return;
     }
-
-    const { db, sqlite } = createDb(chatConfig.databaseUrl);
 
     try {
       const embeddingResponse = await chatConfig.client.embeddings.create({
@@ -110,34 +133,30 @@ export const chatHandler: RequestHandler = async (req, res) => {
       const queryVector = embeddingResponse.data[0]?.embedding;
 
       if (!queryVector) {
-        res
-          .status(500)
-          .json({ error: "Failed to generate embedding" });
-        return;
+        throw new Error("Failed to generate embedding: No data returned from Mistral.");
       }
 
-      const allDocs = await db.select().from(document_embeddings);
+      const allDocs = loadEmbeddings();
       const scoredDocs = allDocs
         .map((doc) => {
-          const docVector = JSON.parse(doc.embedding) as number[];
           return {
             ...doc,
-            score: cosineSimilarity(queryVector, docVector),
+            score: cosineSimilarity(queryVector, doc.embedding),
           };
         })
         .sort((a, b) => b.score - a.score);
 
       const context = scoredDocs
-        .slice(0, 3)
-        .map((doc) => doc.content)
-        .join("\n\n");
+        .slice(0, 5) // Increased to 5 chunks for better context since we have smaller chunks now
+        .map((doc) => `[Source: ${doc.file_path}]\n${doc.content}`)
+        .join("\n\n---\n\n");
 
       const chatResponse = await chatConfig.client.agents.complete({
         agentId: chatConfig.agentId,
         messages: [
           {
             role: "system",
-            content: `You are a terminal-based AI for Creatrweb. Use the following context if relevant: ${context}`,
+            content: `You are a terminal-based AI for Creatrweb. Use the following context if relevant to answer the user's question. If the context is not relevant, rely on your general knowledge but maintain the persona.\n\nCONTEXT:\n${context}`,
           },
           { role: "user", content: message ?? "" },
         ],
@@ -148,11 +167,12 @@ export const chatHandler: RequestHandler = async (req, res) => {
         "I'm sorry, I couldn't process that.";
 
       res.status(200).json({ reply });
-    } finally {
-      sqlite.close();
+    } catch (innerError) {
+        throw innerError;
     }
   } catch (error) {
-    console.error("Chat API error:", error);
-    res.status(500).json({ error: extractErrorMessage(error) });
+    console.error("Chat API error details:", error);
+    const message = extractErrorMessage(error);
+    res.status(500).json({ error: message });
   }
 };
