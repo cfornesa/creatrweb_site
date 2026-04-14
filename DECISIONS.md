@@ -531,3 +531,22 @@
 - **Decision:** Kept HTML parsing dependency-light by converting `.html` files to text in-process instead of adding a separate HTML-to-text package.
 - **Constraint:** PDF ingestion remains mandatory for `documents/`; runtime fallbacks that skip PDFs are not allowed.
 - **Documentation:** Updated `docs/dependencies.md`, `README.md`, and `documents/README.md` to reflect the supported document formats and local Poppler-based PDF parsing behavior.
+## 2026-04-14 â€” Local CLI Resolution Repair (Codex CLI)
+
+- Investigated local Windows failures where `npm run dev` reported
+  `'tsx' is not recognized` and `npm run build` reported
+  `'esbuild' is not recognized`.
+- Confirmed the script definitions and lockfile were correct; the actual
+  local issue was a missing or partial `node_modules` tree on this PC.
+- Confirmed this machine had npm running with `offline=true`, which
+  prevented missing packages from being downloaded until the install was
+  rerun with offline mode disabled.
+- Repaired local dependencies with `npm install`, restoring the local
+  `tsx` and `esbuild` binaries under `node_modules/.bin`.
+- Verified `npm run build` now succeeds and emits `server.bundle.js`.
+- Verified the remaining local `tsx --watch` `spawn EPERM` failure was a
+  sandbox artifact during agent execution, not a repo script defect; the
+  same commands stayed running under unrestricted execution.
+- Confirmed this PC is using Node `v24.14.1` while the repo declares
+  `20.x`; this did not block the build, but it remains an environment
+  mismatch relative to the project profile and Hostinger runtime.

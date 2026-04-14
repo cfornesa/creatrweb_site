@@ -75,3 +75,5 @@
 2026-04-14 · PREFERENCE · Use High-Contrast Focus Outline (3px solid var(--accent-orange)) for :focus-visible project-wide.
 2026-04-14 · DECISION · Darkened --accent-orange to #d35400 in light mode to meet WCAG AA contrast standards (4.79:1).
 2026-04-14 · DECISION · Terminal modal implements focus trapping, Escape key listener, and focus restoration to the trigger element.
+2026-04-14 Â· CORRECTION Â· Local tsx/esbuild failures on this Windows PC were caused by a missing or partial node_modules install, not by broken npm scripts.
+2026-04-14 Â· DECISION Â· This repo expects Node 20.x for environment parity even though local build may still pass on Node 24.

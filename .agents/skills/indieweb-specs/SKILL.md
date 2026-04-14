@@ -1,8 +1,11 @@
 ---
 name: indieweb-specs
-
-description:
-  > Reference for implementing IndieWeb specifications in priority order. Load this skill when implementing or modifying rel=me, microformats2, Webmention, IndieAuth, Micropub, or WebSub — or when the person asks about IndieWeb building blocks, spec compliance, or interoperability. Do not load for general design questions or non-spec work.
+description: >
+  Reference for implementing IndieWeb specifications in priority order. Load this
+  skill when implementing or modifying rel=me, microformats2, Webmention,
+  IndieAuth, Micropub, or WebSub — or when the person asks about IndieWeb
+  building blocks, spec compliance, or interoperability. Do not load for
+  general design questions or non-spec work.
 ---
 
 # IndieWeb Specifications — Implement in Priority Order
