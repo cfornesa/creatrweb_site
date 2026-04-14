@@ -1,24 +1,20 @@
 {
-  "context": [
-    "AGENTS.md",
-    "DECISIONS.md",
-    "CONSTRAINTS.md",
-    "DESIGN.md",
-    "MEMORY.md",
-    ".agents/skills/gallery-format/SKILL.md",
-    ".agents/skills/socratic-depth/SKILL.md",
-    ".agents/skills/indieweb-specs/SKILL.md",
-    ".agents/skills/indieweb-principles/SKILL.md",
-    ".agents/skills/posse-syndication/SKILL.md",
-    ".agents/skills/design-workflow/SKILL.md"
-  ],
-  "ignore": [
-    "node_modules",
-    ".next",
-    ".env",
-    ".env.*",
-    "dist",
-    "build",
-    "*.lock"
-  ]
+  "context": {
+    "fileName": [
+      "AGENTS.md",
+      "DECISIONS.md",
+      "CONSTRAINTS.md",
+      "DESIGN.md",
+      "MEMORY.md",
+      ".agents/skills/gallery-format/SKILL.md",
+      ".agents/skills/socratic-depth/SKILL.md",
+      ".agents/skills/indieweb-specs/SKILL.md",
+      ".agents/skills/indieweb-principles/SKILL.md",
+      ".agents/skills/posse-syndication/SKILL.md",
+      ".agents/skills/design-workflow/SKILL.md"
+    ],
+    "fileFiltering": {
+      "respectGitIgnore": true
+    }
+  }
 }

@@ -17,27 +17,27 @@
 
     <div class="monitor-frame">
       <div class="monitor-screen">
-        <div class="desktop-toolbar">
-          <div class="desktop-toolbar-title"></div>
-          <div class="desktop-toolbar-time"></div>
-        </div>
+        <header class="desktop-toolbar">
+          <div class="desktop-toolbar-title" aria-live="polite"></div>
+          <div class="desktop-toolbar-time" aria-live="polite"></div>
+        </header>
         <div class="monitor-content">
 
           <div class="hcard-wrapper">
 
             <!-- H-Card microformats: server-rendered static HTML -->
-            <div class="h-card grid-container">
+            <div class="h-card grid-container" role="region" aria-label="Identity Card">
 
               <!-- Box 1: Identity -->
               <div class="bento-box identity-box">
-                <div class="mac-title-bar">
+                <div class="mac-title-bar" aria-hidden="true">
                   <span class="mac-dot mac-red"></span>
                   <span class="mac-dot mac-yellow"></span>
                   <span class="mac-dot mac-green"></span>
                 </div>
                 <img
                   src="/guide.png"
-                  alt="Creatrweb"
+                  alt="Creatrweb Logo"
                   width="140"
                   height="140"
                   loading="eager"
@@ -50,37 +50,37 @@
 
               <!-- Box 2: Mission/Note -->
               <div class="bento-box mission-box">
-                <div class="mac-title-bar">
+                <div class="mac-title-bar" aria-hidden="true">
                   <span class="mac-dot mac-red"></span>
                   <span class="mac-dot mac-yellow"></span>
                   <span class="mac-dot mac-green"></span>
                 </div>
-                <div class="symbol-icon">✦</div>
+                <div class="symbol-icon" aria-hidden="true">✦</div>
                 <div class="p-note hcard-note">
                   Identity-First Creative Framework for using AI technology to enhance creativity, decentralization and personal ownership of content. Built with Express, TypeScript, and SQLite. Emphasizes user control, privacy, and a seamless creative experience.
                 </div>
               </div>
 
               <!-- Box 3: Social Profiles -->
-              <div class="bento-box social-box">
-                <div class="mac-title-bar">
+              <nav class="bento-box social-box" aria-label="Social Profiles">
+                <div class="mac-title-bar" aria-hidden="true">
                   <span class="mac-dot mac-red"></span>
                   <span class="mac-dot mac-yellow"></span>
                   <span class="mac-dot mac-green"></span>
                 </div>
-                <a href="https://instagram.com/creatrweb" rel="me" class="u-url social-link">
-                  <div class="social-icon-graphic">⊛</div>
+                <a href="https://instagram.com/creatrweb" rel="me" class="u-url social-link" aria-label="Instagram Profile">
+                  <div class="social-icon-graphic" aria-hidden="true">⊛</div>
                   <span class="social-label">Instagram</span>
                 </a>
-                <a href="https://x.com/creatrweb" rel="me" class="u-url social-link">
-                  <div class="social-icon-graphic">⊛</div>
+                <a href="https://x.com/creatrweb" rel="me" class="u-url social-link" aria-label="X (formerly Twitter) Profile">
+                  <div class="social-icon-graphic" aria-hidden="true">⊛</div>
                   <span class="social-label">X</span>
                 </a>
-                <a href="https://www.tiktok.com/@creatrweb" rel="me" class="u-url social-link">
-                  <div class="social-icon-graphic">⊛</div>
+                <a href="https://www.tiktok.com/@creatrweb" rel="me" class="u-url social-link" aria-label="TikTok Profile">
+                  <div class="social-icon-graphic" aria-hidden="true">⊛</div>
                   <span class="social-label">TikTok</span>
                 </a>
-              </div>
+              </nav>
 
             </div>
             <!-- /h-card -->
@@ -88,7 +88,7 @@
             <!-- Drawer card -->
             <div class="drawer-container">
               <article class="drawer-card">
-                <div class="mac-title-bar">
+                <div class="mac-title-bar" aria-hidden="true">
                   <span class="mac-dot mac-red"></span>
                   <span class="mac-dot mac-yellow"></span>
                   <span class="mac-dot mac-green"></span>
@@ -104,41 +104,41 @@
             </div>
 
             <!-- Desktop icons -->
-            <div class="desktop-area">
-              <a href="/readme" class="desktop-icon">
-                <div class="icon-graphic">📄</div>
+            <nav class="desktop-area" aria-label="Desktop icons">
+              <a href="/readme" class="desktop-icon" aria-label="Read documentation">
+                <div class="icon-graphic" aria-hidden="true">📄</div>
                 <span class="icon-label">Readme</span>
               </a>
 
-              <a href="/projects" class="desktop-icon">
-                <div class="icon-graphic">📁</div>
+              <a href="/projects" class="desktop-icon" aria-label="View studio journal">
+                <div class="icon-graphic" aria-hidden="true">📁</div>
                 <span class="icon-label">Studio Journal</span>
               </a>
 
-              <a href="https://augmenthumankind.com" target="_blank" rel="noopener noreferrer" class="desktop-icon">
-                <div class="icon-graphic">🌐</div>
+              <a href="https://augmenthumankind.com" target="_blank" rel="noopener noreferrer" class="desktop-icon" aria-label="Visit Augment Humankind site (opens in new window)">
+                <div class="icon-graphic" aria-hidden="true">🌐</div>
                 <span class="icon-label">Augment Humankind</span>
               </a>
 
-              <button id="terminal-trigger" class="desktop-icon terminal-icon" type="button">
-                <div class="icon-graphic">⌨️</div>
+              <button id="terminal-trigger" class="desktop-icon terminal-icon" type="button" aria-label="Open Terminal">
+                <div class="icon-graphic" aria-hidden="true">⌨️</div>
                 <span class="icon-label">Terminal</span>
               </button>
-            </div>
+            </nav>
 
           </div>
 
         </div>
       </div>
-      <div class="monitor-stand"></div>
-      <div class="monitor-base"></div>
+      <div class="monitor-stand" aria-hidden="true"></div>
+      <div class="monitor-base" aria-hidden="true"></div>
     </div>
 
-    <div class="mobile-nav-pill">
-      <a id="pill-back" class="pill-link" href="https://augmenthumankind.com">←</a>
-      <div class="pill-title"></div>
-      <button id="pill-chat" class="pill-button" type="button" title="Chat">💬</button>
-    </div>
+    <nav class="mobile-nav-pill" aria-label="Mobile navigation">
+      <a id="pill-back" class="pill-link" href="https://augmenthumankind.com" aria-label="Go back">←</a>
+      <div class="pill-title" aria-live="polite"></div>
+      <button id="pill-chat" class="pill-button" type="button" aria-label="Open Terminal Chat">💬</button>
+    </nav>
   </main>
 
   <script src="/js/app.js"></script>

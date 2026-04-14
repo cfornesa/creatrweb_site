@@ -184,6 +184,14 @@
   box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.1);
 }
 
+/* Specific focus state for cards to avoid double outlines */
+.drawer-card:focus-visible,
+.bento-box:focus-visible,
+.project-card:focus-visible {
+  outline: 3px solid var(--accent-orange);
+  outline-offset: 8px;
+}
+
 @media (prefers-color-scheme: dark) {
   .drawer-card { box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.5); }
   .drawer-card:hover { box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.5); }

@@ -71,3 +71,7 @@
 2026-04-13 · STACK · PDF ingestion uses the local Apache-2.0 package `pdf-parse`, while HTML is converted to text without adding a second parser dependency.
 2026-04-13 · CORRECTION · In-process PDF parsers failed on real project PDFs, so local PDF extraction for RAG indexing now uses Poppler's `pdftotext` CLI.
 2026-04-13 · STACK · The RAG indexer supports `.md`, `.txt`, `.html`, and `.pdf`, with PDFs extracted locally through `pdftotext` rather than an npm PDF parser.
+2026-04-14 · DECISION · Accessibility guidelines (semantic HTML, ARIA labels, keyboard navigation, contrast) implemented across all public HTML, CSS, and JS files.
+2026-04-14 · PREFERENCE · Use High-Contrast Focus Outline (3px solid var(--accent-orange)) for :focus-visible project-wide.
+2026-04-14 · DECISION · Darkened --accent-orange to #d35400 in light mode to meet WCAG AA contrast standards (4.79:1).
+2026-04-14 · DECISION · Terminal modal implements focus trapping, Escape key listener, and focus restoration to the trigger element.

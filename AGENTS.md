@@ -261,6 +261,8 @@ the output good.
 **Webmention integrity:** Webmention sending must be human-initiated or explicitly
 scheduled. Never auto-send.
 
+**Accessibility:** Accessibility is not an afterthought. Disability-friendly implementation details, including: semantic HTML, ARIA labels, keyboard navigation, sufficient contrast, are required, not optional additions.
+
 ---
 
 ## Starting a New Feature — Ask First

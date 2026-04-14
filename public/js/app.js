@@ -75,6 +75,7 @@
   ];
   var isTyping = false;
   var terminalEl = null;
+  var lastFocusedElement = null;
 
   function renderHistory() {
     var body = document.getElementById("terminal-body");
@@ -101,6 +102,39 @@
       terminalEl = null;
     }
     document.body.style.overflow = "";
+    document.removeEventListener("keydown", handleTerminalGlobalKeydown);
+
+    if (lastFocusedElement) {
+      lastFocusedElement.focus();
+      lastFocusedElement = null;
+    }
+  }
+
+  function handleTerminalGlobalKeydown(e) {
+    if (e.key === "Escape") {
+      closeTerminal();
+      return;
+    }
+
+    if (e.key === "Tab") {
+      var focusableElements = terminalEl.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      var firstElement = focusableElements[0];
+      var lastElement = focusableElements[focusableElements.length - 1];
+
+      if (e.shiftKey) {
+        if (document.activeElement === firstElement) {
+          lastElement.focus();
+          e.preventDefault();
+        }
+      } else {
+        if (document.activeElement === lastElement) {
+          firstElement.focus();
+          e.preventDefault();
+        }
+      }
+    }
   }
 
   async function sendMessage(msg) {
@@ -176,26 +210,31 @@
   function openTerminal() {
     if (terminalEl) return;
 
+    lastFocusedElement = document.activeElement;
+
     var overlay = document.createElement("div");
     overlay.className = "terminal-overlay";
     overlay.id = "terminal-overlay";
+    overlay.setAttribute("role", "dialog");
+    overlay.setAttribute("aria-modal", "true");
+    overlay.setAttribute("aria-label", "Creatrweb Terminal");
 
     overlay.innerHTML =
       '<div class="terminal-window">' +
         '<div class="terminal-header">' +
-          '<div class="mac-title-bar">' +
+          '<div class="mac-title-bar" aria-hidden="true">' +
             '<span class="mac-dot mac-red"></span>' +
             '<span class="mac-dot mac-yellow"></span>' +
             '<span class="mac-dot mac-green"></span>' +
           "</div>" +
-          '<span class="header-title">Creatrweb OS Terminal</span>' +
+          '<span class="terminal-header-title">Creatrweb OS Terminal</span>' +
           '<button id="terminal-close" class="terminal-close" type="button" aria-label="Close terminal">\u00d7</button>' +
         "</div>" +
         '<div class="terminal-body" id="terminal-body"></div>' +
         '<form class="terminal-footer" id="terminal-form">' +
-          '<span class="terminal-prompt">&gt;</span>' +
+          '<span class="terminal-prompt" aria-hidden="true">&gt;</span>' +
           '<input type="text" id="terminal-command-input" name="terminal-command" ' +
-            'class="terminal-input" autocomplete="off" autofocus />' +
+            'class="terminal-input" autocomplete="off" aria-label="Terminal input" />' +
         "</form>" +
       "</div>";
 
@@ -207,6 +246,7 @@
 
     document.getElementById("terminal-close").addEventListener("click", closeTerminal);
     document.getElementById("terminal-form").addEventListener("submit", handleTerminalSubmit);
+    document.addEventListener("keydown", handleTerminalGlobalKeydown);
 
     overlay.addEventListener("click", function (e) {
       if (e.target === overlay) closeTerminal();

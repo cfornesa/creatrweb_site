@@ -514,6 +514,16 @@
 
 ---
 
+## 2026-04-14 — Accessibility Guidelines Implementation (Gemini CLI)
+
+- **Decision:** Implemented project-wide accessibility standards (semantic HTML, ARIA labels, keyboard navigation, contrast) as mandated by the updated root `AGENTS.md`.
+- **Decision:** Converted all primary navigation areas to `<nav>` elements and wrapped the desktop toolbar in a `<header>` to improve screen reader document outlines.
+- **Decision:** Modified the light-mode `--accent-orange` from `#e67e22` to `#d35400` to achieve a 4.79:1 contrast ratio against the off-white background, satisfying WCAG AA requirements (4.5:1 minimum).
+- **Decision:** Adopted a "High-Contrast Focus Outline" (3px solid `var(--accent-orange)`) for all interactive elements via `:focus-visible` in `globals.css` to ensure visible focus states for keyboard users.
+- **Correction:** Enhanced the terminal modal in `public/js/app.js` with focus trapping, `Escape` key support, and focus restoration to the trigger element upon closing.
+- **Decision:** Added `aria-hidden="true"` to all decorative system elements (macOS-style dots, symbol icons, monitor stand/base) to reduce screen reader noise.
+- **Decision:** Updated all detail pages (`/projects`, `/readme`, etc.) with consistent ARIA labels for back links and interactive cards.
+
 ## 2026-04-13 — Hybrid Document Parsing for RAG (Codex CLI)
 
 - **Decision:** Extended `scripts/rag-index.ts` to index top-level `.md`, `.txt`, `.html`, and `.pdf` files from `documents/` through a shared text-extraction pipeline.

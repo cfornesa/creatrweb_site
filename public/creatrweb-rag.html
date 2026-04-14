@@ -17,16 +17,16 @@
 
     <div class="monitor-frame">
       <div class="monitor-screen">
-        <div class="desktop-toolbar">
-          <div class="desktop-toolbar-title"></div>
-          <div class="desktop-toolbar-time"></div>
-        </div>
+        <header class="desktop-toolbar">
+          <div class="desktop-toolbar-title" aria-live="polite"></div>
+          <div class="desktop-toolbar-time" aria-live="polite"></div>
+        </header>
         <div class="monitor-content">
 
           <div class="pd-container">
             <header class="pd-header">
-              <a href="/projects" class="pd-back-link">← Back to Projects</a>
-              <div class="pd-symbol-hero">⊛</div>
+              <a href="/projects" class="pd-back-link" aria-label="Go back to projects">← Back to Projects</a>
+              <div class="pd-symbol-hero" aria-hidden="true">⊛</div>
               <h1 class="pd-title">Creatrweb RAG</h1>
               <div class="pd-tags">
                 <span class="pd-tag">Mistral AI</span>
@@ -35,7 +35,7 @@
               </div>
             </header>
 
-            <main class="pd-content">
+            <section class="pd-content">
               <section class="pd-section">
                 <h2 class="pd-section-title">Overview</h2>
                 <p>
@@ -54,20 +54,20 @@
                   <li><strong>Local-First:</strong> Keeps your documents on your machine for maximum security and ownership.</li>
                 </ul>
               </section>
-            </main>
+            </section>
           </div>
 
         </div>
       </div>
-      <div class="monitor-stand"></div>
-      <div class="monitor-base"></div>
+      <div class="monitor-stand" aria-hidden="true"></div>
+      <div class="monitor-base" aria-hidden="true"></div>
     </div>
 
-    <div class="mobile-nav-pill">
-      <a id="pill-back" class="pill-link" href="/projects">←</a>
-      <div class="pill-title"></div>
-      <button id="pill-chat" class="pill-button" type="button" title="Chat">💬</button>
-    </div>
+    <nav class="mobile-nav-pill" aria-label="Mobile navigation">
+      <a id="pill-back" class="pill-link" href="/projects" aria-label="Go back to projects">←</a>
+      <div class="pill-title" aria-live="polite"></div>
+      <button id="pill-chat" class="pill-button" type="button" aria-label="Open Terminal Chat">💬</button>
+    </nav>
   </main>
 
   <script src="/js/app.js"></script>

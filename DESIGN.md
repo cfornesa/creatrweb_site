@@ -112,7 +112,7 @@
 - **Color direction:**
   <!-- Documented from implementation 2026-04-11 -->
   Two-mode palette. Light: warm off-white ground (`#fffdfa`), dark blue-grey text
-  (`#2c3e50`), warm beige card surface (`#f9f6f0`), orange accent (`#e67e22`).
+  (`#2c3e50`), warm beige card surface (`#f9f6f0`), orange accent (`#d35400`).
   Dark: deep charcoal (`#1a1814`), warm off-white text (`#f4f0ea`), golden-orange
   accent (`#f39c12`). One accent color used sparingly — on identity photo border,
   organisation label, icon hover state. Terminal uses its own isolated palette:
@@ -208,6 +208,12 @@
 
 2026-04-11 · DIRECTION · Framework changes should happen beneath the surface; the retro hardware metaphor and existing UI weight must survive architectural rewrites intact.
     [User request: revise and implement the migration plan while preserving the site's original aesthetic design.]
+
+2026-04-14 · DIRECTION · Chose a high-contrast focus outline (3px solid var(--accent-orange)) for accessibility — ensuring keyboard navigation is visible without breaking the neo-brutalist aesthetic.
+    [Consistent with Rule 4: "Amplify their judgment; do not substitute for it" - chose a style that fits the established brand]
+
+2026-04-14 · REFUSAL · Modified the primary accent color (#e67e22 -> #d35400) in light mode to meet WCAG AA contrast standards — prioritizing accessibility over the original brand hex.
+    [User confirmation of the trade-off between brand color and accessibility compliance]
 
 ---
 
