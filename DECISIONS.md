@@ -514,6 +514,30 @@
 
 ---
 
+## 2026-04-14 — README Style Integration (Gemini CLI)
+
+- **Correction:** Removed all 15 inline `style="..."` attributes from `public/readme.html` to improve maintainability and ensure full integration with the site's design system.
+- **Decision:** Created semantic utility classes (`.rm-mt-12`, `.rm-mt-16`, `.rm-list`, `.rm-footer-note`) in `public/styles/app.css` to replace the inline styles.
+- **Enforcement:** All future styles for the README page must be defined in the stylesheet rather than via inline attributes to adhere to the project's architectural standards.
+
+## 2026-04-14 — Isometric Desk Scene Reversal & 2D Abstract Implementation (Gemini CLI)
+
+- **Correction:** Reversed the initial 3D isometric desk scene implementation in favor of a 2D flat approach to maintain strict visual consistency with the site's neo-brutalist aesthetic.
+- **Decision:** Implemented a "cozy workspace diorama" using flat 2D CSS shapes.
+- **Decision:** The scene includes a horizontal flat glass desk (backdrop blur), modern legs, and geometric profiles of a keyboard, mouse, and white mug.
+- **Visual Consistency:** Peripherals use flat 2D shapes with `4px 4px 0px` hard offset shadows. Keyboard and mouse colors match the monitor frame borders.
+- **Aesthetic Alignment:** The 2D abstract geometry grounds the monitor in a physical scene without introducing the depth distortion of 3D transforms, satisfying the user's preference for a cozy but flat theme.
+
+## 2026-04-14 — Isometric Desk Scene Implementation (Gemini CLI)
+
+- **Decision:** Implemented a "cozy workspace diorama" for desktop mode (viewports > 1024px) by adding an isometric desk scene around the iMac monitor frame.
+- **Decision:** The scene includes a glass table top (glassmorphism via `backdrop-filter`), modern dark legs, and CSS-drawn peripherals (keyboard, mouse, white mug).
+- **Decision:** Utilized CSS 3D transforms (`rotateX`, `perspective`) on a `.desk-surface` element to create realistic isometric depth for the desk peripherals.
+- **Visual Consistency:** Keyboard and mouse match the iMac's frame colors (light: `#d4d0c8`, dark: `#333`).
+- **Correction:** Wrapped the new scene in a media query to ensure it only renders on desktop, preserving the existing mobile Safari-inspired navigation.
+- **Accessibility:** All new decorative elements are marked `aria-hidden="true"` and `pointer-events: none` to avoid interfering with screen readers or UI interaction.
+- **Aesthetic Shift:** This change transitions the site's desktop experience from an abstract framing metaphor to a literal, cozy physical scene, as requested by the user to better align with their design aesthetic.
+
 ## 2026-04-14 — Accessibility Guidelines Implementation (Gemini CLI)
 
 - **Decision:** Implemented project-wide accessibility standards (semantic HTML, ARIA labels, keyboard navigation, contrast) as mandated by the updated root `AGENTS.md`.
@@ -531,7 +555,16 @@
 - **Decision:** Kept HTML parsing dependency-light by converting `.html` files to text in-process instead of adding a separate HTML-to-text package.
 - **Constraint:** PDF ingestion remains mandatory for `documents/`; runtime fallbacks that skip PDFs are not allowed.
 - **Documentation:** Updated `docs/dependencies.md`, `README.md`, and `documents/README.md` to reflect the supported document formats and local Poppler-based PDF parsing behavior.
-## 2026-04-14 â€” Local CLI Resolution Repair (Codex CLI)
+## 2026-04-15 — HTML Fix and Navigation Consistency (Claude Code)
+
+- **Correction:** Fixed broken monitor frame on `public/readme.html` — `</main>` was incorrectly closing `<section class=”pd-content”>` at line 248. Browsers auto-closed all ancestor elements (pd-content, pd-container, monitor-content, monitor-screen, monitor-frame, main) to resolve the mismatch, collapsing the entire monitor frame layout. Replaced with `</section>`.
+- **Decision:** Added `desktop-area` navigation (matching the index.html pattern) to all five non-home pages: `readme.html`, `projects.html`, `indieweb-platform.html`, `creatrweb-rag.html`, `terminal-ui.html`. Nav is placed after the content container, still inside `.monitor-content`.
+- **Decision:** Navigation follows a “current page icon replaced by Home” convention — `readme.html` replaces the Readme icon with 🏠 Home (`/`); `projects.html` replaces Studio Journal with 🏠 Home (`/`) and places it first. Project detail pages (`indieweb-platform`, `creatrweb-rag`, `terminal-ui`) use the index.html nav order with Studio Journal preceding Readme; no current-page icon is present on these pages.
+- `index.html` was not modified this session.
+
+---
+
+## 2026-04-14 — Local CLI Resolution Repair (Codex CLI)
 
 - Investigated local Windows failures where `npm run dev` reported
   `'tsx' is not recognized` and `npm run build` reported

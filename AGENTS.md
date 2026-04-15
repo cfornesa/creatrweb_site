@@ -403,6 +403,18 @@ DECISIONS.md.
 
 ---
 
+## Project-Specific Context
+
+### Design Decisions
+
+Navigation and layout additions on existing pages are not mechanical changes — they are design decisions that require a gallery even when the user provides a detailed spec. A detailed spec suppresses the gallery only when the spec names a specific file AND a specific output format together (per the current suppression rule). A spec that names a layout pattern but not a specific file does not meet the suppression threshold.
+
+### Mandatory End of Session Updates
+
+The end-of-session MEMORY.md + DESIGN.md proposal has failed in at least two sessions (2026-04-09, 2026-04-15). Treat this step as a hard stop: before writing any response that could be the final one in a session, check whether the proposal has been made. If not, make it in that response regardless of whether the user's question is about something else.
+
+---
+
 ## Design Identity — Read and Honor These
 
 At session start, read DESIGN.md if it exists.

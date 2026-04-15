@@ -75,5 +75,11 @@
 2026-04-14 · PREFERENCE · Use High-Contrast Focus Outline (3px solid var(--accent-orange)) for :focus-visible project-wide.
 2026-04-14 · DECISION · Darkened --accent-orange to #d35400 in light mode to meet WCAG AA contrast standards (4.79:1).
 2026-04-14 · DECISION · Terminal modal implements focus trapping, Escape key listener, and focus restoration to the trigger element.
-2026-04-14 Â· CORRECTION Â· Local tsx/esbuild failures on this Windows PC were caused by a missing or partial node_modules install, not by broken npm scripts.
-2026-04-14 Â· DECISION Â· This repo expects Node 20.x for environment parity even though local build may still pass on Node 24.
+2026-04-14 · DECISION · Implemented an isometric workspace scene for desktop mode (viewports > 1024px) featuring a flat 2D glass desk and peripherals built from CSS geometry.
+2026-04-14 · CORRECTION · Removed inline style attributes from `public/readme.html` and replaced them with utility classes in `public/styles/app.css` for design consistency.
+2026-04-14 · CORRECTION · Reversed the 3D isometric desk scene in favor of a 2D abstract approach to maintain strict flat visual discipline.
+2026-04-14 · PREFERENCE · Shifted desktop aesthetic from an abstract monitor frame to a literal cozy workspace diorama using 2D geometry.
+2026-04-14 · CORRECTION · Local tsx/esbuild failures on this Windows PC were caused by a missing or partial node_modules install, not by broken npm scripts.
+2026-04-14 · DECISION · This repo expects Node 20.x for environment parity even though local build may still pass on Node 24.
+2026-04-15 · CORRECTION · readme.html had </main> instead of </section> as the closing tag for <section class="pd-content">, collapsing the monitor frame on all browsers.
+2026-04-15 · DECISION · Desktop icon nav on sub-pages follows a "current page replaced by Home" convention: readme and projects replace their own icon with 🏠; project detail pages (indieweb-platform, creatrweb-rag, terminal-ui) show Studio Journal before Readme, no current-page replacement.

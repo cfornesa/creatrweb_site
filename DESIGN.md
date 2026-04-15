@@ -73,32 +73,16 @@
      the value is in the derivation process, not the output alone. -->
 
 - **What your references share:**
-  <!-- AGENT-PROPOSED 2026-04-11 — derived from implemented code, not from stated references.
-       Confirm, correct, or expand. -->
-  Retro hardware nostalgia combined with neo-brutalist flatness — vintage computing
-  warmth (the iMac bezel, beige-grey, brushed metal stand, neon-green terminal) alongside
-  strong 2px borders, offset shadows, and flat color. No gradients except functional ones.
-  Type and structure do the work; illustration and decoration are absent entirely.
+  Retro hardware nostalgia combined with neo-brutalist flatness. The iMac bezel acts as a window into a cozy, physical workspace diorama—featuring a flat 2D glass desk and tabletop peripherals (keyboard, mouse, mug) built from simple CSS geometry that ground the digital content in a comfortable environment while maintaining strict 2D flatness.
 
 - **The tension you are navigating:**
-  <!-- AGENT-PROPOSED 2026-04-11 -->
-  Personal and specific, but not self-indulgent. The iMac frame says "this is *my* computer"
-  — a thing with an owner — while the bento grid and restrained palette keep it readable and
-  purposeful rather than nostalgic for its own sake.
+  Personal and specific, but not self-indulgent. The iMac frame and flat desk scene say "this is *my* computer in *my* room" — a place with an owner — while the bento grid and restrained palette keep it readable and purposeful.
 
 - **What you dislike in contrast:**
-  <!-- AGENT-PROPOSED 2026-04-11 -->
-  The SaaS landing page visual grammar: gradient CTAs, stock photography of smiling teams,
-  soft hero blurs, rounded-corner-everything with no intentional weight, artificial whitespace
-  used to signal "premium." Equally: decorative animation, auto-playing media, emoji as
-  ornament, icons from icon libraries (Unicode symbols preferred). Anything that could belong
-  to a generic product page.
+  The SaaS landing page visual grammar: gradient CTAs, stock photography of smiling teams, soft hero blurs, rounded-corner-everything with no intentional weight, artificial whitespace used to signal "premium." Equally: decorative animation, auto-playing media, emoji as ornament, icons from icon libraries (Unicode symbols preferred). Anything that could belong to a generic product page.
 
 - **The feeling on first load:**
-  <!-- Confirmed by user 2026-04-11 -->
-  Intrigue. The visitor is booting someone else's personal computer — the frame is the
-  invitation, not the content. The expectation is: what does this person's perspective
-  look like from the inside?
+  Intrigue and comfort. The visitor is booting someone else's personal computer in a cozy studio environment — the frame and flat desk are the invitation, not just decoration.
 
 ---
 
@@ -110,50 +94,32 @@
      CONSTRAINTS.md unless they become technical requirements. -->
 
 - **Color direction:**
-  <!-- Documented from implementation 2026-04-11 -->
   Two-mode palette. Light: warm off-white ground (`#fffdfa`), dark blue-grey text
   (`#2c3e50`), warm beige card surface (`#f9f6f0`), orange accent (`#d35400`).
   Dark: deep charcoal (`#1a1814`), warm off-white text (`#f4f0ea`), golden-orange
-  accent (`#f39c12`). One accent color used sparingly — on identity photo border,
-  organisation label, icon hover state. Terminal uses its own isolated palette:
-  pure black ground, neon green (`#0f0`). macOS chrome colors (`#ff5f56`, `#ffbd2e`,
-  `#27c93f`) appear only in the title bar row — decorative system reference, not
-  available for reuse elsewhere.
+  accent (`#f39c12`). Glass table uses semi-transparent glassmorphism (`backdrop-filter`).
+  Keyboard and mouse match the monitor frame borders. Mug is off-white/white.
 
 - **Type direction:**
-  <!-- Documented from implementation 2026-04-11 -->
   System-UI stack for all UI and body copy (`system-ui, -apple-system, BlinkMacSystemFont`).
   Courier New / monospace for terminal, code blocks, and any metadata that needs
   to read as machine-output. No web fonts loaded — no external network requests for
-  type, no FOUT. Size hierarchy: 3–3.5rem titles, 1.5–1.8rem section heads, 1rem body,
-  0.85–0.9rem metadata. Weight hierarchy: 800 for page titles, 700 for section heads,
-  600 for UI labels, 400 for body. Line height 1.6–1.8 for readable body copy.
+  type, no FOUT.
 
 - **Layout disposition:**
-  <!-- Documented from implementation 2026-04-11 -->
-  Content lives inside an iMac monitor frame on desktop (max 1024px threshold).
-  Inside: bento grid (12-column) for the home h-card; constrained single-column for
-  detail pages (800–1000px max-width). Generous top padding (64px) on desktop;
-  compact on mobile (24px). No sidebars. Bottom padding accommodates the mobile nav
-  pill (100px extra). All layout switches at a single 768px breakpoint — no complex
-  multi-step breakpoint ladder.
+  Content lives inside an iMac monitor frame sitting on a flat glass desk in desktop mode
+  (viewports > 1024px). The desk and peripherals are built entirely from 2D CSS shapes
+  with hard offset shadows. Mobile and tablet layouts use a Safari-inspired mobile interface
+  with a floating navigation pill.
 
 - **Motion and interaction:**
-  <!-- Documented from implementation 2026-04-11 -->
   No decorative animation. Transitions only where they carry meaning: state change
-  (hover elevation via `translateY(-4px)`, `translate(-2px, -2px)` lift pattern),
-  and overlay appearance. Standard duration: 0.2s ease. Maximum: 0.3s ease.
-  Icon "press" uses a 2px inward translate to simulate physical click. No spring
-  physics, no entrance animations, no scroll-triggered effects.
+  (hover elevation) and overlay appearance. Standard duration: 0.2s ease.
 
 - **What must never appear:**
-  <!-- Documented from implementation 2026-04-11 -->
-  Gradients on UI surfaces (the monitor stand gradient is a deliberate hardware
-  reference, not a UI pattern — do not reuse it for buttons or cards). Stock
-  photography. Blur-heavy hero sections. Soft drop shadows (all shadows use hard
-  offset pattern: `4px 4px 0px`). Auto-playing media. Emoji as decoration.
-  Icon library icons (Unicode symbols only — ◈, ✦, ♡, ⊛, ⎈). Any visual
-  language associated with SaaS product pages or generic portfolio templates.
+  Gradients on UI surfaces (except for hardware references like the monitor stand or
+  glass table top). Stock photography. Blur-heavy hero sections. Soft drop shadows
+  (all shadows use hard offset pattern: `4px 4px 0px`).
 
 ---
 
@@ -214,6 +180,10 @@
 
 2026-04-14 · REFUSAL · Modified the primary accent color (#e67e22 -> #d35400) in light mode to meet WCAG AA contrast standards — prioritizing accessibility over the original brand hex.
     [User confirmation of the trade-off between brand color and accessibility compliance]
+
+2026-04-14 · DIRECTION · Shifted from an abstract monitor frame to a literal "cozy workspace diorama" featuring a flat 2D glass desk and peripherals built from CSS geometry to maintain strict flat visual discipline.
+    [User: "I want a cozy, comfortable theme... I want some level of coziness added to the layout to turn it into a scene..."]
+
 
 ---
 

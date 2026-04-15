@@ -34,7 +34,7 @@
 
 .main {
   padding: 64px 24px 24px;
-  height: 100dvh;
+  height: 93dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -53,8 +53,8 @@
 
 .monitor-frame {
   width: 100%;
-  max-width: 1000px;
-  height: 100%;
+  max-width: 1500px;
+  height: 85vh;
   max-height: calc(100dvh - 120px);
   position: relative;
   display: flex;
@@ -106,7 +106,7 @@
 
 .monitor-stand {
   width: 140px;
-  height: 50px;
+  height: 100px;
   background: linear-gradient(to right, #b8b4ac, #d4d0c8, #b8b4ac);
   position: relative;
   z-index: 5;
@@ -123,9 +123,107 @@
   flex-shrink: 0;
 }
 
+/* Desk Scene */
+.desk-scene {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: 0;
+  z-index: 15;
+  pointer-events: none;
+}
+
+.desk-surface {
+  width: 100%;
+  height: 24px;
+  background: rgba(var(--card-bg-rgb), 0.6);
+  backdrop-filter: blur(12px);
+  border-top: 2px solid var(--foreground);
+  border-bottom: 2px solid var(--foreground);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.desk-leg {
+  position: absolute;
+  top: 24px;
+  width: 24px;
+  height: 100vh;
+  background: var(--card-bg);
+  border-left: 2px solid var(--foreground);
+  border-right: 2px solid var(--foreground);
+  z-index: 1;
+}
+
+.desk-leg.left { left: 15%; }
+.desk-leg.right { right: 15%; }
+
+.peripheral {
+  position: absolute;
+  border: 2px solid var(--foreground);
+  background: #d4d0c8;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.15);
+  bottom: 100%;
+  z-index: 10;
+}
+
+.peripheral-keyboard {
+  width: 360px;
+  height: 14px;
+  border-radius: 4px 4px 0 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-bottom: none;
+}
+
+.peripheral-mouse {
+  width: 48px;
+  height: 24px;
+  border-radius: 24px 24px 0 0;
+  left: calc(50% + 220px);
+  border-bottom: none;
+}
+
+.peripheral-mug {
+  width: 102px;
+  height: 128px;
+  border-radius: 4px 4px 0 0;
+  background: #fffdfa;
+  left: calc(50% - 330px);
+  border-bottom: none;
+}
+
+.peripheral-mug::before {
+  content: '';
+  position: absolute;
+  top: 24px;
+  left: -40px;
+  width: 48px;
+  height: 64px;
+  border: 2px solid var(--foreground);
+  border-right: none;
+  border-radius: 16px 0 0 16px;
+  z-index: -1;
+  box-shadow: -4px 4px 0px rgba(0, 0, 0, 0.15);
+}
+
 @media (prefers-color-scheme: dark) {
   .monitor-stand { background: linear-gradient(to right, #222, #333, #222); }
   .monitor-base  { background-color: #1a1a1a; }
+  
+  .desk-leg { background: #111; }
+  .peripheral {
+    background: #333;
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.4);
+  }
+  .peripheral-mug { background: #f4f0ea; }
+  .peripheral-mug::before {
+    box-shadow: -4px 4px 0px rgba(0, 0, 0, 0.4);
+  }
 }
 
 @media (max-width: 1024px) {
@@ -138,7 +236,8 @@
     border-top: 1px solid var(--card-border);
   }
   .monitor-stand,
-  .monitor-base { display: none; }
+  .monitor-base,
+  .desk-scene { display: none; }
   .main {
     background-color: var(--background);
     padding: 0;
@@ -295,7 +394,6 @@
 .desktop-toolbar-time {
   font-size: 0.9rem;
   opacity: 0.8;
-  padding-right: 3em;
 }
 
 .floating-mobile-clock {
@@ -844,6 +942,22 @@
   padding: 2px 8px;
   margin-right: 6px;
   font-weight: 600;
+}
+
+.rm-list {
+  padding-left: 20px;
+  line-height: 2;
+}
+
+.rm-mt-8 { margin-top: 8px; }
+.rm-mt-12 { margin-top: 12px; }
+.rm-mt-16 { margin-top: 16px; }
+
+.rm-footer-note {
+  text-align: center;
+  opacity: 0.5;
+  font-style: italic;
+  margin-top: 8px;
 }
 
 
