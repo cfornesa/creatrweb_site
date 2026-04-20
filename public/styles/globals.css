@@ -27,6 +27,36 @@ body {
   color: var(--foreground);
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 2000;
+  padding: 10px 14px;
+  border: 2px solid var(--foreground);
+  background-color: var(--card-bg);
+  color: var(--foreground);
+  text-decoration: none;
+  transform: translateY(-160%);
+  transition: transform 0.2s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
 a {
   color: var(--accent-orange);
   transition: color 0.2s;
@@ -47,4 +77,34 @@ a:hover {
   outline: none;
 }
 
-.h-card {}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .skip-link,
+  a,
+  button,
+  input,
+  .desktop-icon,
+  .project-card,
+  .drawer-card,
+  .bento-box,
+  .mobile-nav-pill,
+  .terminal-window,
+  .terminal-close {
+    forced-color-adjust: auto;
+  }
+
+  :focus-visible {
+    outline: 2px solid CanvasText;
+    outline-offset: 4px;
+  }
+}

@@ -12,16 +12,17 @@
   <link rel="stylesheet" href="/styles/app.css" />
 </head>
 <body data-pathname="/readme">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   <main class="main">
-    <div id="mobile-clock" class="floating-mobile-clock"></div>
+    <time id="mobile-clock" class="floating-mobile-clock" aria-label="Current coordinated universal time"></time>
 
     <div class="monitor-frame">
       <div class="monitor-screen">
         <header class="desktop-toolbar">
-          <div class="desktop-toolbar-title" aria-live="polite"></div>
-          <div class="desktop-toolbar-time" aria-live="polite"></div>
+          <div class="desktop-toolbar-title"></div>
+          <time class="desktop-toolbar-time" aria-label="Current coordinated universal time"></time>
         </header>
-        <div class="monitor-content">
+        <div class="monitor-content" id="main-content" tabindex="-1">
 
           <div class="pd-container">
             <header class="pd-header">
@@ -69,6 +70,7 @@
               <section class="pd-section">
                 <h2 class="pd-section-title">Stack</h2>
                 <table class="rm-table">
+                  <caption class="sr-only">Technology choices used in the Creatrweb stack.</caption>
                   <thead>
                     <tr>
                       <th>Layer</th>
@@ -111,6 +113,7 @@ npm install
 npm run dev                 # http://localhost:3000</pre>
                 <p class="rm-mt-16"><strong>Required environment variables:</strong></p>
                 <table class="rm-table rm-mt-12">
+                  <caption class="sr-only">Required environment variables for local development.</caption>
                   <thead>
                     <tr>
                       <th>Variable</th>
@@ -161,6 +164,7 @@ npm run dev                 # http://localhost:3000</pre>
                 <p>This repo deploys as a bundled Express app on Hostinger Node.js v20.</p>
                 <p class="rm-mt-16"><strong>hPanel settings:</strong></p>
                 <table class="rm-table rm-mt-12">
+                  <caption class="sr-only">Hostinger deployment settings for the application.</caption>
                   <thead>
                     <tr>
                       <th>Setting</th>
@@ -259,7 +263,7 @@ AGENT_ID=...</pre>
               <div class="icon-graphic" aria-hidden="true">🌐</div>
               <span class="icon-label">Augment Humankind</span>
             </a>
-            <button id="terminal-trigger" class="desktop-icon terminal-icon" type="button" aria-label="Open Terminal">
+            <button id="terminal-trigger" class="desktop-icon terminal-icon" type="button" aria-label="Open Terminal" aria-haspopup="dialog" aria-expanded="false">
               <div class="icon-graphic" aria-hidden="true">⌨️</div>
               <span class="icon-label">Terminal</span>
             </button>
@@ -282,8 +286,8 @@ AGENT_ID=...</pre>
 
     <nav class="mobile-nav-pill" aria-label="Mobile navigation">
       <a id="pill-back" class="pill-link" href="/" aria-label="Go back to home">←</a>
-      <div class="pill-title" aria-live="polite"></div>
-      <button id="pill-chat" class="pill-button" type="button" aria-label="Open Terminal Chat">💬</button>
+      <div class="pill-title"></div>
+      <button id="pill-chat" class="pill-button" type="button" aria-label="Open Terminal Chat" aria-haspopup="dialog" aria-expanded="false">💬</button>
     </nav>
   </main>
 

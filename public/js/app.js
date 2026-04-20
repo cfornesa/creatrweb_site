@@ -31,6 +31,7 @@
     if (!el) return;
     function tick() {
       var now = new Date();
+      el.setAttribute("datetime", now.toISOString());
       el.textContent =
         String(now.getUTCHours()).padStart(2, "0") +
         ":" +
@@ -38,7 +39,7 @@
         " UTC";
     }
     tick();
-    setInterval(tick, 1000);
+    setInterval(tick, 60000);
   }
 
   // ─── Desktop toolbar ─────────────────────────────────────────────────────────
@@ -76,10 +77,29 @@
   var isTyping = false;
   var terminalEl = null;
   var lastFocusedElement = null;
+  var terminalStatusText = "";
+  var terminalTriggers = Array.prototype.slice.call(
+    document.querySelectorAll("#terminal-trigger, #pill-chat")
+  );
+
+  function setTerminalExpanded(isExpanded) {
+    terminalTriggers.forEach(function (trigger) {
+      trigger.setAttribute("aria-expanded", isExpanded ? "true" : "false");
+    });
+  }
+
+  function updateTerminalStatus(message) {
+    terminalStatusText = message;
+    var status = document.getElementById("terminal-status");
+    if (status) {
+      status.textContent = message;
+    }
+  }
 
   function renderHistory() {
     var body = document.getElementById("terminal-body");
     if (!body) return;
+    body.setAttribute("aria-busy", isTyping ? "true" : "false");
     body.innerHTML = "";
     terminalHistory.forEach(function (line) {
       var div = document.createElement("div");
@@ -103,6 +123,8 @@
     }
     document.body.style.overflow = "";
     document.removeEventListener("keydown", handleTerminalGlobalKeydown);
+    setTerminalExpanded(false);
+    updateTerminalStatus("Terminal closed.");
 
     if (lastFocusedElement) {
       lastFocusedElement.focus();
@@ -117,9 +139,11 @@
     }
 
     if (e.key === "Tab") {
+      if (!terminalEl) return;
       var focusableElements = terminalEl.querySelectorAll(
         'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
       );
+      if (!focusableElements.length) return;
       var firstElement = focusableElements[0];
       var lastElement = focusableElements[focusableElements.length - 1];
 
@@ -179,11 +203,13 @@
 
     if (msg.toLowerCase() === "help") {
       terminalHistory.push("Commands: help, clear, exit, whoami");
+      updateTerminalStatus("Displayed available terminal commands.");
       renderHistory();
       return;
     }
     if (msg.toLowerCase() === "clear") {
       terminalHistory = [];
+      updateTerminalStatus("Terminal history cleared.");
       renderHistory();
       return;
     }
@@ -193,16 +219,21 @@
     }
     if (msg.toLowerCase() === "whoami") {
       terminalHistory.push("You are a visitor of creatrweb.com.");
+      updateTerminalStatus("Displayed identity response.");
       renderHistory();
       return;
     }
 
     isTyping = true;
+    updateTerminalStatus("Assistant is thinking.");
     renderHistory();
 
     sendMessage(msg).then(function (reply) {
       isTyping = false;
       terminalHistory.push(reply);
+      updateTerminalStatus(
+        reply.indexOf("Error:") === 0 ? "Assistant returned an error." : "Assistant replied."
+      );
       renderHistory();
     });
   }
@@ -217,7 +248,8 @@
     overlay.id = "terminal-overlay";
     overlay.setAttribute("role", "dialog");
     overlay.setAttribute("aria-modal", "true");
-    overlay.setAttribute("aria-label", "Creatrweb Terminal");
+    overlay.setAttribute("aria-labelledby", "terminal-title");
+    overlay.setAttribute("aria-describedby", "terminal-description terminal-shortcuts");
 
     overlay.innerHTML =
       '<div class="terminal-window">' +
@@ -227,22 +259,28 @@
             '<span class="mac-dot mac-yellow"></span>' +
             '<span class="mac-dot mac-green"></span>' +
           "</div>" +
-          '<span class="terminal-header-title">Creatrweb OS Terminal</span>' +
+          '<span class="terminal-header-title" id="terminal-title">Creatrweb OS Terminal</span>' +
           '<button id="terminal-close" class="terminal-close" type="button" aria-label="Close terminal">\u00d7</button>' +
         "</div>" +
-        '<div class="terminal-body" id="terminal-body"></div>' +
+        '<p id="terminal-description" class="sr-only">Terminal chat window for asking questions and receiving replies.</p>' +
+        '<p id="terminal-shortcuts" class="sr-only">Type help for available commands. Press Escape to close the terminal.</p>' +
+        '<div id="terminal-status" class="sr-only" aria-live="polite" aria-atomic="true"></div>' +
+        '<div class="terminal-body" id="terminal-body" role="log" aria-label="Terminal conversation history" aria-live="off" aria-relevant="additions text" aria-busy="false" tabindex="0"></div>' +
         '<form class="terminal-footer" id="terminal-form">' +
           '<span class="terminal-prompt" aria-hidden="true">&gt;</span>' +
           '<input type="text" id="terminal-command-input" name="terminal-command" ' +
-            'class="terminal-input" autocomplete="off" aria-label="Terminal input" />' +
+            'class="terminal-input" autocomplete="off" aria-label="Terminal input" aria-describedby="terminal-description terminal-shortcuts" />' +
         "</form>" +
       "</div>";
 
     document.body.appendChild(overlay);
     document.body.style.overflow = "hidden";
     terminalEl = overlay;
+    setTerminalExpanded(true);
+    updateTerminalStatus("Terminal opened.");
 
     renderHistory();
+    updateTerminalStatus(terminalStatusText);
 
     document.getElementById("terminal-close").addEventListener("click", closeTerminal);
     document.getElementById("terminal-form").addEventListener("submit", handleTerminalSubmit);
@@ -267,4 +305,6 @@
   if (pillChat) {
     pillChat.addEventListener("click", openTerminal);
   }
+
+  setTerminalExpanded(false);
 })();

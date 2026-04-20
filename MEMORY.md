@@ -83,3 +83,5 @@
 2026-04-14 · DECISION · This repo expects Node 20.x for environment parity even though local build may still pass on Node 24.
 2026-04-15 · CORRECTION · readme.html had </main> instead of </section> as the closing tag for <section class="pd-content">, collapsing the monitor frame on all browsers.
 2026-04-15 · DECISION · Desktop icon nav on sub-pages follows a "current page replaced by Home" convention: readme and projects replace their own icon with 🏠; project detail pages (indieweb-platform, creatrweb-rag, terminal-ui) show Studio Journal before Readme, no current-page replacement.
+2026-04-20 Â· DECISION Â· Accessibility updates should preserve the iMac-frame and mobile-pill visual system while improving assistive technology support first.
+2026-04-20 Â· PREFERENCE Â· Accessibility-related CSS changes should be called out explicitly for review when they affect visible design behavior.

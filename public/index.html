@@ -12,16 +12,17 @@
   <link rel="stylesheet" href="/styles/app.css" />
 </head>
 <body data-pathname="/">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   <main class="main">
-    <div id="mobile-clock" class="floating-mobile-clock"></div>
+    <time id="mobile-clock" class="floating-mobile-clock" aria-label="Current coordinated universal time"></time>
 
     <div class="monitor-frame">
       <div class="monitor-screen">
         <header class="desktop-toolbar">
-          <div class="desktop-toolbar-title" aria-live="polite"></div>
-          <div class="desktop-toolbar-time" aria-live="polite"></div>
+          <div class="desktop-toolbar-title"></div>
+          <time class="desktop-toolbar-time" aria-label="Current coordinated universal time"></time>
         </header>
-        <div class="monitor-content">
+        <div class="monitor-content" id="main-content" tabindex="-1">
 
           <div class="hcard-wrapper">
 
@@ -44,7 +45,7 @@
                   decoding="async"
                   class="u-photo hcard-photo"
                 />
-                <a href="https://creatrweb.com" class="u-url p-name hcard-name" rel="me">Creatrweb</a>
+                <a href="https://creatrweb.com" class="u-url p-name hcard-name" rel="me" role="heading" aria-level="1">Creatrweb</a>
                 <div class="p-org hcard-org">Augment Humankind</div>
               </div>
 
@@ -121,7 +122,7 @@
                 <span class="icon-label">Augment Humankind</span>
               </a>
 
-              <button id="terminal-trigger" class="desktop-icon terminal-icon" type="button" aria-label="Open Terminal">
+              <button id="terminal-trigger" class="desktop-icon terminal-icon" type="button" aria-label="Open Terminal" aria-haspopup="dialog" aria-expanded="false">
                 <div class="icon-graphic" aria-hidden="true">⌨️</div>
                 <span class="icon-label">Terminal</span>
               </button>
@@ -146,8 +147,8 @@
 
     <nav class="mobile-nav-pill" aria-label="Mobile navigation">
       <a id="pill-back" class="pill-link" href="https://augmenthumankind.com" aria-label="Go back">←</a>
-      <div class="pill-title" aria-live="polite"></div>
-      <button id="pill-chat" class="pill-button" type="button" aria-label="Open Terminal Chat">💬</button>
+      <div class="pill-title"></div>
+      <button id="pill-chat" class="pill-button" type="button" aria-label="Open Terminal Chat" aria-haspopup="dialog" aria-expanded="false">💬</button>
     </nav>
   </main>
 

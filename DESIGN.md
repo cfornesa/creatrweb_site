@@ -185,6 +185,12 @@
     [User: "I want a cozy, comfortable theme... I want some level of coziness added to the layout to turn it into a scene..."]
 
 
+2026-04-20 Â· TENSION Â· Wants the site to be assistive-first without visually drifting away from the established retro hardware framing.
+    [User request: "Please make these changes assistive-first but prioritize keeping the design as-is as much as possible..."]
+
+2026-04-20 Â· DIRECTION Â· Prefers accessibility improvements that preserve the resting appearance and reveal themselves mainly through focus, motion, and assistive-tech behavior.
+    [User asked that CSS-impacting design changes be stated explicitly for review]
+
 ---
 
 <!-- The agent holds the brush. You choose what gets painted.

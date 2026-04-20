@@ -97,6 +97,10 @@
   scrollbar-color: var(--foreground) var(--card-bg);
 }
 
+.monitor-content:focus {
+  outline: none;
+}
+
 .monitor-content::-webkit-scrollbar { width: 8px; }
 .monitor-content::-webkit-scrollbar-track { background: transparent; }
 .monitor-content::-webkit-scrollbar-thumb {
@@ -355,6 +359,12 @@
   box-shadow: 0px 0px 0px transparent;
   background-color: var(--accent-orange);
   color: white;
+}
+
+.desktop-icon:focus-visible .icon-graphic,
+.desktop-icon:focus-visible .icon-label {
+  background-color: var(--accent-orange);
+  color: #fff;
 }
 
 .icon-label {
@@ -639,6 +649,12 @@
   color: #fff;
 }
 
+.social-link:focus-visible .social-icon-graphic,
+.social-link:focus-visible .social-label {
+  background-color: var(--accent-orange);
+  color: #fff;
+}
+
 .social-label {
   font-size: 0.8rem;
   background-color: rgba(255, 255, 255, 0.5);
@@ -810,6 +826,11 @@
 .project-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
+  text-decoration: none;
+}
+
+.project-card:focus-visible {
+  transform: translateY(-4px);
   text-decoration: none;
 }
 
@@ -1037,6 +1058,11 @@
 }
 
 .terminal-close:hover { background: #0f0; color: #000; }
+
+.terminal-close:focus-visible {
+  background: #0f0;
+  color: #000;
+}
 
 .terminal-body {
   flex: 1;

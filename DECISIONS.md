@@ -583,3 +583,30 @@
 - Confirmed this PC is using Node `v24.14.1` while the repo declares
   `20.x`; this did not block the build, but it remains an environment
   mismatch relative to the project profile and Hostinger runtime.
+
+## 2026-04-20 â€” Assistive-First Accessibility Pass (Codex)
+
+- Applied an assistive-first accessibility pass across all public HTML
+  pages, shared CSS, and the terminal JavaScript while preserving the
+  current iMac-frame and mobile-pill visual system.
+- Added keyboard-only skip links to every page and made the
+  `.monitor-content` container a focusable main-content target for
+  faster keyboard and screen-reader navigation.
+- Replaced live-announced toolbar and mobile clocks with semantic
+  `<time>` elements so the current UTC display remains visible without
+  repeated screen-reader interruptions.
+- Added hidden table captions on `/readme` and a heading role on the
+  home identity name to improve document structure for assistive
+  technologies without changing visible layout.
+- Upgraded terminal triggers with `aria-haspopup="dialog"` and
+  synchronized `aria-expanded` state so both desktop and mobile launch
+  controls expose dialog state correctly.
+- Upgraded the terminal overlay with explicit dialog labelling, hidden
+  usage instructions, a polite status announcer, `aria-busy` handling,
+  and safer focus-trap guards while preserving the existing interaction
+  model.
+- Added accessibility-mode CSS support with a hidden-text utility,
+  focusable skip-link styling, reduced-motion handling, forced-colors
+  support, and keyboard-focus parity for icon-style interactive
+  elements.
+- Verified the changes with `npm run build` and `npx tsc --noEmit`.
