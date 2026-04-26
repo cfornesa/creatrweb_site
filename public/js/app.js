@@ -39,7 +39,7 @@
         " UTC";
     }
     tick();
-    setInterval(tick, 60000);
+    setInterval(tick, 5000);
   }
 
   // ─── Desktop toolbar ─────────────────────────────────────────────────────────
