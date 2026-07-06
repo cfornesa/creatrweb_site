@@ -626,8 +626,8 @@
   breadcrumb links, matching home page spacing
 - Replaced "Studio Journal" with "Projects" across all navigation links and
   page references (icon labels, aria-labels, page title, app.js mapping)
-- Removed Terminal button from index.html desktop navigation to maintain 
-  consistency (only Projects and Readme links at bottom of all pages)
+- Re-added Terminal button to desktop navigation across ALL pages to enable 
+  terminal UI launch on desktop experiences; mobile already has chat button via pill-button
 
 ### Files Created
 
@@ -640,23 +640,26 @@
 ### Files Modified
 
 - `/public/index.html` — Fixed social-box layout, updated aria-labels, 
-  removed Terminal button from desktop navigation
+  re-added Terminal button to desktop navigation
 - `/public/projects.html` — Updated project cards with proper order (Augment 
   Humankind, Fornesus Art, Open Creatrweb, Chris Fornesa, Creatrweb), added 
-  project descriptions, simplified navigation to Projects/Readme only
+  project descriptions, re-added Terminal button to desktop navigation
 - `/public/readme.html` — Updated to reference 8 pages total, removed old project 
   references (indieweb-platform, creatrweb-rag, terminal-ui), added Mistral Vibe and 
-  Opencode Go mention, simplified navigation to Projects/Readme only
+  Opencode Go mention, re-added Terminal button to desktop navigation
 - `/public/augment-humankind.html` — Aligned heading with icon via pd-title-group, 
-  simplified navigation to Projects/Readme only
+  re-added Terminal button to desktop navigation
 - `/public/fornesus-art.html` — Aligned heading with icon via pd-title-group, 
-  simplified navigation to Projects/Readme only
+  re-added Terminal button to desktop navigation
 - `/public/open-creatrweb.html` — Aligned heading with icon via pd-title-group, 
-  simplified navigation to Projects/Readme only
+  re-added Terminal button to desktop navigation
 - `/public/chris-fornesa.html` — Aligned heading with icon via pd-title-group, 
-  simplified navigation to Projects/Readme only
+  re-added Terminal button to desktop navigation
 - `/public/creatrweb.html` — Aligned heading with icon via pd-title-group, 
-  simplified navigation to Projects/Readme only
+  re-added Terminal button to desktop navigation
+- `/public/creatrweb-rag.html` — Re-added Terminal button to desktop navigation
+- `/public/indieweb-platform.html` — Re-added Terminal button to desktop navigation
+- `/public/terminal-ui.html` — Re-added Terminal button to desktop navigation
 - `/public/styles/app.css` — Added .pd-title-group styling, updated .pd-container
   padding from 48px/64px to 40px to match home page margin
 - `/server.js` — Removed old project routes (indieweb-platform, creatrweb-rag, 

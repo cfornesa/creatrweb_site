@@ -89,7 +89,7 @@
 2026-07-06 · DECISION · Reorganized Projects section with icon-grid layout, icons now properly grouped under "💼 Projects" heading in social-box container with horizontal row layout
 2026-07-06 · DECISION · Created five project pages: augment-humankind (AI art persona), fornesus-art (handmade art persona), open-creatrweb (open-source platform), chris-fornesa (personal portfolio), creatrweb (non-technical site philosophy)
 2026-07-06 · PREFERENCE · Project page headings align horizontally with icon symbol on same line using pd-title-group flex container, with mobile-responsive flex-wrap
-2026-07-06 · DECISION · Simplified bottom navigation to Projects and Readme only across all pages, removed Terminal button from index.html desktop area
+2026-07-06 · DECISION · Re-added Terminal button to desktop navigation across ALL pages to enable terminal UI launch on desktop experiences; mobile already has chat button via pill-button
 2026-07-06 · DECISION · Adjusted pd-container padding to 40px (mobile and desktop) to create consistent 40px gap between UTC time in toolbar and breadcrumb links, matching home page spacing
 2026-07-06 · DECISION · Removed old project routes (indieweb-platform, creatrweb-rag, terminal-ui) from server.js pageRoutes, retaining only new project routes
 2026-07-06 · DECISION · Updated readme.html and README.md to reference 8 pages total, removed old project references, added Mistral Vibe and Opencode Go as primary open-source AI tools
