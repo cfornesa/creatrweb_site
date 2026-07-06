@@ -85,3 +85,11 @@
 2026-04-15 · DECISION · Desktop icon nav on sub-pages follows a "current page replaced by Home" convention: readme and projects replace their own icon with 🏠; project detail pages (indieweb-platform, creatrweb-rag, terminal-ui) show Studio Journal before Readme, no current-page replacement.
 2026-04-20 Â· DECISION Â· Accessibility updates should preserve the iMac-frame and mobile-pill visual system while improving assistive technology support first.
 2026-04-20 Â· PREFERENCE Â· Accessibility-related CSS changes should be called out explicitly for review when they affect visible design behavior.
+
+2026-07-06 · DECISION · Reorganized Projects section with icon-grid layout, icons now properly grouped under "💼 Projects" heading in social-box container with horizontal row layout
+2026-07-06 · DECISION · Created five project pages: augment-humankind (AI art persona), fornesus-art (handmade art persona), open-creatrweb (open-source platform), chris-fornesa (personal portfolio), creatrweb (non-technical site philosophy)
+2026-07-06 · PREFERENCE · Project page headings align horizontally with icon symbol on same line using pd-title-group flex container, with mobile-responsive flex-wrap
+2026-07-06 · DECISION · Simplified bottom navigation to Projects and Readme only across all pages, removed Terminal button from index.html desktop area
+2026-07-06 · DECISION · Adjusted pd-container padding to 40px (mobile and desktop) to create consistent 40px gap between UTC time in toolbar and breadcrumb links, matching home page spacing
+2026-07-06 · DECISION · Removed old project routes (indieweb-platform, creatrweb-rag, terminal-ui) from server.js pageRoutes, retaining only new project routes
+2026-07-06 · DECISION · Updated readme.html and README.md to reference 8 pages total, removed old project references, added Mistral Vibe and Opencode Go as primary open-source AI tools

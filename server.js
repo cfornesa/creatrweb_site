@@ -8,20 +8,25 @@ const app = express();
 const PORT = Number(process.env.PORT ?? 3001);
 const HOST = process.env.HOST ?? "127.0.0.1";
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "public")));
+
 const pageRoutes = {
     "/": "index",
     "/projects": "projects",
     "/readme": "readme",
-    "/indieweb-platform": "indieweb-platform",
-    "/creatrweb-rag": "creatrweb-rag",
-    "/terminal-ui": "terminal-ui",
+    "/creatrweb": "creatrweb",
+    "/augment-humankind": "augment-humankind",
+    "/fornesus-art": "fornesus-art",
+    "/open-creatrweb": "open-creatrweb",
+    "/chris-fornesa": "chris-fornesa",
 };
+
 Object.entries(pageRoutes).forEach(([route, file]) => {
     app.get(route, (_req, res) => {
         res.sendFile(path.join(__dirname, "public", `${file}.html`));
     });
 });
+
+app.use(express.static(path.join(__dirname, "public")));
 app.post("/api/chat", chatHandler);
 app.listen(PORT, HOST, () => {
     console.log(`[server] Listening on http://${HOST}:${PORT}`);

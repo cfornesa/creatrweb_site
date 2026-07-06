@@ -610,3 +610,56 @@
   support, and keyboard-focus parity for icon-style interactive
   elements.
 - Verified the changes with `npm run build` and `npx tsc --noEmit`.
+
+---
+
+## 2026-07-06 — Project Pages Restructuring
+
+- Reorganized Projects section in index.html with social-icons-container
+  wrapper to properly group icons horizontally under the "💼 Projects" heading
+- Updated .social-box CSS to use column flex-direction with social-icons-container
+  using row flex-direction for horizontal icon layout
+- Aligned pd-header symbol and title on same line using new pd-title-group
+  flex container, with mobile-responsive flex-wrap
+- Adjusted .pd-container margin to -40px and padding to 40px (mobile and desktop) 
+  to create consistent thin spacing (40px gap) between UTC time in toolbar and 
+  breadcrumb links, matching home page spacing
+- Replaced "Studio Journal" with "Projects" across all navigation links and
+  page references (icon labels, aria-labels, page title, app.js mapping)
+- Removed Terminal button from index.html desktop navigation to maintain 
+  consistency (only Projects and Readme links at bottom of all pages)
+
+### Files Created
+
+- `/public/augment-humankind.html` — AI art persona project page
+- `/public/fornesus-art.html` — Handmade art persona project page  
+- `/public/open-creatrweb.html` — Open-source focused project page
+- `/public/chris-fornesa.html` — Personal portfolio project page
+- `/public/creatrweb.html` — Non-technical site philosophy page
+
+### Files Modified
+
+- `/public/index.html` — Fixed social-box layout, updated aria-labels, 
+  removed Terminal button from desktop navigation
+- `/public/projects.html` — Updated project cards with proper order (Augment 
+  Humankind, Fornesus Art, Open Creatrweb, Chris Fornesa, Creatrweb), added 
+  project descriptions, simplified navigation to Projects/Readme only
+- `/public/readme.html` — Updated to reference 8 pages total, removed old project 
+  references (indieweb-platform, creatrweb-rag, terminal-ui), added Mistral Vibe and 
+  Opencode Go mention, simplified navigation to Projects/Readme only
+- `/public/augment-humankind.html` — Aligned heading with icon via pd-title-group, 
+  simplified navigation to Projects/Readme only
+- `/public/fornesus-art.html` — Aligned heading with icon via pd-title-group, 
+  simplified navigation to Projects/Readme only
+- `/public/open-creatrweb.html` — Aligned heading with icon via pd-title-group, 
+  simplified navigation to Projects/Readme only
+- `/public/chris-fornesa.html` — Aligned heading with icon via pd-title-group, 
+  simplified navigation to Projects/Readme only
+- `/public/creatrweb.html` — Aligned heading with icon via pd-title-group, 
+  simplified navigation to Projects/Readme only
+- `/public/styles/app.css` — Added .pd-title-group styling, updated .pd-container
+  padding from 48px/64px to 40px to match home page margin
+- `/server.js` — Removed old project routes (indieweb-platform, creatrweb-rag, 
+  terminal-ui), kept only new project routes (creatrweb, augment-humankind, 
+  fornesus-art, open-creatrweb, chris-fornesa)
+- `/README.md` — Updated to match readme.html with 8 pages and Mistral Vibe/Opencode Go mention

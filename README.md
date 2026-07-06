@@ -14,8 +14,9 @@ portable across hosts.
   local RAG over documents you index yourself
 - **IndieWeb microformats** — h-card and rel=me links are server-rendered in
   static HTML; no client-side hydration required
-- **Six pages** — `/` (home), `/projects`, `/readme`, `/indieweb-platform`,
-  `/creatrweb-rag`, `/terminal-ui`
+- **Eight pages** — `/` (home), `/projects`, `/readme`, `/creatrweb`,
+  `/augment-humankind`, `/fornesus-art`, `/open-creatrweb`, `/chris-fornesa`
+- **Built with Mistral Vibe and Opencode Go** — the primary open-source AI coding tools orchestrated in developing this site, enabling human-led creative collaboration with agentic AI
 
 ---
 
